@@ -1,0 +1,18 @@
+#email-error-login {
+    color: red;
+    visibility: hidden;
+}
+
+#email-error-login.invalid {
+    visibility: visible;
+}
+
+#pass-error-login {
+    color: red;
+    visibility: hidden;
+}
+
+#pass-error-login.invalid {
+    visibility: visible;
+}
+

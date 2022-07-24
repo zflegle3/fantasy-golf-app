@@ -1,0 +1,16 @@
+#email-error {
+    color: red;
+    visibility: hidden;
+}
+
+#email-error.invalid {
+    visibility: visible;
+}
+
+p[id*="pass-error-signin"] {
+    color: rebeccapurple;
+}
+
+p[id*="pass-error-signin"].invalid {
+    color: red;
+}
