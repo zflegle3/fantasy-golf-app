@@ -106,8 +106,8 @@ function SignUp(props) {
 
     
     return (
-        <div className="login-form">
-            <div className="login-header">
+        <div className="auth-container">
+            <div className="sign-up-header">
                 <h1>Sign Up</h1>
                 <p id="login" onClick={props.switchPage}>Login</p>
             </div>

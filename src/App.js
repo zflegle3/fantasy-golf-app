@@ -7,7 +7,8 @@ import {
   Link
 } from "react-router-dom";
 //Styles
-import './App.css';
+import './styles/Reset.css';
+import './styles/App.css';
 //Components
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
@@ -110,13 +111,13 @@ function App() {
     switch (pageSelect) {
       case "login":
         return (
-          <div className="App">
+          <div className="app-landing">
             <Login auth={auth} switchPage={switchPage} />
           </div>
         );
       case "signup":
         return (
-          <div className="App">
+          <div className="app-landing">
             <SignUp auth={auth} switchPage={switchPage} />
           </div>
         );

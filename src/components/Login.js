@@ -49,27 +49,38 @@ function Login(props) {
 
 
     return (
-        <div className="login-form">
-            <div className="login-header">
-                <h1>Login</h1>
-                <p id="signup" onClick={props.switchPage}>Sign Up</p>
+        <div className="auth-container">
+            <div className="auth-left"></div>
+            <div className="auth-right">
+                <div className="login-container">
+                    <div className="login-header">
+                        <div className="login-header-main">
+                            <h1>Login</h1>
+                            <p id="signup" onClick={props.switchPage}>Sign Up</p>
+                        </div>
+                        <div className="login-header-sub">
+                            Sign in using email
+                        </div>
+
+                    </div>
+
+
+                    
+                    <form className="login-form">
+
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter email" ></input>
+                        <p id="email-error-login" >Sorry, this user does not exist</p>
+
+                        <label htmlFor="pwd">Password</label>
+                        <input type="password" id="pwd" name="pwd" placeholder="Enter password" ></input>
+                        <p id="pass-error-login">Your password was incorrect.</p>
+
+                        <button onClick={userLogin}>Continue</button>
+
+                    </form>
+                </div>
             </div>
-
-            <p onClick={props.switchPage}>Sign in using email</p>
-            
-            <form>
-
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter email" ></input>
-                <p id="email-error-login" >Sorry, this user does not exist</p>
-
-                <label htmlFor="pwd">Password</label>
-                <input type="password" id="pwd" name="pwd" placeholder="Enter password" ></input>
-                <p id="pass-error-login">Your password was incorrect.</p>
-
-                <button onClick={userLogin}>Continue</button>
-
-            </form>
         </div>
     );
 }

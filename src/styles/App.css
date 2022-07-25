@@ -1,0 +1,13 @@
+/* ~~~~~~~~~~~~~~~~~~~~
+Main Document Styles
+~~~~~~~~~~~~~~~~~~~~ */
+
+.app-landing {
+  min-height: 100vh;
+}
+
+* {
+  /* Define Varibles here */
+  --bgnd-plain: rgb(207, 207, 207);
+
+}
