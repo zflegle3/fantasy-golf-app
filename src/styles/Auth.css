@@ -1,0 +1,170 @@
+/* Auth Container Styles
+~~~~~~~~~~~~~~~~~~~~ */
+.app-landing {
+    min-height: 100vh;
+}
+
+.auth-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: row;
+}
+
+.auth-left {
+    min-width: 500px;
+    height: 100vh;
+    background-color: rebeccapurple;
+    display: flex;
+    flex: 2 2 0; /* flex grow , shrink,  basis */
+    position: relative;
+}
+
+.auth-right {
+    flex: 3 3 0;
+    height: 100vh;
+    background-color: var(--bgnd-plain);
+    display: flex;
+    position: relative;
+    flex-direction: row;
+}
+
+.auth-content {
+    padding: 100px 100px 100px 100px;
+    flex-grow: 1;
+    margin: auto;
+    max-width: 600px;
+}
+
+
+/* Auth Header Styles
+~~~~~~~~~~~~~~~~~~~~ */
+.auth-header {
+    padding: 0 10px;
+    margin-bottom: 40px
+}
+
+.auth-header-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    padding-bottom: 1rem;
+}
+
+.auth-header-main h1 {
+    flex-grow: 1;
+    font-size: 4rem;
+
+}
+
+.auth-header-main p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-header-sub {
+    font-size: 1.5rem;
+}
+
+
+/* Form Styles
+~~~~~~~~~~~~~~~~~~~~ */
+.form-item-container {
+    min-width: 350px;
+    margin-bottom: 2rem;
+}
+
+.input-container {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.input-container input {
+    width: 100%;
+    font-size: 2rem;
+    padding: 1rem 1rem 1rem 1rem;
+    border: none;
+    background-color: white;
+    border-radius: 0.2rem;
+}
+
+.form-item-container label {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.form-submit-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-btn-container {
+    flex-grow: 1;
+}
+
+.form-btn-container button {
+    padding: 1rem 3rem 1rem 3rem;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: var(--button-norm);
+}
+
+.form-btn-container button:hover {
+    box-shadow: 3px 3px rgba(0,0,0, 0.25);
+}
+
+.form-item-container p {
+    font-size: 1.2rem;
+    padding: 0rem 0rem 0.5rem 1rem;
+}
+
+/* Login Specific Styles
+~~~~~~~~~~~~~~~~~~~~ */
+
+#email-error-login {
+    color: red;
+    visibility: hidden;
+}
+
+#email-error-login.invalid {
+    visibility: visible;
+}
+
+#pass-error-login {
+    color: red;
+    visibility: hidden;
+}
+
+#pass-error-login.invalid {
+    visibility: visible;
+}
+
+
+/* Sign Up Specific Styles
+~~~~~~~~~~~~~~~~~~~~ */
+
+#email-error {
+    color: red;
+    visibility: hidden;
+}
+
+#email-error.invalid {
+    visibility: visible;
+}
+
+p[id*="pass-error-signin"] {
+    color: rebeccapurple;
+}
+
+p[id*="pass-error-signin"].invalid {
+    color: red;
+}
+
+
+

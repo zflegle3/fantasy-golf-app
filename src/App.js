@@ -9,6 +9,7 @@ import {
 //Styles
 import './styles/Reset.css';
 import './styles/App.css';
+import "./styles/Auth.css";
 //Components
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";

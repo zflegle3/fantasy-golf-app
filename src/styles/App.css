@@ -9,5 +9,7 @@ Main Document Styles
 * {
   /* Define Varibles here */
   --bgnd-plain: rgb(207, 207, 207);
+  --button-norm: rgb(151, 232, 51);
+  --button-hov: rgb(151, 232, 51);
 
 }
