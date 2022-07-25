@@ -2,14 +2,65 @@
 Main Document Styles
 ~~~~~~~~~~~~~~~~~~~~ */
 
+* {
+  /* Define Varibles here */
+  --bkgnd-main: #7DAF9C;
+  --bkgnd-sub: #1C533F;
+  --bkgnd-plain: rgb(207, 207, 207);
+  --button-norm: rgb(151, 232, 51);
+  --button-hov: rgb(151, 232, 51);
+  box-sizing: border-box;
+
+}
+
+/* App Container Styles
+~~~~~~~~~~~~~~~~~~~~ */
 .app-landing {
   min-height: 100vh;
 }
 
-* {
-  /* Define Varibles here */
-  --bgnd-plain: rgb(207, 207, 207);
-  --button-norm: rgb(151, 232, 51);
-  --button-hov: rgb(151, 232, 51);
 
+.app-layout {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bkgnd-main);
+  display: flex; 
+}
+
+.left-panel-container {
+  height: 100vh;
+  width: 250px;
+  flex: 0 0 240px;
+
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bkgnd-sub);
+}
+
+.center-panel-container {
+
+
+}
+
+/* Left Panel Styles
+~~~~~~~~~~~~~~~~~~~~ */
+.nav-header {
+  flex: 0 0 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-logo{
+  font-size: 3rem;
+}
+
+.nav-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-footer {
+  flex: 0 0 100px;
 }

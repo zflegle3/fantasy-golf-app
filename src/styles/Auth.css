@@ -23,7 +23,7 @@
 .auth-right {
     flex: 3 3 0;
     height: 100vh;
-    background-color: var(--bgnd-plain);
+    background-color: var(--bkgnd-plain);
     display: flex;
     position: relative;
     flex-direction: row;
@@ -143,6 +143,11 @@
 
 #pass-error-login.invalid {
     visibility: visible;
+}
+
+#pass-reset {
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
 

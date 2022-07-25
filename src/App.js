@@ -6,17 +6,26 @@ import {
   Route,
   Link
 } from "react-router-dom";
+
 //Styles
 import './styles/Reset.css';
 import './styles/App.css';
 import "./styles/Auth.css";
+
+//images
+import addIcon from "./images/icons/plus-circle-outline-wh.png";
+import logoIcon from "./images/icons/golf-tee-wh.png";
+import leagueIcon from "./images/icons/golf-flag-wh.png";
+import profileIcon from "./images/icons/golf-cart-wh.png";
+import settingsIcon from "./images/icons/cog-outline-wh.png";
+
 //Components
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import League from "./components/League";
 
-// FIREBASE
+//Firebase
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { 
@@ -25,7 +34,6 @@ import {
   onAuthStateChanged,
   signOut,
  } from "firebase/auth";
-
 const firebaseConfig = {
   apiKey: "AIzaSyAI0DXYQ5rRJFxL5oIqEcPf3h5dkRiW_fw",
   authDomain: "fantasy-golf-e2dc1.firebaseapp.com",
@@ -35,17 +43,12 @@ const firebaseConfig = {
   appId: "1:98644773374:web:79405b5ea7830b34ba58af",
   measurementId: "G-MRB45784YQ"
 };
-// Initialize Firebase
+//Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 //Authentication
 const auth = getAuth(app);
 connectAuthEmulator(auth, "http://localhost:9099")
-
-
-
-
 
 
 
@@ -57,9 +60,8 @@ function App() {
 
 
 
-  const switchPage = (e) => {
+  const authSwitchPage = (e) => {
     e.preventDefault();
-    // console.log("switching page", e.target.id);
     setPageSelect(e.target.id);
   };
 
@@ -83,22 +85,40 @@ function App() {
     });
   }, []);
 
-
-
   if (userAuth) {
     return (
-      <div className="App">
+      <div className="app-layout">
         <Router>
-          <div className="left-nav-panel">
+          <div className="left-panel-container">
+            <div className="nav-header">
+                <img src={logoIcon}></img>
+                <h1 className="header-logo">Site Name</h1>
+            </div>
+
+            <div className="nav-body">
               <Link to="/">Golf Home</Link>
-              <Link to="/league-1">League One</Link>
-              <Link to="/league-2">League Two</Link>
-              <div> 
-                <p>Account Name</p>
-                <button onClick={userLogOut}> Log Out</button>
+              <div className="new-league">
+                <p>New League</p>
+                <img src={addIcon}></img>
               </div>
+              <Link to="/league-1">
+                <img src={leagueIcon}></img>
+                <p>League One</p>
+              </Link>
+              <Link to="/league-2">
+                <img src={leagueIcon}></img>
+                <p>League Two</p>
+              </Link>
+            </div>
+
+            <div className="nav-footer"> 
+              <img src={profileIcon}></img>
+              <p>Account Name</p>
+              <button onClick={userLogOut}> Log Out</button>
+              <img src={settingsIcon}></img>
+            </div>
           </div>
-          <div className="center-panel-wrap">
+          <div className="center-panel-container">
             <Routes>
                 <Route exact path="/" element={<Home/>}/>
                 <Route exact path="/league-1" element={<League name={"League One"}/>}/>
@@ -113,13 +133,13 @@ function App() {
       case "login":
         return (
           <div className="app-landing">
-            <Login auth={auth} switchPage={switchPage} />
+            <Login auth={auth} switchPage={authSwitchPage} />
           </div>
         );
       case "signup":
         return (
           <div className="app-landing">
-            <SignUp auth={auth} switchPage={switchPage} />
+            <SignUp auth={auth} switchPage={authSwitchPage} />
           </div>
         );
       case "reset-pwd":
