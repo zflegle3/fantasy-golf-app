@@ -1,4 +1,4 @@
-import "../styles/Login.css";
+import "../styles/SignUp.css";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 
@@ -10,7 +10,7 @@ function SignUp(props) {
 
     const validateSignUp = (e) => {
         e.preventDefault();
-        console.log(e);
+        // console.log(e);
         let emailCheck = false;
         let passCheck = false;
 
@@ -61,20 +61,21 @@ function SignUp(props) {
 
         //8 characters
         if(password.length < 8) {
-            let passTest = false;
+            passTest = false;
             passErrorLen.classList = "invalid";
         } else {
             passErrorLen.classList = "";
         }
         //uppercase
         if(!password.match(/[A-Z]/g)) {
-            let passTest = true;
+            passTest = false;
             passErrorUp.classList = "invalid";
         } else {
             passErrorUp.classList = "";
         }
         //number
         if(!password.match(/[0-9]/g)) {
+            passTest = false;
             passErrorNum.classList = "invalid";
         } else {
             passErrorNum.classList = "";
@@ -93,8 +94,6 @@ function SignUp(props) {
         try {
             const userCredential = await createUserWithEmailAndPassword(props.auth, userEmail, userPassword);
             console.log(userCredential);
-            //Send UserCredential to App State??
-            // props.checkAuthState();
           }
           catch(error) {
             console.log("ERROR!")

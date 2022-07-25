@@ -3,6 +3,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { 
     signInWithEmailAndPassword,
    } from "firebase/auth";
+import "../styles/Login.css";
 
 
 function Login(props) {
@@ -14,34 +15,33 @@ function Login(props) {
         e.preventDefault();
         let userEmail = document.getElementById("email").value;
         let userPassword = document.getElementById("pwd").value;
-        // console.log(userEmail,userPassword);
         logInEmailPassword(userEmail, userPassword);
     };
 
     const logInEmailPassword = async (email, password) => {
         try {
           const userCredential = await signInWithEmailAndPassword(props.auth, email, password);
-          console.log(userCredential.user);
+        //   console.log(userCredential.user);
           document.getElementById("email-error-login").className = "";
           document.getElementById("pass-error-login").className = "";
           //Send UserCredential to App State??
         //   props.checkAuthState(userCredential.user);
         }
         catch(error) {
-          console.log("ERROR!")
+        //   console.log("ERROR!")
           handleLoginError(error);
         }
     }
 
     const handleLoginError = (error) => {
-        console.log(error.code);
+        // console.log(error.code);
         switch (error.code) {
             case ("auth/user-not-found"):
-                console.log("email Error");
+                // console.log("email Error");
                 document.getElementById("email-error-login").className = "invalid";
                 break;
             case ("auth/wrong-password"):
-                console.log("password Error");
+                // console.log("password Error");
                 document.getElementById("pass-error-login").className = "invalid";
                 break;
         }
