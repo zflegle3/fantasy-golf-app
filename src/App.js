@@ -96,16 +96,19 @@ function App() {
             </div>
 
             <div className="nav-body">
-              <Link to="/">Golf Home</Link>
-              <div className="new-league">
+              <Link to="/" className="nav-link">
+                <img src={logoIcon}></img>
+                <p>Golf Home</p>
+              </Link>
+              <div id="new-league" className="nav-link">
                 <p>New League</p>
                 <img src={addIcon}></img>
               </div>
-              <Link to="/league-1">
+              <Link to="/league-1" className="nav-link">
                 <img src={leagueIcon}></img>
                 <p>League One</p>
               </Link>
-              <Link to="/league-2">
+              <Link to="/league-2" className="nav-link">
                 <img src={leagueIcon}></img>
                 <p>League Two</p>
               </Link>
@@ -113,14 +116,16 @@ function App() {
 
             <div className="nav-footer"> 
               <img src={profileIcon}></img>
-              <p>Account Name</p>
-              <button onClick={userLogOut}> Log Out</button>
+              <div className="profile-container">
+                <p>Account Name</p>
+                <button onClick={userLogOut}> Log Out</button>
+              </div>
               <img src={settingsIcon}></img>
             </div>
           </div>
           <div className="center-panel-container">
             <Routes>
-                <Route exact path="/" element={<Home/>}/>
+                <Route exact path="/*" element={<Home/>}/>
                 <Route exact path="/league-1" element={<League name={"League One"}/>}/>
                 <Route exact path="/league-2" element={<League name={"League Two"}/>}/>
             </Routes>
