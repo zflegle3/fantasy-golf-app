@@ -24,6 +24,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import League from "./components/League";
+import LeagueLinks from "./components/LeagueLinks";
 
 //Firebase
 import { initializeApp } from "firebase/app";
@@ -57,6 +58,12 @@ connectAuthEmulator(auth, "http://localhost:9099")
 function App() {
   const [pageSelect, setPageSelect] = useState("login");
   const [userAuth, setUserAuth] = useState(false);
+  const [userActive, setUserActive] = useState();
+  const [leagues, setLeagues] = useState([
+    {name: "League One", id: "league-1", logo: leagueIcon},
+    {name: "League Two", id: "league-2", logo: leagueIcon},
+    {name: "League Three", id: "league-3", logo: leagueIcon},
+  ]);
 
 
 
@@ -67,6 +74,7 @@ function App() {
 
   const userLogOut = async () => {
     await signOut(auth);
+    setUserActive();
     console.log("Log Out");
   };
 
@@ -77,6 +85,7 @@ function App() {
         // User is signed in.
         console.log("logged in")
         setUserAuth(true);
+        setUserActive(user);
       }
       else {
         console.log("logged out")
@@ -84,6 +93,8 @@ function App() {
       }
     });
   }, []);
+
+  console.log(userActive);
 
   if (userAuth) {
     return (
@@ -96,28 +107,24 @@ function App() {
             </div>
 
             <div className="nav-body">
+
               <Link to="/" className="nav-link">
                 <img src={logoIcon}></img>
                 <p>Golf Home</p>
               </Link>
+
               <div id="new-league" className="nav-link">
                 <p>New League</p>
                 <img src={addIcon}></img>
               </div>
-              <Link to="/league-1" className="nav-link">
-                <img src={leagueIcon}></img>
-                <p>League One</p>
-              </Link>
-              <Link to="/league-2" className="nav-link">
-                <img src={leagueIcon}></img>
-                <p>League Two</p>
-              </Link>
+
+              <LeagueLinks leagues={leagues}/>
             </div>
 
             <div className="nav-footer"> 
               <img src={profileIcon}></img>
               <div className="profile-container">
-                <p>Account Name</p>
+                <p>{userActive.email}</p>
                 <button onClick={userLogOut}> Log Out</button>
               </div>
               <img src={settingsIcon}></img>
@@ -126,8 +133,7 @@ function App() {
           <div className="center-panel-container">
             <Routes>
                 <Route exact path="/*" element={<Home/>}/>
-                <Route exact path="/league-1" element={<League name={"League One"}/>}/>
-                <Route exact path="/league-2" element={<League name={"League Two"}/>}/>
+                <Route exact path="/league/:id/*" element={<League name={"League One"} />}/>
             </Routes>
           </div>
         </Router>

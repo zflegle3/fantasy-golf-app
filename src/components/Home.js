@@ -1,11 +1,8 @@
 import {
-    BrowserRouter as Router,
     Routes,
     Route,
     Link,
-    Switch,
 } from "react-router-dom";
-
 import Test from "./Test";
 
 
@@ -23,10 +20,10 @@ function Home(props) {
                 </ul>
                 <div className="center-panel-display">
                     <Routes>
-                        <Route exact path="" element={<Test test={"Tab 0 test"}/>}/>
-                        <Route exact path="schedule" element={<Test test={"Tab 1 test"}/>}/>
-                        <Route exact path="players" element={<Test test={"Tab 2 test"}/>}/>
-                        <Route exact path="news" element={<Test test={"Tab 3 test"}/>}/>
+                        <Route exact path="" element={<Test test={"Tab 0 test, Home"}/>}/>
+                        <Route exact path="schedule" element={<Test test={"Tab 1 test, Home"}/>}/>
+                        <Route exact path="players" element={<Test test={"Tab 2 test, Home"}/>}/>
+                        <Route exact path="news" element={<Test test={"Tab 3 test, Home"}/>}/>
                     </Routes>
                 </div>
               </div>
