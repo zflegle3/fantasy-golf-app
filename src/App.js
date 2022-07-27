@@ -78,6 +78,31 @@ function App() {
     console.log("Log Out");
   };
 
+  const selectTabDisplay = (e) => {
+    e.preventDefault();
+    //turn off all select classes
+    let allTabs = document.querySelectorAll("[id=nav-tab]");
+    console.log(allTabs);
+    for (let i=0; i< allTabs.length; i++) {
+      console.log(allTabs[i]);
+      allTabs[i].classList =  "nav-link";
+      console.log(allTabs[i].classList);
+    };
+    console.log(allTabs);
+    //turn on classlist on selected
+
+    console.log(e.target);
+    let selected = e.target;
+    console.log(selected.id);
+    if (!selected.id) {
+      selected = e.target.parentElement;
+      console.log(selected);
+    }
+    console.log(selected);
+    selected.classList = "nav-link tab-selected";
+
+  }
+
   useEffect(() => {
     onAuthStateChanged( auth, user => {
       console.log(user);
@@ -108,17 +133,17 @@ function App() {
 
             <div className="nav-body">
 
-              <Link to="/" className="nav-link">
+              <Link to="/" className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
                 <img src={logoIcon}></img>
                 <p>Golf Home</p>
               </Link>
 
-              <div id="new-league" className="nav-link">
+              <div className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
                 <p>New League</p>
                 <img src={addIcon}></img>
               </div>
 
-              <LeagueLinks leagues={leagues}/>
+              <LeagueLinks leagues={leagues} selectTabDisplay={selectTabDisplay}/>
             </div>
 
             <div className="nav-footer"> 

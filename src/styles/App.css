@@ -1,19 +1,69 @@
 /* ~~~~~~~~~~~~~~~~~~~~
 Main Document Styles
 ~~~~~~~~~~~~~~~~~~~~ */
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@700&display=swap');
 
 * {
   /* Define Varibles here */
-  --bkgnd-main: #7DAF9C;
-  --bkgnd-sub: #1C533F;
+  /* Style A
+  --bkgnd-main: #172A3A;
+  --bkgnd-sub: #004346;
+  --bkgnd-lt: #74B3CE;
+  --bkgnd-drk: #508991;
   --text-main: #EBF5DF;
   --text-sub: #BAD4AA;
-  --bkgnd-plain: rgb(207, 207, 207);
+  --button-norm: red;
+  --button-hov: red;
+  --button-tgt: red; */
+
+  /* Style B
+  --bkgnd-main: #1E2019;
+  --bkgnd-sub: #394032;
+  --bkgnd-lt: #4f5845;
+  --bkgnd-drk: #508991;
+  --text-main: #CFEE9E;
+  --text-sub:  #CFEE9E;
+  --button-norm: #2BC016;
+  --button-hov: red;
+  --button-tgt: red; */
+
+    /* Style C */
+  --bkgnd-main: #0D1F22;
+  --bkgnd-sub: #132d2c;
+  --bkgnd-lt: #377771;
+
+  --bkgnd-drk: #1b403f;
+
+  --text-main: #FFF;
+  --text-sub:  #87BAAB;
+  --text-hlght:  #E6E49F;
+
+  --button-norm: #0A8754;
+  --button-hov: #1b403f;
+  --button-tgt: red;
+  --tab-highlight: #1b403f;
+  --select-highlight: #fff;
+  --bkgnd-plain: #0D1F22;
+  --error-red: #820933;
+
+  --misc: #69995D;
+
+
+
+  box-sizing: red;
+
+
+
+
+  /* --bkgnd-plain: rgb(207, 207, 207);
   --button-norm: rgb(151, 232, 51);
   --button-hov: #BEE5BF;
 
   --tab-highlight: #277357;
-  box-sizing: border-box;
+  box-sizing: border-box; */
+
+  /* Fonts */
+  font-family: 'Mukta', sans-serif;
 
 }
 
@@ -39,6 +89,7 @@ Main Document Styles
   display: flex;
   flex-direction: column;
   background-color: var(--bkgnd-sub);
+  border: 1px solid var(--bkgnd-drk);
 }
 
 .center-panel-container {
@@ -78,16 +129,30 @@ Main Document Styles
   cursor: pointer;
   padding: 1rem 2rem 2rem 2rem;
   text-decoration: none;
+  transition: 0.25s;
+  z-index: 1;
+  margin-left: 1rem;
+
 }
 
 .nav-link:hover {
   background-color: var(--tab-highlight);
-  border-radius: .5rem;
+  /* border-radius: .5rem; */
+}
+
+.tab-selected {
+  border-left: 3rem soid var(----select-highlight);
+  margin-left: 0rem;
 }
 
 .nav-link p {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--text-sub);
+  font-weight: 400;
+}
+
+.tab-selected p {
+  color: var(--text-hlght);
 }
 
 .nav-link img {
@@ -97,6 +162,8 @@ Main Document Styles
 
 #new-league p {
   flex: 1 1 0;
+  color: var(--text-main);
+  font-weight: 700;
 }
 
 
@@ -108,7 +175,8 @@ Main Document Styles
   align-items: center;
   flex-direction: row;
   padding: .5rem 1rem .5rem 2rem;
-  background-color: var(--tab-highlight);
+  background-color: var(--bkgnd-main);
+  /* border: 1px solid var(--bkgnd-lt); */
   border-radius: 0.5rem;
 }
 
@@ -122,7 +190,8 @@ Main Document Styles
 
 .profile-container p {
   font-size: 1.5rem;
-  color: var(--text-sub);
+  color: var(--text-main);
+  font-weight: 700;
 }
 
 .profile-container button {
@@ -163,7 +232,7 @@ Main Document Styles
   margin-bottom: 20px;
   flex-grow: 1;
   align-items: center;
-  background-color: rebeccapurple;
+  color: var(--text-main)
 }
 
 .dual-content-panel {
@@ -175,20 +244,19 @@ Main Document Styles
 
 
 .center-panel {
-  background-color: var(--tab-highlight);
   display: flex;
   flex-direction: column;
   height: 100%;
   flex-grow: 1;
   border-radius: 1.5rem;
   overflow: hidden;
-  border: 1px solid var(--bkgnd-sub);
+  border: 1px solid var(--bkgnd-lt);
+  background-color: var(--bkgnd-sub);
 }
 
 .center-panel-tabs {
   display: flex;
   padding: 2rem;
-  background-color: aqua;
 }
 
 .center-panel-tab-item {
@@ -217,15 +285,17 @@ Main Document Styles
   max-width: 400px;
   border-radius: 1.5rem;
   overflow: hidden;
-  border: 1px solid var(--bkgnd-sub);
   margin-left: 2rem;
+  border: 1px solid var(--bkgnd-sub);
+  border: 1px solid var(--bkgnd-lt);
+  background-color: var(--bkgnd-sub);
+
 }
 
 /* Layout Changes (small Screens 
 ~~~~~~~~~~~~~~~~~~~~ */
 @media only screen and  (max-width:1300px) {
   .center-panel {
-    background-color: aqua;
     min-width: 600px;
   }
   .right-panel {
@@ -235,7 +305,6 @@ Main Document Styles
 
 @media only screen and  (min-width:1600px) {
   .center-panel {
-    background-color: rgb(225, 255, 0);
     min-width: 900px;
   }
   .right-panel {

@@ -119,9 +119,9 @@ function Login(props) {
                             <div className="form-btn-container">
                                 <button onClick={userLogin}>Continue</button>
                             </div>
-                            <div id="pass-reset">
+                            <p id="pass-reset">
                                 Forgot password?
-                            </div>
+                            </p>
 
                         </div>
 

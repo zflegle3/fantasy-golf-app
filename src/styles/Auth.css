@@ -54,7 +54,8 @@
 
 .auth-header-main h1 {
     flex-grow: 1;
-    font-size: 4rem;
+    font-size: 5rem;
+    color: var(--text-main);
 
 }
 
@@ -62,10 +63,19 @@
     font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
+    color: var(--button-norm);
+    transition: 0.5s;
+}
+
+.auth-header-main p:hover {
+    transform: scale(1.15);
+    box-shadow: 3px 3px rgba(0,0,0, 0.25);
+    color: var(--text-hlght);
 }
 
 .auth-header-sub {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+    color: var(--text-sub);
 }
 
 
@@ -86,20 +96,50 @@
 .input-container input {
     width: 100%;
     font-size: 2rem;
+    color: var(--text-sub);
+    background-color: var(--bkgnd-sub);
     padding: 1rem 1rem 1rem 1rem;
     border: none;
-    background-color: white;
     border-radius: 0.2rem;
+    box-shadow: 3px 3px rgba(0,0,0,0.15);
+    transition: 0.5s;
+}
+
+::-webkit-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--misc));
+  }
+
+.input-container input:focus {
+    outline: none;
+    box-shadow: 7px 7px rgba(0,0,0,0.15);
+    transform: scale(1.03)
+    /* border: 1px solid var(--text-hlght); */
 }
 
 .form-item-container label {
     margin-bottom: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+       color: var(--text-sub);
 }
 
 .form-submit-container {
     display: flex;
+    align-items: center;
     flex-direction: row;
+}
+.form-submit-container p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--button-norm);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.form-submit-container p:hover {
+    transform: scale(1.15);
+    box-shadow: 3px 3px rgba(0,0,0, 0.25);
+    color: var(--text-hlght);
 }
 
 .form-btn-container {
@@ -112,24 +152,29 @@
     border-radius: 2rem;
     font-size: 1.5rem;
     cursor: pointer;
+    transition: 0.5s;
     background-color: var(--button-norm);
 }
 
 .form-btn-container button:hover {
     box-shadow: 3px 3px rgba(0,0,0, 0.25);
     background-color: var(--button-hov);
+    color: var(--text-hlght);
+    transform: scale(1.1)
 }
 
+
 .form-item-container p {
-    font-size: 1.2rem;
-    padding: 0rem 0rem 0.5rem 1rem;
+    font-size: 1.3rem;
+    padding: 1rem 0rem 0rem 1rem;
+    color: var(--text-sub);
 }
 
 /* Login Specific Styles
 ~~~~~~~~~~~~~~~~~~~~ */
 
 #email-error-login {
-    color: red;
+    color: var( --error-red);
     visibility: hidden;
 }
 
@@ -138,7 +183,7 @@
 }
 
 #pass-error-login {
-    color: red;
+    color: var( --error-red);
     visibility: hidden;
 }
 
@@ -146,17 +191,13 @@
     visibility: visible;
 }
 
-#pass-reset {
-    font-size: 1.2rem;
-    cursor: pointer;
-}
 
 
 /* Sign Up Specific Styles
 ~~~~~~~~~~~~~~~~~~~~ */
 
 #email-error {
-    color: red;
+    color: var( --error-red);
     visibility: hidden;
 }
 
@@ -164,12 +205,9 @@
     visibility: visible;
 }
 
-p[id*="pass-error-signin"] {
-    color: rebeccapurple;
-}
 
 p[id*="pass-error-signin"].invalid {
-    color: red;
+    color: var( --error-red);
 }
 
 

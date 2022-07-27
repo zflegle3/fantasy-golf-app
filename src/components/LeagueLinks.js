@@ -4,9 +4,10 @@ import {
 
 function LeagueLinks(props) {
     //props.leagues
+    // props.selectTabDisplay
 
     const linksAll = props.leagues.map((leagueInfo) =>
-        <Link key={leagueInfo.id} to={`/league/${leagueInfo.id}`} className="nav-link">
+        <Link key={leagueInfo.id} to={`/league/${leagueInfo.id}`} className="nav-link" id="nav-tab" onClick={props.selectTabDisplay}>
             <img src={leagueInfo.logo}></img>
             <p>{leagueInfo.name}</p>
         </Link>
