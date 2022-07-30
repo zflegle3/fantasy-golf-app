@@ -1,0 +1,49 @@
+#new-league-modal-form {
+    visibility: hidden;
+    position: absolute;
+    z-index: 10;
+    height: 0%;
+    width: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+    background-color: rgba(155, 155, 155, 0.55);
+    transition: 2s;
+}
+
+#new-league-modal-form.visable {
+    visibility: visible;
+    height: 100%;
+    width: 100%;
+}
+
+.new-league-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-league-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-league-header h1 {
+    font-size: 4rem;
+    padding-bottom: 1rem;
+}
+
+.new-league-header p {
+    font-size: 1.5rem;
+    padding: 0rem 0rem 3rem 0.5rem;
+}
+
+.new-league-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-league-input {
+    display: flex;
+    flex-direction: column;
+}

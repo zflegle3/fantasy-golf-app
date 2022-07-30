@@ -1,0 +1,30 @@
+.world-rankings-display {
+    display:flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.player-rank-heading {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    flex-direction: row;
+}
+
+.player-rank-heading p {
+    justify-self: center;
+    font-size: 1.5rem;
+    color: var(--text-main);
+}
+
+.player-rank-item {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    flex-direction: row;
+}
+
+.player-rank-item  p {
+    justify-self: center;
+    font-size: 1.2rem;
+    color: var(--text-sub);
+
+}

@@ -54,7 +54,7 @@ function Login(props) {
         //   props.checkAuthState(userCredential.user);
         }
         catch(error) {
-        //   console.log("ERROR!")
+           console.log("ERROR!", error)
           handleLoginError(error);
         }
     }

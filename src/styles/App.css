@@ -140,6 +140,10 @@ Main Document Styles
   /* border-radius: .5rem; */
 }
 
+.new-league p {
+  flex-grow: 1;
+}
+
 .tab-selected {
   border-left: 3rem soid var(----select-highlight);
   margin-left: 0rem;

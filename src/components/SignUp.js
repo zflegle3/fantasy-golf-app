@@ -101,7 +101,7 @@ function SignUp(props) {
             console.log(userCredential);
           }
           catch(error) {
-            console.log("ERROR!")
+            console.log("ERROR!", error)
           }
     }
 

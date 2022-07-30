@@ -11,6 +11,8 @@ import {
 import './styles/Reset.css';
 import './styles/App.css';
 import "./styles/Auth.css";
+import "./styles/Home.css";
+import "./styles/NewLeague.css";
 
 //images
 import addIcon from "./images/icons/plus-circle-outline-wh.png";
@@ -25,14 +27,24 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import League from "./components/League";
 import LeagueLinks from "./components/LeagueLinks";
+import NewLeagueModal from "./components/NewLeague"
 
 //Firebase
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { 
+  getFirestore, 
+  doc, 
+  getDoc,
+  getDocs,
+  addDoc,
+  setDoc,
+  collection,
+} from "firebase/firestore";
+import { 
   getAuth,
   connectAuthEmulator,
-  onAuthStateChanged,
+  onAuthStateChanged, 
   signOut,
  } from "firebase/auth";
 const firebaseConfig = {
@@ -49,7 +61,14 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 //Authentication
 const auth = getAuth(app);
-connectAuthEmulator(auth, "http://localhost:9099")
+// connectAuthEmulator(auth, "http://localhost:9099");
+//firebase emulators:start --only auth
+//Firestore Storage
+const db = getFirestore(app);
+const testDoc = doc(db, "users/user-id-01");
+const testCollection = collection(db, "users");
+
+
 
 
 
@@ -79,51 +98,95 @@ function App() {
   };
 
   const selectTabDisplay = (e) => {
-    e.preventDefault();
-    //turn off all select classes
     let allTabs = document.querySelectorAll("[id=nav-tab]");
-    console.log(allTabs);
     for (let i=0; i< allTabs.length; i++) {
-      console.log(allTabs[i]);
       allTabs[i].classList =  "nav-link";
-      console.log(allTabs[i].classList);
     };
-    console.log(allTabs);
-    //turn on classlist on selected
-
-    console.log(e.target);
     let selected = e.target;
-    console.log(selected.id);
     if (!selected.id) {
       selected = e.target.parentElement;
-      console.log(selected);
     }
-    console.log(selected);
     selected.classList = "nav-link tab-selected";
+  }
 
+  const createNewLeague = (e) => {
+    console.log("New League");
+    let newLeagueModal = document.getElementById("new-league-modal-form");
+    newLeagueModal.classList = "visable";
+    // let newLeagueUserIns = document.querySelectorAll("#new-league-input");
+    // console.log.log(newLeagueUserIns);
+    //
   }
 
   useEffect(() => {
     onAuthStateChanged( auth, user => {
-      console.log(user);
-      if (user) {
-        // User is signed in.
+      if (user) { // User is signed in.
         console.log("logged in")
+        console.log(user.uid);
         setUserAuth(true);
         setUserActive(user);
+        //pull firbase doc based on UID
+        // pullUserData(user.uid);
+        // let userDoc = doc(db, "users/user-id-01");
+        pullUserData(user);
+        // addNewDoc();
       }
       else {
-        console.log("logged out")
+        console.log("logged out");
         setUserAuth(false);
       }
     });
   }, []);
 
+
+  async function pullUserData(user) { 
+
+    let userId = user.uid;
+    let userEmail = user.email;
+    console.log(userId);
+    console.log(userEmail);
+    
+    let userDocPath = `users/U-${userId}`;
+    console.log(userDocPath);
+    const userDoc = doc(db, `${userDocPath}`);
+    console.log(userDoc);
+    const userSnap  = await getDoc(userDoc);
+    if (userSnap.exists()) {
+      console.log("Doc Exists");
+      //if valid store league ids in state
+      const userData = userSnap.data();
+      // console.log(userData);
+      setLeagues(userData.leagues);
+    } else {
+      console.log("No Doc found");
+      //if not valid (Signed Up), populate empty doc w/ uId
+      // addNewDoc(userDocPath)
+      await setDoc(doc(db, "users", `U-${userId}`), {email: `${userEmail}`,leagues: []});
+    }
+
+  }
+
+  async function addNewDoc() {
+    const newDoc = await addDoc(testCollection, {
+      value: "test"
+    });
+    console.log("doc created");
+  }
+
+
+
+  
+
   console.log(userActive);
+
+
 
   if (userAuth) {
     return (
       <div className="app-layout">
+        <div className="new-league-modal-form" id="new-league-modal-form">
+          <NewLeagueModal />
+        </div>
         <Router>
           <div className="left-panel-container">
             <div className="nav-header">
@@ -138,7 +201,7 @@ function App() {
                 <p>Golf Home</p>
               </Link>
 
-              <div className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
+              <div className="nav-link " id="new-league" onClick={createNewLeague}>
                 <p>New League</p>
                 <img src={addIcon}></img>
               </div>
