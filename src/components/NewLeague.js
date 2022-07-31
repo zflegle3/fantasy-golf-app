@@ -1,13 +1,20 @@
 import { useState, useEffect } from 'react';
-import {
-    Routes,
-    Route,
-    Link,
-} from "react-router-dom";
+import { 
+    getFirestore, 
+    doc, 
+    getDoc,
+    getDocs,
+    addDoc,
+    setDoc,
+    collection,
+  } from "firebase/firestore";
+import { v4 as uuidv4 } from 'uuid';
 
 
 
 function NewLeagueModal(props) {
+    //props.userActive
+    //props.db
     // const [rankData, setRankData] = useState({rankings: []});
 
     const closeModal = () => {
@@ -28,12 +35,57 @@ function NewLeagueModal(props) {
         if (validateModal(leagueVarsAll)) {
             //write data to database
             //update state leagues & update display
+            createLeagueDoc(leagueVarsAll);
             closeModal();
             document.getElementById("new-league-form").reset();
         } else {
             console.log("handle error new league");
         }
     } 
+
+    async function createLeagueDoc(leagueVarsAll) { 
+        console.log(props.userActive);
+
+        let id = `L-${uuidv4()}`; //format: L-leagueid
+        let teamArray = [{
+            name: "New Team 1",
+            manager: `U-${props.userActive.uid}`,
+        }];
+        for (let i=1; i < leagueVarsAll[1]; i++) {
+            teamArray.push({
+                name: `New Team ${i+1}`,
+                manager: "none",
+            });
+        }
+
+        let data = {
+            leagueId: id,
+            activity: [{
+                item: "Created new League, Test",
+                time: Date(),
+                user: `U-${props.userActive.uid}`,
+            }],
+            settings: {
+                admin: `U-${props.userActive.uid}`,
+                name: leagueVarsAll[0],
+                scoring: {
+                    missCutScore: -1,
+                    rosterCut: leagueVarsAll[4],
+                    rosterSize: leagueVarsAll[3],
+                    format: leagueVarsAll[2],
+                },
+                schedule: [],
+                teamCount: leagueVarsAll[1],
+            },
+            teams: teamArray,
+        };
+        //create new league doc
+        await setDoc(doc(props.db, "leagues", `${id}`), data);
+        //add league info to user doc 
+
+      }
+
+
 
     const validateModal = (formVals) => {
         console.log("Validating Data");
@@ -112,7 +164,7 @@ function NewLeagueModal(props) {
                 <div className="input-container">
                     <select id="new-league-format" name="format" defaultValue={"league-play"}>
                         <option value="league-play" >Tournament</option>
-                        <option value="h2h--play">Head to Head</option>
+                        <option value="h2h-play">Head to Head</option>
                     </select>
                 </div>
             </div>

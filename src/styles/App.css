@@ -140,7 +140,7 @@ Main Document Styles
   /* border-radius: .5rem; */
 }
 
-.new-league p {
+#new-league p {
   flex-grow: 1;
 }
 

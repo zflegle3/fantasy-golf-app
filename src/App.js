@@ -185,7 +185,7 @@ function App() {
     return (
       <div className="app-layout">
         <div className="new-league-modal-form" id="new-league-modal-form">
-          <NewLeagueModal />
+          <NewLeagueModal userActive={userActive} db={db} />
         </div>
         <Router>
           <div className="left-panel-container">
