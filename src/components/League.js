@@ -14,9 +14,12 @@ import {
     collection,
   } from "firebase/firestore";
 import { useHistory, useParams } from 'react-router-dom'
-
+//Components
 import Test from "./Test";
 import LeagueTab from "./LeagueTab";
+//img
+import leagueIcon from "../images/icons/golf-flag-wh.png";
+
 
 
 function League(props) {
@@ -51,7 +54,11 @@ function League(props) {
     if (leagueSelectData) {
         return (
             <div className="center-panel-content">
-                <div className="center-panel-header">{leagueSelectData.settings.name}</div>
+                <div className="center-panel-header">
+                    <img src={leagueIcon}></img>
+                    <h1>{leagueSelectData.settings.name}</h1>
+                    <p>{`${leagueSelectData.settings.teamCount}-Team ${leagueSelectData.settings.scoring.format}`}</p>
+                    </div>
                 <div className="dual-content-panel">
                     <div className="center-panel">
                     <ul className="center-panel-tabs">

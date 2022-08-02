@@ -1,10 +1,14 @@
-import List from "./List"
+
 import { useState, useEffect } from 'react';
+//Components
+import List from "./List";
+import LeagueSettingsList from "./LeagueSettingsList"
 
 
 function LeagueTab(props) {
     //props.test
     //props.LeagueData
+
     console.log(props.leagueData);
 
     return (
@@ -17,8 +21,8 @@ function LeagueTab(props) {
                 <h1>Activity</h1>
                 <List dataArray={props.leagueData.activity} listType={"league-activity"} />
             </div>
-            <div className="league-display-content">
-                <h1>settings</h1>
+            <div className="settings-temp">
+                <LeagueSettingsList settingsData={props.leagueData.settings}/>
             </div>
         </div>
     );

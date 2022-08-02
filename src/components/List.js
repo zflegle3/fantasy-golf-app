@@ -9,7 +9,7 @@ function List(props) {
     let listItemsAll = {};
     if(props.listType === "league-activity") {
         listItemsAll = props.dataArray.map((dataItem) =>
-            <div className={`${props.listType}-item`}>
+            <div key={dataItem.time} className={`${props.listType}-item`}>
                 <p>{dataItem.user} {dataItem.item}, {dataItem.time}</p>
             </div>
         );

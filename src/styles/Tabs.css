@@ -6,3 +6,75 @@
 /* League Tab Styling
 ~~~~~~~~~~~~~~~~~~~ */
 
+.league-display-all {
+    position: relative;
+    /* background-color: #0A8754; */
+    overflow-y: scroll;
+  }
+  
+  .league-display-content {
+    background-color: red;
+    margin: 2rem 2rem 2rem 2rem;
+    height: 500px;
+  }
+
+
+
+  /* Settings Styling
+~~~~~~~~~~~~~~~~~~~ */
+.league-settings-all {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    background-color: var(--tab-highlight);
+    /* border: 1px solid red; */
+}
+
+.league-settings-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.league-settings-header p {
+    color: var(--text-main);
+    font-size: 2rem;
+    padding-bottom: 2rem;
+}
+
+.league-settings-header img {
+    height: 2rem;
+    cursor: pointer;
+}
+
+
+
+
+.league-settings-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.5rem 4rem 0rem 1rem;
+}
+
+.league-settings-item p:nth-child(1) {
+    color: var(--text-sub);
+    font-size: 1.5rem;
+}
+.league-settings-item p:nth-child(2) {
+    color: var(--text-main);
+    font-size: 1.5rem;
+}
+
+.league-settings-note {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    color: var(--text-sub);
+}
+
