@@ -13,6 +13,7 @@ import './styles/App.css';
 import "./styles/Auth.css";
 import "./styles/Home.css";
 import "./styles/NewLeague.css";
+import './styles/Tabs.css';
 
 //images
 import addIcon from "./images/icons/plus-circle-outline-wh.png";
@@ -78,11 +79,8 @@ function App() {
   const [pageSelect, setPageSelect] = useState("login");
   const [userAuth, setUserAuth] = useState(false);
   const [userActive, setUserActive] = useState();
-  const [leagues, setLeagues] = useState([
-    {name: "League One", id: "league-1", logo: leagueIcon},
-    {name: "League Two", id: "league-2", logo: leagueIcon},
-    {name: "League Three", id: "league-3", logo: leagueIcon},
-  ]);
+  const [leagues, setLeagues] = useState([]);
+  // const [leagueData, setLeagueData] = useState([]);
 
 
 
@@ -118,45 +116,42 @@ function App() {
     //
   }
 
+
+
   useEffect(() => {
     onAuthStateChanged( auth, user => {
+      console.log(user);
       if (user) { // User is signed in.
         console.log("logged in")
         console.log(user.uid);
         setUserAuth(true);
         setUserActive(user);
-        //pull firbase doc based on UID
-        // pullUserData(user.uid);
-        // let userDoc = doc(db, "users/user-id-01");
         pullUserData(user);
-        // addNewDoc();
       }
       else {
         console.log("logged out");
         setUserAuth(false);
       }
     });
+
+
   }, []);
 
 
   async function pullUserData(user) { 
-
     let userId = user.uid;
     let userEmail = user.email;
-    console.log(userId);
-    console.log(userEmail);
-    
     let userDocPath = `users/U-${userId}`;
-    console.log(userDocPath);
     const userDoc = doc(db, `${userDocPath}`);
-    console.log(userDoc);
     const userSnap  = await getDoc(userDoc);
-    if (userSnap.exists()) {
-      console.log("Doc Exists");
-      //if valid store league ids in state
+    if (userSnap.exists()) { //if valid store league ids in state
       const userData = userSnap.data();
       // console.log(userData);
       setLeagues(userData.leagues);
+      // setLeagueData();
+      // for (let i=0;i<userData.leagues.length;i++) {
+      //   pullLeagueData(userData.leagues[i].id);
+      // }
     } else {
       console.log("No Doc found");
       //if not valid (Signed Up), populate empty doc w/ uId
@@ -166,26 +161,32 @@ function App() {
 
   }
 
-  async function addNewDoc() {
-    const newDoc = await addDoc(testCollection, {
-      value: "test"
-    });
-    console.log("doc created");
-  }
+  // async function pullLeagueData(leagueIdToPull) {
+  //   console.log("Pull league data",leagueIdToPull);
+  //   let leagueDoc = doc(db,`leagues/${leagueIdToPull}`);
+  //   const leagueSnap  = await getDoc(leagueDoc);
+  //   console.log(leagueSnap.data());
+  //   let newLeagueData = leagueData;
+  //   newLeagueData.push(leagueSnap.data());
+  //   setLeagueData(newLeagueData);
+  // }
+
+  // const pullLeagueData = (leagueIdToPull) => {
+
+
+  // }
 
 
 
   
 
   console.log(userActive);
-
-
-
+  // console.log(leagueData);
   if (userAuth) {
     return (
       <div className="app-layout">
         <div className="new-league-modal-form" id="new-league-modal-form">
-          <NewLeagueModal userActive={userActive} db={db} />
+          <NewLeagueModal userActive={userActive} db={db} setLeagues={setLeagues} />
         </div>
         <Router>
           <div className="left-panel-container">
@@ -196,7 +197,7 @@ function App() {
 
             <div className="nav-body">
 
-              <Link to="/" className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
+              <Link to="/" className="nav-link tab-selected" id="nav-tab" onClick={selectTabDisplay}>
                 <img src={logoIcon}></img>
                 <p>Golf Home</p>
               </Link>
@@ -221,7 +222,7 @@ function App() {
           <div className="center-panel-container">
             <Routes>
                 <Route exact path="/*" element={<Home/>}/>
-                <Route exact path="/league/:id/*" element={<League name={"League One"} />}/>
+                <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} />}/>
             </Routes>
           </div>
         </Router>

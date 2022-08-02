@@ -11,7 +11,7 @@ import WorldRanks from "./WorldRanks";
 function Home(props) {
     const [rankData, setRankData] = useState({rankings: []});
 
-
+    // // Pull Golf Data
     // useEffect(() => {
     //     if (rankData.rankings.length === 0) {
     //         console.log("No Data yet");
@@ -39,7 +39,8 @@ function Home(props) {
             <div className="dual-content-panel">
               <div className="center-panel">
                 <ul className="center-panel-tabs">
-                    <Link to="/schedule" className="center-panel-tab-item">Wold Rankings</Link>
+                    <Link to="" className="center-panel-tab-item">Wold Rankings</Link>
+                    <Link to="/schedule" className="center-panel-tab-item">Tab 1</Link>
                     <Link to="/players" className="center-panel-tab-item">Tab2</Link>
                     <Link to="/news" className="center-panel-tab-item">Tab3</Link>
                 </ul>

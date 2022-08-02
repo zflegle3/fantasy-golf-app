@@ -50,7 +50,7 @@ Main Document Styles
 
 
 
-  box-sizing: red;
+  box-sizing: border-box;
 
 
 
@@ -214,17 +214,22 @@ Main Document Styles
 
 /* Center Panel Styles
 ~~~~~~~~~~~~~~~~~~~~ */
+/* See Tabs for Tab Component Styling */
 .center-panel-container {
-  height: 100vh;
-  display: flex;
-  flex-grow: 1;
-}
-
-.center-panel-content {
+  position: relative;
   height: 100vh;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  overflow: hidden;
+}
+
+.center-panel-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
   padding: 2rem 2rem 2rem 2rem;
 }
 
@@ -240,39 +245,78 @@ Main Document Styles
 }
 
 .dual-content-panel {
+  position: relative;
   flex-grow: 1;
   display: flex;
+  flex-direction: row;
   height: 100%;
+  overflow: hidden;
   /* background-color: aqua; */
 }
 
 
 .center-panel {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
   flex-grow: 1;
   border-radius: 1.5rem;
-  overflow: hidden;
+  /* overflow: hidden; */
   border: 1px solid var(--bkgnd-lt);
   background-color: var(--bkgnd-sub);
 }
 
 .center-panel-tabs {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   padding: 2rem;
+  height: 40px;
 }
 
 .center-panel-tab-item {
-  font-size: 1.5rem;
+  font-size: 2rem;
   padding: 1rem 1.5rem;
+  background-color: var(--bkgnd-drk);
+  border-radius: 1rem;
+  margin-right: 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-sub);
+  text-decoration: none;
+}
+
+.center-panel-tab-item.league-tab-selected {
+  color: var(--text-sub);
+  background-color: var(--bkgnd-lt);
 }
 
 .center-panel-display {
-  font-size: 1.5rem;
-  padding: 1rem 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  overflow: hidden;
 }
 
+/* League Tab Styling
+~~~~~~~~~~~~~~~~~~~ */
+
+.league-display-all {
+  position: relative;
+  /* background-color: #0A8754; */
+  overflow-y: scroll;
+}
+
+.league-display-content {
+  background-color: red;
+  margin: 2rem 2rem 2rem 2rem;
+  height: 500px;
+}
 
 
 

@@ -6,6 +6,7 @@ import {
     getDocs,
     addDoc,
     setDoc,
+    updateDoc,
     collection,
   } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
@@ -31,10 +32,8 @@ function NewLeagueModal(props) {
         let leaguePlayersIn = document.getElementById("new-league-roster-players").value;
         let leagueCutIn = document.getElementById("new-league-roster-cut").value;
         let leagueVarsAll = [leagueNameIn, leagueTeamsIn, leagueFormatIn, leaguePlayersIn, leagueCutIn]
-        console.log(leagueVarsAll);
+        // console.log(leagueVarsAll);
         if (validateModal(leagueVarsAll)) {
-            //write data to database
-            //update state leagues & update display
             createLeagueDoc(leagueVarsAll);
             closeModal();
             document.getElementById("new-league-form").reset();
@@ -44,9 +43,7 @@ function NewLeagueModal(props) {
     } 
 
     async function createLeagueDoc(leagueVarsAll) { 
-        console.log(props.userActive);
-
-        let id = `L-${uuidv4()}`; //format: L-leagueid
+        let newId = `L-${uuidv4()}`; //format: L-leagueid
         let teamArray = [{
             name: "New Team 1",
             manager: `U-${props.userActive.uid}`,
@@ -59,7 +56,7 @@ function NewLeagueModal(props) {
         }
 
         let data = {
-            leagueId: id,
+            leagueId: newId,
             activity: [{
                 item: "Created new League, Test",
                 time: Date(),
@@ -80,37 +77,45 @@ function NewLeagueModal(props) {
             teams: teamArray,
         };
         //create new league doc
-        await setDoc(doc(props.db, "leagues", `${id}`), data);
+        await setDoc(doc(props.db, "leagues", `${newId}`), data);
+        
         //add league info to user doc 
-
+        const userDoc = doc(props.db, `users/U-${props.userActive.uid}`);
+        const userSnap  = await getDoc(userDoc);
+        if (userSnap.exists()) {
+            let userData = userSnap.data();
+            //pull data 
+            let leaguesAll = userData.leagues;
+            //write new data to doc db
+            leaguesAll.push({
+                id: newId,
+                logo: "imgSrc",
+                name: leagueVarsAll[0],
+            });
+            updateDoc(userDoc,{leagues: leaguesAll})
+            //update display with league info
+            props.setLeagues(leaguesAll);
+        } else {
+           console.log("No User Doc found, handle error");
+        }
       }
 
-
-
     const validateModal = (formVals) => {
-        console.log("Validating Data");
         let validValues = true;
         let errorOut = document.getElementById("new-league-error");
-        console.log(errorOut);
-
         if (formVals[0].length < 1) {
-            console.log("Name Error");
             errorOut.textContent = "Please enter a league name";
             return false;
         } else if (formVals[1].length < 1) {
-            console.log("Teams Error");
             errorOut.textContent = "Please select the number of teams";
             return false;
         } else if (formVals[2].length < 1) {
-            console.log("Format Error");
             errorOut.textContent = "Please select a league format";
             return false;
         } else if (formVals[3].length < 1) {
-            console.log("Roster Players Error");
             errorOut.textContent = "Please select the number of golfers per team";
             return false;
         } else if (formVals[4].length < 1) {
-            console.log("Roster Players Error");
             errorOut.textContent = "Please select the team cut";
             validValues = false;
             return false;
