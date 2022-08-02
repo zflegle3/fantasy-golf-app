@@ -4,21 +4,26 @@
 .league-message-console {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: flex-start;
     height: 100%;
-    padding: 1rem;
+    padding: 2rem;
+}
+
+.league-message-header {
+    font-size: 2rem;
+    color: var(--text-main);
+    padding-bottom: 1rem
 }
 /* Form Styles
 ~~~~~~~~~~~~~~~~~~~~~~ */
-.league-message-form {
+#league-message-form {
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
     padding-top: 1rem;
 }
-.league-message-form input{
+#league-message-form input{
     background-color: var(--bkgnd-main);
     color: var(--text-main);
     border: none;
@@ -28,15 +33,15 @@
     flex-grow: 1;
 }
 
-.league-message-form button{
-    margin: 1rem;
+#league-message-form button{
+    margin-left: 1rem;
     background-color: transparent;
     border: none;
     display: flex;
     align-items: center;
 }
 
-.league-message-form button img{
+#league-message-form button img{
   height: 3rem;  
 }
 
@@ -45,10 +50,16 @@
 
 /* Message Styles
 ~~~~~~~~~~~~~~~~~~~~~~ */
+.league-message-list {
+    overflow-y: scroll;
+}
 .league-message-item {
+    width:100%;
+    padding-top: 1.5rem;
 }
 
 .league-message-item-header  {
+    width:100%;
     display: flex;
     justify-content: space-between;
     align-items: center;

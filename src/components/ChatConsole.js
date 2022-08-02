@@ -16,6 +16,7 @@ import {
     where,
     limit,
     collection,
+    orderBy,
   } from "firebase/firestore";
 import { useHistory, useParams } from 'react-router-dom'
 //Components
@@ -32,50 +33,67 @@ function ChatConsole(props) {
     const [LeagueName, setLeagueName]= useState("League Name Temp");
     const [leagueMsgData, setLeagueMsgData] = useState();
 
-    const sendNewMessage = (e) => {
+    const createNewMessage = (e) => {
         e.preventDefault();
-        console.log("Send Message");
+        let messageIn = document.getElementById("message-input");
+        let msgForm = document.getElementById("league-message-form");
+        // console.log(messageIn.value);
+        if (messageIn.value) {
+            sendNewMessage(messageIn.value);
+            msgForm.reset();
+        }
+        setTimeout(() => {
+            console.log("Delayed for 1 second, update messages now");
+            pullMsgData(id);
+        }, "1000")
     }
 
 
     useEffect(() => {
-        console.log(`Pulling Chat Data`);
         pullMsgData(id);
-        console.log(id);
     }, [id]);
 
 
     async function pullMsgData(leagueIdToPull) {
+        // console.log(`Pulling Chat Data`);
         let allMessageData = [];
         const messagesRef = collection(props.db,"messages");
-
         const messagesQuery = query(
             messagesRef,
             where("leagueId", "==", leagueIdToPull),
-            limit(15),
+            orderBy("time"),
         );
-
         const messagesSnap = await getDocs(messagesQuery);
-
-
         messagesSnap.forEach((doc) => {
-            console.log(doc.data());
             allMessageData.push(doc.data());
         })
-        console.log(allMessageData);
-
         setLeagueMsgData(allMessageData);
+    }
+
+    async function sendNewMessage(messageIn) {
+        console.log(messageIn);
+        console.log(typeof messageIn);
+        const messagesRef = collection(props.db,"messages");
+        const newMsgDoc = await addDoc(messagesRef, {
+            leagueId: id,
+            text: messageIn,
+            time: Date(),
+            userName: "zegle456@gmail.com",
+        });
     }
 
 
     if (leagueMsgData) {
         return (
             <div className="league-message-console">
-                <List listType="league-message" dataArray={leagueMsgData} />
-                <form className="league-message-form">
-                    <input className="league-message-input" placeholder="Enter Message"></input>
-                    <button onClick={sendNewMessage}><img className="league-message-input" src={sendIcon} alt="send icon" onClick={sendNewMessage}/></button>
+                <h1 className="league-message-header">League Chat</h1>
+
+                <form id="league-message-form">
+                    <input className="league-message-input" id="message-input" placeholder="Enter Message"></input>
+                    <button onClick={createNewMessage}><img className="league-message-input" src={sendIcon} alt="send icon" /></button>
                 </form>
+
+                <List listType="league-message" dataArray={leagueMsgData} />
             </div>
         );
     } else {

@@ -31,7 +31,7 @@ function List(props) {
         <div key={uuidv4()} className={`${props.listType}-item`}>
             <div className="league-message-item-header">
                 <p>{dataItem.userName}</p>
-                <p>{`${dataItem.time.toDate()}`}</p>
+                <p>{`${dataItem.time}`}</p>
             </div>
             <div className="league-message-item-content">
                 <p>{dataItem.text}</p>
