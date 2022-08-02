@@ -10,6 +10,7 @@
     position: relative;
     /* background-color: #0A8754; */
     overflow-y: scroll;
+    padding-bottom: 3rem;
   }
   
   .league-display-content {
@@ -74,28 +75,55 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 2.5rem;
+    padding: 2.5rem 2.5rem 2.5rem 2.5rem;
     border-radius: 1rem;
     background-color: var(--tab-highlight);
+    margin-top: 1rem;
     margin-bottom: 3rem;
 }
 
 .league-standings-item {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
     padding: 1.5rem 4rem 1.5rem 1rem;
 }
+ 
+.league-standings-item-header {
+    display: flex;
+    flex-direction: column;justify-content: flex-start;
+    white-space: nowrap;
+}
 
-.league-standings-item p:nth-child(1) {
+.league-standings-item-header p:nth-child(1) {
+    color: var(--text-main);
+    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
+}
+.league-standings-item-header p:nth-child(2) {
     color: var(--text-sub);
     font-size: 1.5rem;
 }
-.league-standings-item p:nth-child(2) {
-    color: var(--text-main);
-    font-size: 1.5rem;
+
+.roster-list {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
+
+.roster-item p {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    background-color: var(--button-norm);
+    color: var(--text-hlght);
+    margin-left: 1rem;
+    white-space: nowrap;
+    border-radius: 0.5rem;
+}
+
+
 
   /* Standings Styling
 ~~~~~~~~~~~~~~~~~~~ */

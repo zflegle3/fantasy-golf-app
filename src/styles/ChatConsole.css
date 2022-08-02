@@ -1,0 +1,73 @@
+
+/* General Console Styles
+~~~~~~~~~~~~~~~~~~~~~~ */
+.league-message-console {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    padding: 1rem;
+}
+/* Form Styles
+~~~~~~~~~~~~~~~~~~~~~~ */
+.league-message-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding-top: 1rem;
+}
+.league-message-form input{
+    background-color: var(--bkgnd-main);
+    color: var(--text-main);
+    border: none;
+    border-radius: 1rem;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    font-size: 1.5rem;
+    flex-grow: 1;
+}
+
+.league-message-form button{
+    margin: 1rem;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+}
+
+.league-message-form button img{
+  height: 3rem;  
+}
+
+
+
+
+/* Message Styles
+~~~~~~~~~~~~~~~~~~~~~~ */
+.league-message-item {
+}
+
+.league-message-item-header  {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+
+.league-message-item-header p:nth-child(1) {
+    font-size: 1.5rem;
+    color: var(--text-main);
+    padding-right: 0.5rem
+}
+
+.league-message-item-header p:nth-child(2) {
+    font-size: 1rem;
+    color: var(--text-sub);
+}
+
+.league-message-item-content p {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    padding-left: 0.5rem;
+}

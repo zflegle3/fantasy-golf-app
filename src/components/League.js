@@ -17,6 +17,7 @@ import { useHistory, useParams } from 'react-router-dom'
 //Components
 import Test from "./Test";
 import LeagueTab from "./LeagueTab";
+import ChatConsole from "./ChatConsole";
 //img
 import leagueIcon from "../images/icons/golf-flag-wh.png";
 
@@ -42,8 +43,6 @@ function League(props) {
         console.log("Pull league data",leagueIdToPull);
         let leagueDoc = doc(props.db,`leagues/${leagueIdToPull}`);
         const leagueSnap  = await getDoc(leagueDoc);
-        console.log(leagueSnap.data());
-        console.log(leagueSnap.data().activity);
         setLeagueSelectedData(leagueSnap.data());
         setLeagueName(leagueSnap.data().settings.name)
         return(leagueSnap.data());
@@ -76,7 +75,9 @@ function League(props) {
                         </Routes>
                     </div>
                     </div>
-                    <div className="right-panel"></div>
+                    <div className="right-panel">
+                        <ChatConsole db={props.db}/>
+                    </div>
                 </div>
             </div>
         );

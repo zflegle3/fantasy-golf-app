@@ -44,14 +44,27 @@ function NewLeagueModal(props) {
 
     async function createLeagueDoc(leagueVarsAll) { 
         let newId = `L-${uuidv4()}`; //format: L-leagueid
+
+        let rosterArray=[];
+        for (let i=1; i < leagueVarsAll[3]; i++) {
+            rosterArray.push({
+                playerName: `Player ${i}`,
+                playerid: {i},
+            });
+        }
+
         let teamArray = [{
-            name: "New Team 1",
-            manager: `U-${props.userActive.uid}`,
+            teamnName: "New Team 1",
+            managerId: `U-${props.userActive.uid}`,
+            managerName: "Admin Name Temp",
+            roster: rosterArray,
         }];
         for (let i=1; i < leagueVarsAll[1]; i++) {
             teamArray.push({
-                name: `New Team ${i+1}`,
-                manager: "none",
+                teamName: `New Team ${i+1}`,
+                managerId: "none",
+                managerName: "Manager Name Temp",
+                roster: rosterArray,
             });
         }
 

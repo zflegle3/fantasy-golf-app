@@ -14,6 +14,7 @@ import "./styles/Auth.css";
 import "./styles/Home.css";
 import "./styles/NewLeague.css";
 import './styles/Tabs.css';
+import "./styles/ChatConsole.css"
 
 //images
 import addIcon from "./images/icons/plus-circle-outline-wh.png";

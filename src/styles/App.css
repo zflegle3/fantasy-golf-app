@@ -31,7 +31,6 @@ Main Document Styles
   --bkgnd-main: #0D1F22;
   --bkgnd-sub: #132d2c;
   --bkgnd-lt: #377771;
-
   --bkgnd-drk: #1b403f;
 
   --text-main: #FFF;
@@ -299,7 +298,7 @@ Main Document Styles
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 0rem 3rem 3rem 3rem;
+  padding: 0rem 3rem 0rem 3rem;
   overflow: hidden;
 }
 
