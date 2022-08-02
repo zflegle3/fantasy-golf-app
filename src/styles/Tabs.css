@@ -19,7 +19,6 @@
   }
 
 
-
   /* Settings Styling
 ~~~~~~~~~~~~~~~~~~~ */
 .league-settings-all {
@@ -32,26 +31,23 @@
     /* border: 1px solid red; */
 }
 
-.league-settings-header {
+.league-section-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
 }
 
-.league-settings-header p {
+.league-section-header p {
     color: var(--text-main);
     font-size: 2rem;
     padding-bottom: 2rem;
 }
 
-.league-settings-header img {
+.league-section-header img {
     height: 2rem;
     cursor: pointer;
 }
-
-
-
 
 .league-settings-item {
     display: flex;
@@ -70,11 +66,66 @@
     font-size: 1.5rem;
 }
 
-.league-settings-note {
+
+  /* Standings Styling
+~~~~~~~~~~~~~~~~~~~ */
+
+.league-standings-all {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    background-color: var(--tab-highlight);
+    margin-bottom: 3rem;
+}
+
+.league-standings-item {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 100%;
+    padding: 1.5rem 4rem 1.5rem 1rem;
+}
+
+.league-standings-item p:nth-child(1) {
     color: var(--text-sub);
+    font-size: 1.5rem;
+}
+.league-standings-item p:nth-child(2) {
+    color: var(--text-main);
+    font-size: 1.5rem;
+}
+
+  /* Standings Styling
+~~~~~~~~~~~~~~~~~~~ */
+
+.league-activity-all {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    background-color: var(--tab-highlight);
+    margin-bottom: 3rem;
+}
+
+.league-activity-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.5rem 4rem 1.5rem 1rem;
+}
+
+.league-activity-item p:nth-child(1) {
+    color: var(--text-sub);
+    font-size: 1.5rem;
+    padding-right: 2rem;
+    white-space: nowrap;
+}
+.league-activity-item p:nth-child(2) {
+    color: var(--text-main);
+    font-size: 1.5rem;
 }
 

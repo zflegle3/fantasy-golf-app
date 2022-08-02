@@ -1,5 +1,5 @@
 import List from "./List"
-import settingsIcon from "../images/icons/cog-outline-wh.png";
+
 
 function LeagueSettingsList(props) {
     //props.settingsData
@@ -13,11 +13,7 @@ function LeagueSettingsList(props) {
 
 
     return (
-        <div className="league-settings-all">
-            <div className="league-settings-header">
-                <p>League Settings</p>
-                <img src={settingsIcon} alt="settings icon" onClick={editSettings}></img>
-            </div>
+        <div className="league-settings-list">
             <div className="league-settings-item">
                 <p>Number of Teams</p>
                 <p>{props.settingsData.teamCount}</p>
