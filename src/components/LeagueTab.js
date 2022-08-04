@@ -18,7 +18,7 @@ function LeagueTab(props) {
     }
 
     return (
-        <div className="league-display-all">            
+        <div className="center-panel-content-all">            
             <div className="league-standings-all">
                 <div className="league-section-header">
                     <p>Team Standings</p>

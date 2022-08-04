@@ -36,6 +36,7 @@ Main Document Styles
   --text-main: #FFF;
   --text-sub:  #87BAAB;
   --text-hlght:  #E6E49F;
+  --text-drk:  #0D1F22;
 
   --button-norm: #0A8754;
   --button-hov: #1b403f;
@@ -92,8 +93,6 @@ Main Document Styles
 }
 
 .center-panel-container {
-
-
 }
 
 /* Left Panel Styles
@@ -300,6 +299,13 @@ Main Document Styles
   flex-direction: column;
   padding: 0rem 3rem 0rem 3rem;
   overflow: hidden;
+}
+
+.center-panel-content-all {
+  position: relative;
+  /* background-color: #0A8754; */
+  overflow-y: scroll;
+  padding-bottom: 3rem;
 }
 
 .center-panel-header {

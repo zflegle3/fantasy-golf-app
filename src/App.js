@@ -71,12 +71,8 @@ const auth = getAuth(app);
 
 //Firestore Storage
 const db = getFirestore(app);
-const testDoc = doc(db, "users/user-id-01");
-const testCollection = collection(db, "users");
-
-
-
-
+// const testDoc = doc(db, "users/user-id-01");
+// const testCollection = collection(db, "users");
 
 
 
@@ -85,7 +81,7 @@ function App() {
   const [userAuth, setUserAuth] = useState(false);
   const [userActive, setUserActive] = useState();
   const [leagues, setLeagues] = useState([]);
-  // const [leagueData, setLeagueData] = useState([]);
+  const [scheduleDataAll, setScheduleDataAll] = useState([]);
 
 
   const authSwitchPage = (e) => {
@@ -156,12 +152,11 @@ function App() {
 
   async function pullScheduleData() { 
     //updates schedule data monthly when loaded (reduce frequency?)
-    
-    //pull timestamp from 2022 schedule doc
-    const scheduleDoc = doc(db, "schedules/test-schedule");
+    const scheduleDoc = doc(db, "schedules/2022-schedule");
     const scheduleSnap = await getDoc(scheduleDoc);
     if (scheduleSnap.exists()) {
       const scheduleData = scheduleSnap.data();
+      setScheduleDataAll(scheduleData.schedule);
       const myTimestamp = Timestamp.fromDate(new Date()); //current timestamp
       let daysSinceUpdate = (myTimestamp - scheduleData.lastUpdate)/86400;
       if (daysSinceUpdate > 30) { //if last update more than 30days prior pull new data and populate
@@ -234,7 +229,7 @@ function App() {
           </div>
           <div className="center-panel-container">
             <Routes>
-                <Route exact path="/*" element={<Home/>}/>
+                <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll}/>}/>
                 <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} />}/>
             </Routes>
           </div>

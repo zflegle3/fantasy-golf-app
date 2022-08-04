@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Test from "./Test";
 import WorldRanks from "./WorldRanks";
+import ScheduleTab from "./ScheduleTab";
 
 
 function Home(props) {
@@ -39,16 +40,16 @@ function Home(props) {
             <div className="dual-content-panel">
               <div className="center-panel">
                 <ul className="center-panel-tabs">
-                    <Link to="" className="center-panel-tab-item">Wold Rankings</Link>
-                    <Link to="/schedule" className="center-panel-tab-item">Tab 1</Link>
-                    <Link to="/players" className="center-panel-tab-item">Tab2</Link>
+                    <Link to="" className="center-panel-tab-item">Happening Now</Link>
+                    <Link to="/world-rankings" className="center-panel-tab-item">Tab 1</Link>
+                    <Link to="/fedex-rankings" className="center-panel-tab-item">Tab2</Link>
                     <Link to="/news" className="center-panel-tab-item">Tab3</Link>
                 </ul>
                 <div className="center-panel-display">
                     <Routes>
-                        <Route exact path="" element={<WorldRanks topHundred={rankData.rankings}/>}/>
-                        <Route exact path="schedule" element={<Test test={"Tab 1 test, Home"}/>}/>
-                        <Route exact path="players" element={<Test test={"Tab 2 test, Home"}/>}/>
+                        <Route exact path="" element={<ScheduleTab scheduleDataAll={props.scheduleDataAll}/>}/>
+                        <Route exact path="world-rankings" element={<WorldRanks topHundred={rankData.rankings}/>}/>   
+                        <Route exact path="fedex-rankings" element={<Test test={"Tab 2 test, Home"}/>}/>
                         <Route exact path="news" element={<Test test={"Tab 3 test, Home"}/>}/>
                     </Routes>
                 </div>

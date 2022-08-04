@@ -1,3 +1,115 @@
+/* Schedule Styling
+~~~~~~~~~~~~~~~~~~~ */
+.schedule-upcoming-all {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+    border-radius: 1rem;
+    background-color: var(--tab-highlight);
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+}
+
+.schedule-upcoming-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.schedule-upcoming-header p {
+    color: var(--text-main);
+    font-size: 2rem;
+    padding-bottom: 2rem;
+}
+
+.schedule-upcoming-header img {
+    height: 2rem;
+    cursor: pointer;
+}
+
+
+.schedule-item {
+    display: grid;
+    grid-template-columns: [one] 400px [two] 1fr [three] 1fr [four] 1fr;
+    column-gap: 1rem;
+    width: 100%;
+    padding: 1rem 2rem 0.5rem 2rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--misc);
+
+}
+
+
+.schedule-item div{
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    white-space: nowrap;
+}
+
+.schedule-item div:nth-child(-n+2){
+    justify-self: left;
+}
+
+.schedule-item-dates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    white-space: nowrap;
+}
+
+.schedule-item-dates p {
+    color: var(--text-sub);
+    font-size: 1.2rem;
+    padding-bottom: 0.5rem;
+}
+
+.schedule-item-content p:nth-child(1) {
+    color: var(--text-drk);
+    font-size: 1.5rem;
+}
+
+.schedule-item-content p:nth-child(2) {
+    color: var(--text-sub);
+    font-size: 1.2rem;
+}
+
+.roster-list {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.roster-item p {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    background-color: var(--button-norm);
+    color: var(--text-hlght);
+    margin-left: 1rem;
+    white-space: nowrap;
+    border-radius: 0.5rem;
+}
+
+
+/* Inactive Schedule item Styling */
+.inactive-tournament {
+    background-color: grey;
+    
+}
+
+.inactive-tournament div:nth-child(1) p {
+    color: black
+}
+
+/* Golf Rankings Styling
+~~~~~~~~~~~~~~~~~~~ */
 .world-rankings-display {
     display:flex;
     flex-direction: column;
