@@ -8,6 +8,7 @@ import ScheduleList from "./ScheduleList";
 function ScheduleTab(props) {
     //props.scheduleDataAll
     //props.leaderboardLive
+    // const [scheduleDataAll, setScheduleDataAll] = useState(props.scheduleDataAll);
 
     console.log(props.scheduleDataAll);
 

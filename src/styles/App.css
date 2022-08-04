@@ -33,10 +33,13 @@ Main Document Styles
   --bkgnd-lt: #377771;
   --bkgnd-drk: #1b403f;
 
+
   --text-main: #FFF;
   --text-sub:  #87BAAB;
   --text-hlght:  #E6E49F;
   --text-drk:  #0D1F22;
+  --text-drk-alt:  #0b5556;
+  --text-grey: #8BAAAD;
 
   --button-norm: #0A8754;
   --button-hov: #1b403f;

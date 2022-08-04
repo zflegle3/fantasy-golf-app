@@ -30,18 +30,18 @@
 }
 
 
+
+/* Schedule Item Container/Common Styles */
 .schedule-item {
     display: grid;
-    grid-template-columns: [one] 400px [two] 1fr [three] 1fr [four] 1fr;
+    grid-template-columns: [one] 2fr [two] 1fr [three] 1fr [four] 1fr [five] 1fr;
     column-gap: 1rem;
     width: 100%;
     padding: 1rem 2rem 0.5rem 2rem;
     margin: 1rem;
     border-radius: 0.5rem;
     background-color: var(--misc);
-
 }
-
 
 .schedule-item div{
     justify-self: center;
@@ -64,49 +64,88 @@
     white-space: nowrap;
 }
 
-.schedule-item-dates p {
-    color: var(--text-sub);
-    font-size: 1.2rem;
+.schedule-item-content p:nth-child(1) {
+    font-size: 1.5rem;
+
     padding-bottom: 0.5rem;
 }
 
-.schedule-item-content p:nth-child(1) {
-    color: var(--text-drk);
-    font-size: 1.5rem;
-}
-
 .schedule-item-content p:nth-child(2) {
-    color: var(--text-sub);
     font-size: 1.2rem;
 }
 
-.roster-list {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.schedule-item-dates p {
+    font-size: 1.2rem;
+    padding-bottom: 0.5rem;
+
 }
 
-.roster-item p {
+.schedule-item-points p {
     font-size: 1.5rem;
-    padding: 0.5rem;
-    background-color: var(--button-norm);
-    color: var(--text-hlght);
-    margin-left: 1rem;
-    white-space: nowrap;
-    border-radius: 0.5rem;
+
+}
+
+.schedule-item-purse p {
+    font-size: 1.5rem;
+}
+
+/* Schedule Item Plain Styles */
+
+.schedule-item p {
+    color: var(--text-drk);
+}
+
+.schedule-item-content p:nth-child(1) {
+    color: var(--text-main);
 }
 
 
-/* Inactive Schedule item Styling */
+
+
+
+
+/* Inactive Schedule Item Styling */
 .inactive-tournament {
-    background-color: grey;
-    
+    background-color: var(--bkgnd-main); 
+}
+.inactive-tournament p {
+    color: var(--text-grey);
 }
 
-.inactive-tournament div:nth-child(1) p {
-    color: black
+
+
+/* Active Schedule Item Styling */
+.active-tournament {
+    background-color: var(--text-hlght);
 }
+
+.active-tournament p {
+    color: var(--text-drk-alt);
+}
+
+.active-tournament .schedule-item-content p:nth-child(1) {
+    color: var(--text-drk);
+}
+
+.schedule-item-status p {
+    color: var(--error-red);
+    font-size: 1.5rem;
+    visibility: hidden;
+}
+
+.active-tournament .schedule-item-status p {
+    visibility: visible;
+}
+
+
+
+
+
+
+
+
+
+
 
 /* Golf Rankings Styling
 ~~~~~~~~~~~~~~~~~~~ */

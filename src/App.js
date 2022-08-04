@@ -155,6 +155,7 @@ function App() {
     const scheduleDoc = doc(db, "schedules/2022-schedule");
     const scheduleSnap = await getDoc(scheduleDoc);
     if (scheduleSnap.exists()) {
+      console.log("Setting Schedule Data");
       const scheduleData = scheduleSnap.data();
       setScheduleDataAll(scheduleData.schedule);
       const myTimestamp = Timestamp.fromDate(new Date()); //current timestamp
