@@ -27,7 +27,7 @@ function List(props) {
             </div>
         );
     } else if (props.listType === "league-message") {
-        listItemsAll = props.dataArray.map((dataItem) =>
+        let listItemsTemp = props.dataArray.map((dataItem) =>
         <div key={uuidv4()} className={`${props.listType}-item`}>
             <div className="league-message-item-header">
                 <p>{dataItem.userName}</p>
@@ -38,6 +38,7 @@ function List(props) {
             </div>
         </div>
         );
+        listItemsAll= listItemsTemp.reverse();
     }
 
     return (

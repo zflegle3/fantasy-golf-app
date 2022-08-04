@@ -42,6 +42,7 @@ import {
   addDoc,
   setDoc,
   collection,
+  Timestamp,
 } from "firebase/firestore";
 import { 
   getAuth,
@@ -58,13 +59,16 @@ const firebaseConfig = {
   appId: "1:98644773374:web:79405b5ea7830b34ba58af",
   measurementId: "G-MRB45784YQ"
 };
+
 //Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
 //Authentication
 const auth = getAuth(app);
 // connectAuthEmulator(auth, "http://localhost:9099");
 //firebase emulators:start --only auth
+
 //Firestore Storage
 const db = getFirestore(app);
 const testDoc = doc(db, "users/user-id-01");
@@ -82,7 +86,6 @@ function App() {
   const [userActive, setUserActive] = useState();
   const [leagues, setLeagues] = useState([]);
   // const [leagueData, setLeagueData] = useState([]);
-
 
 
   const authSwitchPage = (e) => {
@@ -112,9 +115,6 @@ function App() {
     console.log("New League");
     let newLeagueModal = document.getElementById("new-league-modal-form");
     newLeagueModal.classList = "visable";
-    // let newLeagueUserIns = document.querySelectorAll("#new-league-input");
-    // console.log.log(newLeagueUserIns);
-    //
   }
 
 
@@ -128,14 +128,13 @@ function App() {
         setUserAuth(true);
         setUserActive(user);
         pullUserData(user);
+        pullScheduleData();
       }
       else {
         console.log("logged out");
         setUserAuth(false);
       }
     });
-
-
   }, []);
 
 
@@ -147,35 +146,48 @@ function App() {
     const userSnap  = await getDoc(userDoc);
     if (userSnap.exists()) { //if valid store league ids in state
       const userData = userSnap.data();
-      // console.log(userData);
       setLeagues(userData.leagues);
-      // setLeagueData();
-      // for (let i=0;i<userData.leagues.length;i++) {
-      //   pullLeagueData(userData.leagues[i].id);
-      // }
-    } else {
+    } else {//if not valid (Signed Up), populate empty doc w/ uId
       console.log("No Doc found");
-      //if not valid (Signed Up), populate empty doc w/ uId
-      // addNewDoc(userDocPath)
       await setDoc(doc(db, "users", `U-${userId}`), {email: `${userEmail}`,leagues: []});
     }
 
   }
 
-  // async function pullLeagueData(leagueIdToPull) {
-  //   console.log("Pull league data",leagueIdToPull);
-  //   let leagueDoc = doc(db,`leagues/${leagueIdToPull}`);
-  //   const leagueSnap  = await getDoc(leagueDoc);
-  //   console.log(leagueSnap.data());
-  //   let newLeagueData = leagueData;
-  //   newLeagueData.push(leagueSnap.data());
-  //   setLeagueData(newLeagueData);
-  // }
-
-  // const pullLeagueData = (leagueIdToPull) => {
-
-
-  // }
+  async function pullScheduleData() { 
+    //updates schedule data monthly when loaded (reduce frequency?)
+    
+    //pull timestamp from 2022 schedule doc
+    const scheduleDoc = doc(db, "schedules/test-schedule");
+    const scheduleSnap = await getDoc(scheduleDoc);
+    if (scheduleSnap.exists()) {
+      const scheduleData = scheduleSnap.data();
+      const myTimestamp = Timestamp.fromDate(new Date()); //current timestamp
+      let daysSinceUpdate = (myTimestamp - scheduleData.lastUpdate)/86400;
+      if (daysSinceUpdate > 30) { //if last update more than 30days prior pull new data and populate
+        console.log("Updating schedule data.")
+        const options = {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': '8a8c03b674msh32cd92a7c6fbf58p140730jsn7fb9bc80d982',
+            'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com',
+        }};
+        const response = await fetch('https://live-golf-data.p.rapidapi.com/schedule?year=2022', options);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const newData = await response.json();
+        setDoc(scheduleDoc, {
+          lastUpdate: Timestamp.fromDate(new Date()),
+          schedule: newData.schedule,
+        });
+      } else {
+        console.log("Schedule Data up to date");
+      }
+    } else {
+      console.log("Schedule Updaing Error, no schedule doc found.");
+    }
+  }
 
 
 

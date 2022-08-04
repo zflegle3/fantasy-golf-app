@@ -42,7 +42,7 @@
 }
 
 #league-message-form button img{
-  height: 3rem;  
+  height: 2.5rem;  
 }
 
 
@@ -52,6 +52,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~ */
 .league-message-list {
     overflow-y: scroll;
+    height: 100%;
 }
 .league-message-item {
     width:100%;
@@ -63,7 +64,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1rem;
 }
 
 .league-message-item-header p:nth-child(1) {
@@ -79,6 +80,6 @@
 
 .league-message-item-content p {
     font-size: 1.25rem;
-    color: var(--text-main);
+    color: var(--text-hlght);
     padding-left: 0.5rem;
 }
