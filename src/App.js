@@ -76,12 +76,19 @@ const db = getFirestore(app);
 
 
 
+
+
+
+
 function App() {
   const [pageSelect, setPageSelect] = useState("login");
   const [userAuth, setUserAuth] = useState(false);
   const [userActive, setUserActive] = useState();
+  //Data passed to components
   const [leagues, setLeagues] = useState([]);
-  const [scheduleDataAll, setScheduleDataAll] = useState([]);
+  const [scheduleDataAll, setScheduleDataAll] = useState();
+  const [leaderboardData, setLeaderboardData] = useState();
+  const [leaderboardInfo, setLeaderboardInfo] = useState();
 
 
   const authSwitchPage = (e) => {
@@ -155,9 +162,10 @@ function App() {
     const scheduleDoc = doc(db, "schedules/2022-schedule");
     const scheduleSnap = await getDoc(scheduleDoc);
     if (scheduleSnap.exists()) {
-      console.log("Setting Schedule Data");
       const scheduleData = scheduleSnap.data();
+      console.log("Setting Schedule Data",);
       setScheduleDataAll(scheduleData.schedule);
+      getNextEvent(scheduleData.schedule)
       const myTimestamp = Timestamp.fromDate(new Date()); //current timestamp
       let daysSinceUpdate = (myTimestamp - scheduleData.lastUpdate)/86400;
       if (daysSinceUpdate > 30) { //if last update more than 30days prior pull new data and populate
@@ -185,58 +193,110 @@ function App() {
     }
   }
 
+  const getNextEvent = (latestSchedule) => { 
+  //determines next tournament based on schedule data in database
+    console.log(latestSchedule);
+    let upcomingEvents = latestSchedule.filter(event => Date.now()-event.date.end.$date.$numberLong < 0);
+    let nextEvent = upcomingEvents[0];
+    setLeaderboardInfo(nextEvent);
+    pullLeaderboardData(nextEvent.tournId);
+  }
 
 
-  
 
-  console.log(userActive);
-  // console.log(leagueData);
+  async function pullLeaderboardData(nextTournId) { 
+    //updates Leaderboard data hourly(UPDATE FREQUENCY)
+    const leaderboardDoc = doc(db, "leaderboard-live/example-leaderboard");
+    const leaderboardSnap = await getDoc(leaderboardDoc);
+    if (leaderboardSnap.exists()) {
+      const leaderboardData = leaderboardSnap.data();
+      console.log("Setting Live Leaderboard Data");
+      setLeaderboardData(leaderboardData.leaderboard);
+      const myTimestamp = Timestamp.fromDate(new Date()); //current timestamp
+      let daysSinceUpdate = (myTimestamp - leaderboardData.lastUpdate)/86400;
+      if (daysSinceUpdate > 30) { //CURRENTLY SET TO 30 DAYS, UPDATE TO HOURLY ONCE WORKING
+        console.log("Updating Leaderboard Data")
+        const options = {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': '8a8c03b674msh32cd92a7c6fbf58p140730jsn7fb9bc80d982',
+            'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com'
+          }
+        };
+        const response = await fetch(`https://live-golf-data.p.rapidapi.com/leaderboard?tournId=${nextTournId}&year=2022`, options);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const newData = await response.json();
+        console.log(newData);
+        setDoc(leaderboardDoc, {
+          lastUpdate: Timestamp.fromDate(new Date()),
+          leaderboard: newData,
+        });
+      } else {
+        console.log("Leaderboard data up to date");
+      }
+    } else {
+      console.log("Leaderboard Updaing Error, no leaderboard doc found.");
+    }
+  }
+
+
+
   if (userAuth) {
-    return (
-      <div className="app-layout">
-        <div className="new-league-modal-form" id="new-league-modal-form">
-          <NewLeagueModal userActive={userActive} db={db} setLeagues={setLeagues} />
+    if (leagues && scheduleDataAll && leaderboardData && leaderboardInfo) {
+    //added conditional to check data is loaded before rendering App components to solve props bug
+      return (
+        <div className="app-layout">
+          <div className="new-league-modal-form" id="new-league-modal-form">
+            <NewLeagueModal userActive={userActive} db={db} setLeagues={setLeagues} />
+          </div>
+          <Router>
+            <div className="left-panel-container">
+              <div className="nav-header">
+                  <img src={logoIcon}></img>
+                  <h1 className="header-logo">Site Name</h1>
+              </div>
+  
+              <div className="nav-body">
+  
+                <Link to="/" className="nav-link tab-selected" id="nav-tab" onClick={selectTabDisplay}>
+                  <img src={logoIcon}></img>
+                  <p>Golf Home</p>
+                </Link>
+  
+                <div className="nav-link " id="new-league" onClick={createNewLeague}>
+                  <p>New League</p>
+                  <img src={addIcon}></img>
+                </div>
+  
+                <LeagueLinks leagues={leagues} selectTabDisplay={selectTabDisplay}/>
+              </div>
+  
+              <div className="nav-footer"> 
+                <img src={profileIcon}></img>
+                <div className="profile-container">
+                  <p>{userActive.email}</p>
+                  <button onClick={userLogOut}> Log Out</button>
+                </div>
+                <img src={settingsIcon}></img>
+              </div>
+            </div>
+            <div className="center-panel-container">
+              <Routes>
+                  <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} leaderboardInfo={leaderboardInfo} />}/>
+                  <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} />}/>
+              </Routes>
+            </div>
+          </Router>
         </div>
-        <Router>
-          <div className="left-panel-container">
-            <div className="nav-header">
-                <img src={logoIcon}></img>
-                <h1 className="header-logo">Site Name</h1>
-            </div>
-
-            <div className="nav-body">
-
-              <Link to="/" className="nav-link tab-selected" id="nav-tab" onClick={selectTabDisplay}>
-                <img src={logoIcon}></img>
-                <p>Golf Home</p>
-              </Link>
-
-              <div className="nav-link " id="new-league" onClick={createNewLeague}>
-                <p>New League</p>
-                <img src={addIcon}></img>
-              </div>
-
-              <LeagueLinks leagues={leagues} selectTabDisplay={selectTabDisplay}/>
-            </div>
-
-            <div className="nav-footer"> 
-              <img src={profileIcon}></img>
-              <div className="profile-container">
-                <p>{userActive.email}</p>
-                <button onClick={userLogOut}> Log Out</button>
-              </div>
-              <img src={settingsIcon}></img>
-            </div>
-          </div>
-          <div className="center-panel-container">
-            <Routes>
-                <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll}/>}/>
-                <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} />}/>
-            </Routes>
-          </div>
-        </Router>
-      </div>
-    );
+      );
+    } else {
+      return(
+        <div>Loading</div>
+      )
+    }
+    
   } else {
     switch (pageSelect) {
       case "login":

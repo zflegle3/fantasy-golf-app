@@ -35,7 +35,6 @@ function League(props) {
         console.log(`Pulling League Data,`);
         let data = pullLeagueData(id);
         console.log(data);
-
     }, [id]);
 
 

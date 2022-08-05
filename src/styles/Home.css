@@ -1,3 +1,48 @@
+/* Leaderboard Styling
+~~~~~~~~~~~~~~~~~~~ */
+.leaderboard-live-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.leaderboard-live-header div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+
+.leaderboard-live-header div p:nth-child(1) {
+    font-size: 2.5rem;
+    color: var(--text-main);
+}
+
+.leaderboard-live-header div p:nth-child(2) {
+    font-size: 1.5rem;
+    color: var(--text-hlght);
+}
+
+.leaderboard-live-header p:nth-child(2) {
+    font-size: 1.5rem;
+    color: var(--text-sub);
+    padding-bottom: 0.5rem;
+}
+
+.leaderboard-live-header p:nth-child(3) {
+    font-size: 1.5rem;
+    color: var(--text-sub);
+}
+
+.leaderboard-item {
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+
 /* Schedule Styling
 ~~~~~~~~~~~~~~~~~~~ */
 .schedule-upcoming-all {
@@ -29,12 +74,10 @@
     cursor: pointer;
 }
 
-
-
 /* Schedule Item Container/Common Styles */
 .schedule-item {
     display: grid;
-    grid-template-columns: [one] 2fr [two] 1fr [three] 1fr [four] 1fr [five] 1fr;
+    grid-template-columns: [one] 300px [two] 1fr [three] 1fr [four] 1fr [five] 1fr;
     column-gap: 1rem;
     width: 100%;
     padding: 1rem 2rem 0.5rem 2rem;
@@ -52,7 +95,7 @@
     white-space: nowrap;
 }
 
-.schedule-item div:nth-child(-n+2){
+.schedule-item div:nth-child(1){
     justify-self: left;
 }
 
@@ -126,6 +169,7 @@
 .active-tournament .schedule-item-content p:nth-child(1) {
     color: var(--text-drk);
 }
+
 
 .schedule-item-status p {
     color: var(--error-red);

@@ -7,7 +7,6 @@ function ScheduleList(props) {
     const [scheduleArray, setScheduleArray] = useState([]);
 
     const checkActive = (dataIn) => {
-        console.log(Date.now()-dataIn.date.end.$date.$numberLong);
         if (Date.now()-dataIn.date.end.$date.$numberLong > 0) {
             return "schedule-item inactive-tournament";
         } else if (Date.now()-dataIn.date.end.$date.$numberLong > -432000000) {
@@ -22,7 +21,6 @@ function ScheduleList(props) {
         for (let i=0; i<tempScheduleArray.length;i++) {
             //replace missing purse
             if (!tempScheduleArray[i].purse) {
-                console.log(tempScheduleArray[i])
                 tempScheduleArray[i].purse = {
                     $numberInt: "Unavailable"
                 }
@@ -36,18 +34,6 @@ function ScheduleList(props) {
         }
         setScheduleArray(tempScheduleArray);
       }, [props.dataArray]);
-    
-
-
-
-    // let test = props.dataArray[0];
-    // if (test) {
-    //     console.log(test);
-    //     // let testDate = test.purse);
-    //     // console.log(testDate.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric", hour:"numeric"}));
-    //     console.log(Object.keys(test.purse)[0]);
-    // }
-
 
 
     let listItemsAll = scheduleArray.map((dataItem) => (
