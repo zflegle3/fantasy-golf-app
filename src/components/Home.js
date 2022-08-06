@@ -37,40 +37,30 @@ function Home(props) {
     // }, []);
 
 
-    if (props.scheduleDataAll, props.leaderboardData, props.leaderboardInfo) {
-        console.log("All Home data loaded");
-        // console.log(props.scheduleDataAll);
-        // console.log(props.leaderboardData);
-        // console.log(props.leaderboardInfo);
-        return (
-            <div className="center-panel-content">
-                <div className="center-panel-header">HOME</div>
-                <div className="dual-content-panel">
-                  <div className="center-panel">
-                    <ul className="center-panel-tabs">
-                        <Link to="" className="center-panel-tab-item">Happening Now</Link>
-                        <Link to="/world-rankings" className="center-panel-tab-item">Tab 1</Link>
-                        <Link to="/fedex-rankings" className="center-panel-tab-item">Tab2</Link>
-                        <Link to="/news" className="center-panel-tab-item">Tab3</Link>
-                    </ul>
-                    <div className="center-panel-display">
-                        <Routes>
-                            <Route exact path="" element={<ScheduleTab scheduleDataAll={props.scheduleDataAll} leaderboardData={props.leaderboardData} leaderboardInfo={props.leaderboardInfo}/>}/>
-                            <Route exact path="world-rankings" element={<WorldRanks topHundred={rankData.rankings}/>}/>   
-                            <Route exact path="fedex-rankings" element={<Test test={"Tab 2 test, Home"}/>}/>
-                            <Route exact path="news" element={<Test test={"Tab 3 test, Home"}/>}/>
-                        </Routes>
-                    </div>
-                  </div>
-                  <div className="right-panel"></div>
+    return (
+        <div className="center-panel-content">
+            <div className="center-panel-header">HOME</div>
+            <div className="dual-content-panel">
+                <div className="center-panel">
+                <ul className="center-panel-tabs">
+                    <Link to="" className="center-panel-tab-item">Happening Now</Link>
+                    <Link to="/world-rankings" className="center-panel-tab-item">Tab 1</Link>
+                    <Link to="/fedex-rankings" className="center-panel-tab-item">Tab2</Link>
+                    <Link to="/news" className="center-panel-tab-item">Tab3</Link>
+                </ul>
+                <div className="center-panel-display">
+                    <Routes>
+                        <Route exact path="" element={<ScheduleTab scheduleDataAll={props.scheduleDataAll} leaderboardData={props.leaderboardData} leaderboardInfo={props.leaderboardInfo}/>}/>
+                        <Route exact path="world-rankings" element={<WorldRanks topHundred={rankData.rankings}/>}/>   
+                        <Route exact path="fedex-rankings" element={<Test test={"Tab 2 test, Home"}/>}/>
+                        <Route exact path="news" element={<Test test={"Tab 3 test, Home"}/>}/>
+                    </Routes>
                 </div>
+                </div>
+                <div className="right-panel"></div>
             </div>
-        );
-    } else {
-        return (
-            <div>Loading</div>
-        )
-    }
+        </div>
+    );
 
 
 

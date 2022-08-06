@@ -35,9 +35,28 @@
     color: var(--text-sub);
 }
 
+.leaderboard-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1rem 0rem 0.5rem 0rem;
+}
+
+.leaderboard-header P {
+    font-size: 1.5rem;
+}
+
 .leaderboard-item {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    border-top: 1px solid var(--bkgnd-lt);
+}
+
+.leaderboard-item p {
+    font-size: 1.2rem;
+    padding: 0.5rem 0rem 0.5rem 0rem;
+    color: var(--text-main)
 }
 
 

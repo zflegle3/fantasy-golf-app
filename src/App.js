@@ -127,7 +127,7 @@ function App() {
       console.log(user);
       if (user) { // User is signed in.
         console.log("logged in")
-        console.log(user.uid);
+        console.log("User:",user.uid);
         setUserAuth(true);
         setUserActive(user);
         pullUserData(user);
@@ -195,7 +195,7 @@ function App() {
 
   const getNextEvent = (latestSchedule) => { 
   //determines next tournament based on schedule data in database
-    console.log(latestSchedule);
+    // console.log(latestSchedule);
     let upcomingEvents = latestSchedule.filter(event => Date.now()-event.date.end.$date.$numberLong < 0);
     let nextEvent = upcomingEvents[0];
     setLeaderboardInfo(nextEvent);
