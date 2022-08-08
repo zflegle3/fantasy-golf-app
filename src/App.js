@@ -15,6 +15,7 @@ import "./styles/Home.css";
 import "./styles/NewLeague.css";
 import './styles/Tabs.css';
 import "./styles/ChatConsole.css"
+import "./styles/EditSettings.css"
 
 //images
 import addIcon from "./images/icons/plus-circle-outline-wh.png";
@@ -29,7 +30,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import League from "./components/League";
 import LeagueLinks from "./components/LeagueLinks";
-import NewLeagueModal from "./components/NewLeague"
+import NewLeagueModal from "./components/NewLeague";
 
 //Firebase
 import { initializeApp } from "firebase/app";
@@ -242,7 +243,7 @@ function App() {
   }
 
 
-
+  console.log(userActive);
   if (userAuth) {
     if (leagues && scheduleDataAll && leaderboardData && leaderboardInfo) {
     //added conditional to check data is loaded before rendering App components to solve props bug
@@ -285,7 +286,7 @@ function App() {
             <div className="center-panel-container">
               <Routes>
                   <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} leaderboardInfo={leaderboardInfo} />}/>
-                  <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} />}/>
+                  <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} />}/>
               </Routes>
             </div>
           </Router>

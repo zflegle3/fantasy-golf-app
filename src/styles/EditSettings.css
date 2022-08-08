@@ -1,0 +1,85 @@
+/* Display Settings
+~~~~~~~~~~~~~~~~~~~~ */
+.edit-settings-modal-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(155, 155, 155, 0.55);
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#edit-settings-modal-container.visable {
+    visibility: visible;
+    height: 100%;
+    width: 100%;
+}
+
+#edit-settings-modal-form {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    background-color: var(--bkgnd-drk);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+    border-radius: 1rem;
+    box-shadow: 0.3rem 0.3rem 15px var(--shadow-main);
+}
+
+.edit-settings-modal-tabs {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 2rem 1rem 2rem 2rem;
+    border-right: 1px solid var(--text-hlght);
+
+}
+
+.edit-settings-modal-tabs p {
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+
+
+
+}
+
+.edit-settings-form {
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 2rem 2rem 2rem 1rem;
+}
+
+.edit-settings-form-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-settings-form-header p {
+    font-size: 1.5rem;
+}
+
+.edit-settings-form-header p:nth-child(2) {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.4rem;
+}
+
+.edit-settings-form-header p:nth-child(2):hover {
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: var(--bkgnd-main);
+}

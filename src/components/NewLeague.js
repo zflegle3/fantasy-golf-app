@@ -55,7 +55,7 @@ function NewLeagueModal(props) {
 
         let teamArray = [{
             teamnName: "New Team 1",
-            managerId: `U-${props.userActive.uid}`,
+            managerId: props.userActive.uid,
             managerName: "Admin Name Temp",
             roster: rosterArray,
         }];
@@ -73,10 +73,10 @@ function NewLeagueModal(props) {
             activity: [{
                 item: "Created new League, Test",
                 time: Date(),
-                user: `U-${props.userActive.uid}`,
+                user: props.userActive.uid,
             }],
             settings: {
-                admin: `U-${props.userActive.uid}`,
+                admin: props.userActive.uid,
                 name: leagueVarsAll[0],
                 scoring: {
                     missCutScore: -1,

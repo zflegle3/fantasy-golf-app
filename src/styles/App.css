@@ -33,6 +33,8 @@ Main Document Styles
   --bkgnd-lt: #377771;
   --bkgnd-drk: #1b403f;
 
+  --shadow-main: #18202f;
+
 
   --text-main: #FFF;
   --text-sub:  #87BAAB;
@@ -217,7 +219,7 @@ Main Document Styles
 ~~~~~~~~~~~~~~~~~~~~ */
 /* See Tabs for Tab Component Styling */
 .center-panel-container {
-  position: relative;
+  /* position: relative; */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -226,7 +228,7 @@ Main Document Styles
 }
 
 .center-panel-content {
-  position: relative;
+  /* position: relative; */
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -243,6 +245,17 @@ Main Document Styles
   flex-grow: 1;
   align-items: center;
   color: var(--text-main)
+}
+
+.center-panel-header div {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+  align-items: center;
+}
+.center-panel-header div img {
+  height: 3.5rem;
+  cursor: pointer;
 }
 
 .dual-content-panel {
