@@ -49,7 +49,7 @@ function NewLeagueModal(props) {
         for (let i=1; i < leagueVarsAll[3]; i++) {
             rosterArray.push({
                 playerName: `Player ${i}`,
-                playerid: {i},
+                playerId: i,
             });
         }
 

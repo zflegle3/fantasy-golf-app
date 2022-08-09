@@ -100,7 +100,7 @@ function League(props) {
                     </div>
                 </div>
                 <div className="edit-settings-modal-container" id="edit-settings-modal-container">
-                    <EditSettingsModal db={props.db} leagueSettings={leagueSelectData} userInfo={props.userInfo} closeSettingsModal={closeSettingsModal}/>
+                    <EditSettingsModal db={props.db} leagueSettings={leagueSelectData} userInfo={props.userInfo} closeSettingsModal={closeSettingsModal} pullLeagueData={pullLeagueData}/>
                 </div>
             </div>
         );
