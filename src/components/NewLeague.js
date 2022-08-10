@@ -32,7 +32,6 @@ function NewLeagueModal(props) {
         let leaguePlayersIn = document.getElementById("new-league-roster-players").value;
         let leagueCutIn = document.getElementById("new-league-roster-cut").value;
         let leagueVarsAll = [leagueNameIn, leagueTeamsIn, leagueFormatIn, leaguePlayersIn, leagueCutIn]
-        // console.log(leagueVarsAll);
         if (validateModal(leagueVarsAll)) {
             createLeagueDoc(leagueVarsAll);
             closeModal();
@@ -43,8 +42,9 @@ function NewLeagueModal(props) {
     } 
 
     async function createLeagueDoc(leagueVarsAll) { 
-        let newId = `L-${uuidv4()}`; //format: L-leagueid
-
+        //create league ID, format: L-leagueid
+        let newId = `L-${uuidv4()}`; 
+        //create rosters per player qty
         let rosterArray=[];
         for (let i=1; i < leagueVarsAll[3]; i++) {
             rosterArray.push({
@@ -52,7 +52,7 @@ function NewLeagueModal(props) {
                 playerId: i,
             });
         }
-
+        //create teams per team qty
         let teamArray = [{
             teamnName: "New Team 1",
             managerId: props.userActive.uid,
@@ -67,6 +67,11 @@ function NewLeagueModal(props) {
                 roster: rosterArray,
             });
         }
+        //create league schedule data per current date & 2022 schedule
+        //Update later to LM selecting schedule
+        const scheduleData = await createSchedule();
+        console.log(scheduleData);
+
 
         let data = {
             leagueId: newId,
@@ -75,6 +80,7 @@ function NewLeagueModal(props) {
                 time: Date(),
                 user: props.userActive.uid,
             }],
+            schedule: scheduleData,
             settings: {
                 admin: props.userActive.uid,
                 name: leagueVarsAll[0],
@@ -84,7 +90,6 @@ function NewLeagueModal(props) {
                     rosterSize: leagueVarsAll[3],
                     format: leagueVarsAll[2],
                 },
-                schedule: [],
                 teamCount: leagueVarsAll[1],
             },
             teams: teamArray,
@@ -111,7 +116,7 @@ function NewLeagueModal(props) {
         } else {
            console.log("No User Doc found, handle error");
         }
-      }
+    }
 
     const validateModal = (formVals) => {
         let validValues = true;
@@ -135,6 +140,37 @@ function NewLeagueModal(props) {
         }
         errorOut.textContent = "";
         return(validValues);
+    }
+
+    async function createSchedule() {
+        let scheduleData = [];
+        let currentSchedule = [];
+        const scheduleDocRef = doc(props.db,"schedules/2022-schedule");
+        const scheduleSnap = await getDoc(scheduleDocRef);
+        if (scheduleSnap.exists()) {
+            //pull data 
+            scheduleData = scheduleSnap.data().schedule;
+            //filter data by date
+            console.log(scheduleData);
+            currentSchedule = scheduleData.filter((dateSelect) => {
+                return Date.now()-dateSelect.date.start.$date.$numberLong < 0;
+            })
+            console.log(currentSchedule);
+            currentSchedule = currentSchedule.map((tournament)=> {
+                return {
+                    tournId: tournament.tournId,
+                    tournName: tournament.name,
+                    startDate: tournament.date.start.$date.$numberLong,
+                    endDate: tournament.date.end.$date.$numberLong,
+                    Scorecard: [],
+                    completeStatus: false,
+                }
+            })
+        } else {
+           console.log("No Schedule Doc found, handle error");
+        }
+        console.log(currentSchedule);
+        return currentSchedule;
     }
 
 
