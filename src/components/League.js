@@ -19,6 +19,7 @@ import Test from "./Test";
 import LeagueTab from "./LeagueTab";
 import ChatConsole from "./ChatConsole";
 import EditSettingsModal from "./EditSettingsModal";
+import TeamTab from "./TeamTab";
 //img
 import leagueIcon from "../images/icons/golf-flag-wh.png";
 import settingsIcon from "../images/icons/cog-outline-wh.png";
@@ -145,7 +146,7 @@ function League(props) {
                     <div className="center-panel-display">
                         <Routes>
                             <Route exact path="" element={<LeagueTab test={`${LeagueName}, League Home`} leagueData={leagueSelectData} userInfo={props.userInfo} openSettingsModal={openSettingsModal} />}/>
-                            <Route exact path="roster" element={<Test test={`${LeagueName}, Team/Roster`}/>}/>
+                            <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} />}/>
                             <Route exact path="players" element={<Test test={`${LeagueName}, Players`}/>}/>
                             <Route exact path="draft" element={<Test test={`${LeagueName}, Draft`}/>}/>
                         </Routes>
