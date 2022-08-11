@@ -13,28 +13,9 @@ function Home(props) {
     //props.scheduleDataAll
     //props.leaderboardData
     //props.leaderboardInfo
+    //props.worldRanksData
+    //props.fedexRanksData
     const [rankData, setRankData] = useState({rankings: []});
-
-    // // Pull Golf Data
-    // useEffect(() => {
-    //     if (rankData.rankings.length === 0) {
-    //         console.log("No Data yet");
-    //         const options = {
-    //             method: 'GET',
-    //             headers: {
-    //                 'X-RapidAPI-Key': '8a8c03b674msh32cd92a7c6fbf58p140730jsn7fb9bc80d982',
-    //                 'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com'
-    //             }
-    //         };
-    //         fetch('https://live-golf-data.p.rapidapi.com/stats?year=2022&statId=186', options)
-    //         .then(response => response.json())
-    //         .then(response => setRankData(response))
-    //         .catch(err => console.error(err));
-    //     } else {
-    //         console.log("already got data");
-    //     }
-    //     console.log(rankData);
-    // }, []);
 
 
     return (
@@ -51,7 +32,7 @@ function Home(props) {
                 <div className="center-panel-display">
                     <Routes>
                         <Route exact path="" element={<ScheduleTab scheduleDataAll={props.scheduleDataAll} leaderboardData={props.leaderboardData} leaderboardInfo={props.leaderboardInfo}/>}/>
-                        <Route exact path="world-rankings" element={<WorldRanks topHundred={rankData.rankings}/>}/>   
+                        <Route exact path="world-rankings" element={<WorldRanks worldRanksData={props.worldRanksData}/>}/>   
                         <Route exact path="fedex-rankings" element={<Test test={"Tab 2 test, Home"}/>}/>
                         <Route exact path="news" element={<Test test={"Tab 3 test, Home"}/>}/>
                     </Routes>

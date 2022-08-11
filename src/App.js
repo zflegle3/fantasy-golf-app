@@ -90,6 +90,8 @@ function App() {
   const [scheduleDataAll, setScheduleDataAll] = useState();
   const [leaderboardData, setLeaderboardData] = useState();
   const [leaderboardInfo, setLeaderboardInfo] = useState();
+  const [worldRanksData, setWorldRanksData] = useState();
+  const [fedexRanksData, setFedexRanksData] = useState();
 
 
   const authSwitchPage = (e) => {
@@ -125,13 +127,16 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged( auth, user => {
-      // console.log(user);
+    //Pulls required app data on user login
       if (user) { // User is signed in.
-        console.log("User:",user.uid);
-        setUserAuth(true);
+        console.log("User:",user.uid,"logged in");
+        setUserAuth(true); //remove?
         setUserActive(user);
+        //Pull Data
         pullUserData(user);
         pullScheduleData();
+        pullWorldRankData();
+        pullFedexRankData();
       }
       else {
         console.log("logged out");
@@ -165,9 +170,9 @@ function App() {
       const scheduleData = scheduleSnap.data();
       // console.log("Setting Schedule Data",);
       setScheduleDataAll(scheduleData.schedule);
-      getNextEvent(scheduleData.schedule)
-      const myTimestamp = Timestamp.fromDate(new Date()); //current timestamp
-      let daysSinceUpdate = (myTimestamp - scheduleData.lastUpdate)/86400;
+      getNextEvent(scheduleData.schedule);
+      const currentTimestamp = Timestamp.fromDate(new Date()); //current timestamp
+      let daysSinceUpdate = (currentTimestamp - scheduleData.lastUpdate)/86400;
       if (daysSinceUpdate > 30) { //if last update more than 30days prior pull new data and populate
         console.log("Updating schedule data.")
         const options = {
@@ -195,13 +200,13 @@ function App() {
 
   const getNextEvent = (latestSchedule) => { 
   //determines next tournament based on schedule data in database
+  //called in pullScheduleData
     // console.log(latestSchedule);
     let upcomingEvents = latestSchedule.filter(event => Date.now()-event.date.end.$date.$numberLong < 0);
     let nextEvent = upcomingEvents[0];
     setLeaderboardInfo(nextEvent);
     pullLeaderboardData(nextEvent.tournId);
   }
-
 
 
   async function pullLeaderboardData(nextTournId) { 
@@ -212,8 +217,8 @@ function App() {
       const leaderboardData = leaderboardSnap.data();
       // console.log("Setting Live Leaderboard Data");
       setLeaderboardData(leaderboardData.leaderboard);
-      const myTimestamp = Timestamp.fromDate(new Date()); //current timestamp
-      let daysSinceUpdate = (myTimestamp - leaderboardData.lastUpdate)/86400;
+      const currentTimestamp = Timestamp.fromDate(new Date()); //current timestamp
+      let daysSinceUpdate = (currentTimestamp - leaderboardData.lastUpdate)/86400;
       if (daysSinceUpdate > 30) { //CURRENTLY SET TO 30 DAYS, UPDATE TO HOURLY ONCE WORKING
         console.log("Updating Leaderboard Data")
         const options = {
@@ -242,9 +247,83 @@ function App() {
   }
 
 
+  async function pullWorldRankData() {
+    //pull world rank data and set state
+    const worldRankDoc = doc(db, "rankings/world-rankings");
+    const worldRankSnap = await getDoc(worldRankDoc);
+    if (worldRankSnap.exists()) {
+      const worldRankData = worldRankSnap.data();
+      // console.log("Setting Live Leaderboard Data");
+      setWorldRanksData(worldRankData);
+      const currentTimestamp = Timestamp.fromDate(new Date());
+      let daysSinceUpdate = (currentTimestamp - worldRankData.lastUpdate)/86400;
+      if (daysSinceUpdate > 30) { //CURRENTLY SET TO 30 DAYS, UPDATE TO WEEKLY ONCE WORKING
+        console.log("Updating World Rankings Data")
+        const options = {
+          method: 'GET',
+          headers: {
+              'X-RapidAPI-Key': '8a8c03b674msh32cd92a7c6fbf58p140730jsn7fb9bc80d982',
+              'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com'
+          }
+        };
+        const response = await fetch('https://live-golf-data.p.rapidapi.com/stats?year=2022&statId=186', options);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const newData = await response.json();
+        console.log(newData);
+        setDoc(worldRankDoc, {
+          lastUpdate: Timestamp.fromDate(new Date()),
+          worldRanks: newData,
+        });
+      } else {
+        console.log("World Rankings up to date");
+      }
+    } else {
+      console.log("World Rankings Updaing Error, no leaderboard doc found.");
+    }
+  }
+
+  async function pullFedexRankData() {
+    //pull world rank data and set state
+    const fedexRankDoc = doc(db, "rankings/fedex-rankings");
+    const fedexRankSnap = await getDoc(fedexRankDoc);
+    if (fedexRankSnap.exists()) {
+      const fedexRankData = fedexRankSnap.data();
+      setFedexRanksData(fedexRankData);
+      const currentTimestamp = Timestamp.fromDate(new Date());
+      let daysSinceUpdate = (currentTimestamp - fedexRankData.lastUpdate)/86400;
+      if (daysSinceUpdate > 30) { //CURRENTLY SET TO 30 DAYS, UPDATE TO WEEKLY ONCE WORKING
+        console.log("Updating Fedex Rankings Data")
+        const options = {
+          method: 'GET',
+          headers: {
+              'X-RapidAPI-Key': '8a8c03b674msh32cd92a7c6fbf58p140730jsn7fb9bc80d982',
+              'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com'
+          }
+        };
+        const response = await fetch('https://live-golf-data.p.rapidapi.com/stats?year=2022&statId=02671', options);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const newData = await response.json();
+        console.log(newData);
+        setDoc(fedexRankDoc, {
+          lastUpdate: Timestamp.fromDate(new Date()),
+          fedexRanks: newData,
+        });
+      } else {
+        console.log("Fedex Rankings up to date");
+      }
+    } else {
+      console.log("Fedex Rankings Updaing Error, no leaderboard doc found.");
+    }
+  }
+
+
   // console.log(userActive);
   if (userAuth) {
-    if (leagues && scheduleDataAll && leaderboardData && leaderboardInfo) {
+    if (leagues && scheduleDataAll && leaderboardData && leaderboardInfo && worldRanksData && fedexRanksData) {
     //added conditional to check data is loaded before rendering App components to solve props bug
       return (
         <div className="app-layout">
@@ -284,8 +363,8 @@ function App() {
             </div>
             <div className="center-panel-container">
               <Routes>
-                  <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} leaderboardInfo={leaderboardInfo} />}/>
-                  <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} />}/>
+                  <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} leaderboardInfo={leaderboardInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/>
+                  <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/>
               </Routes>
             </div>
           </Router>

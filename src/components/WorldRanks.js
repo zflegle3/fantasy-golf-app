@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
     Routes,
     Route,
@@ -7,11 +8,11 @@ import {
 
 
 function WorldRanks(props) {
-    //props.topHundred
-    console.log(props.topHundred)
+    //props.worldRanksData
+    console.log(props.worldRanksData);
 
-    const playerRanks = props.topHundred.map((player) =>
-        <div key={player.playerId} className="player-rank-item">
+    const playerRanks = props.worldRanksData.worldRanks.rankings.map((player) =>
+        <div key={uuidv4()} className="player-rank-item">
             <p>{player.rank}</p>
             <p>{player.previousRank}</p>
             <p>{player.firstName} {player.lastName}</p>

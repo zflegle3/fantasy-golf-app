@@ -31,6 +31,8 @@ function League(props) {
     //props.leagues
     //props.userInfo  
     //props.leaderboardData
+    //props.worldRanksData
+    //props.fedexRanksData
     const { id } = useParams();
     const [LeagueName, setLeagueName]= useState("League Name Temp");
     const [leagueSelectData, setLeagueSelectedData] = useState();
