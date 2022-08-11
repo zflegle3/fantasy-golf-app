@@ -5,14 +5,14 @@ function Roster(props) {
     //props.players
 
     let listItemsAll =  props.players.map((player) =>
-            <div key={uuidv4()} className="roster-item">
+            <div key={uuidv4()} className="standings-roster-item">
                 <p>{player.playerName}</p>
             </div>
         );
 
 
     return (
-        <div className="roster-list">
+        <div className="standings-roster-list">
             {listItemsAll}
         </div>
     );

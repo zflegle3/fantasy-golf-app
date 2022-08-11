@@ -13,9 +13,13 @@ function TeamTab(props) {
     //props.LeagueData
     //props.userInfo
     //props.openSettingsModal()
+    //props.worldRanksData
+    //props.fedexRanksData
 
     console.log(props.leagueData);
     console.log(props.userInfo);
+    console.log(props.worldRanksData);
+    console.log(props.fedexRanksData);
 
 
 
@@ -59,7 +63,7 @@ function TeamTab(props) {
                         <p>Total</p>
                 </div>
             </div>
-            <RosterList teamRoster={teamSelected[0].roster}/>
+            <RosterList teamRoster={teamSelected[0].roster} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData}/>
         </div>
     );
 };

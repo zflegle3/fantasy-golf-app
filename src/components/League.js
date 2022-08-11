@@ -38,6 +38,9 @@ function League(props) {
     const [leagueSelectData, setLeagueSelectedData] = useState();
     const [leagueLeaderboard, setLeagueLeaderboard] = useState();
 
+    console.log(props.worldRanksData);
+    console.log(props.fedexRanksData);
+
 
     const openSettingsModal = () => {
         console.log("Open Edit Settings");
@@ -148,7 +151,7 @@ function League(props) {
                     <div className="center-panel-display">
                         <Routes>
                             <Route exact path="" element={<LeagueTab test={`${LeagueName}, League Home`} leagueData={leagueSelectData} userInfo={props.userInfo} openSettingsModal={openSettingsModal} />}/>
-                            <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} />}/>
+                            <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData}/>}/>
                             <Route exact path="players" element={<Test test={`${LeagueName}, Players`}/>}/>
                             <Route exact path="draft" element={<Test test={`${LeagueName}, Draft`}/>}/>
                         </Routes>
