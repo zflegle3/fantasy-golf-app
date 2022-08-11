@@ -116,7 +116,7 @@ function App() {
   }
 
   const createNewLeague = (e) => {
-    console.log("New League");
+    // console.log("New League");
     let newLeagueModal = document.getElementById("new-league-modal-form");
     newLeagueModal.classList = "visable";
   }
@@ -125,9 +125,8 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged( auth, user => {
-      console.log(user);
+      // console.log(user);
       if (user) { // User is signed in.
-        console.log("logged in")
         console.log("User:",user.uid);
         setUserAuth(true);
         setUserActive(user);
@@ -164,7 +163,7 @@ function App() {
     const scheduleSnap = await getDoc(scheduleDoc);
     if (scheduleSnap.exists()) {
       const scheduleData = scheduleSnap.data();
-      console.log("Setting Schedule Data",);
+      // console.log("Setting Schedule Data",);
       setScheduleDataAll(scheduleData.schedule);
       getNextEvent(scheduleData.schedule)
       const myTimestamp = Timestamp.fromDate(new Date()); //current timestamp
@@ -211,7 +210,7 @@ function App() {
     const leaderboardSnap = await getDoc(leaderboardDoc);
     if (leaderboardSnap.exists()) {
       const leaderboardData = leaderboardSnap.data();
-      console.log("Setting Live Leaderboard Data");
+      // console.log("Setting Live Leaderboard Data");
       setLeaderboardData(leaderboardData.leaderboard);
       const myTimestamp = Timestamp.fromDate(new Date()); //current timestamp
       let daysSinceUpdate = (myTimestamp - leaderboardData.lastUpdate)/86400;
@@ -243,7 +242,7 @@ function App() {
   }
 
 
-  console.log(userActive);
+  // console.log(userActive);
   if (userAuth) {
     if (leagues && scheduleDataAll && leaderboardData && leaderboardInfo) {
     //added conditional to check data is loaded before rendering App components to solve props bug
@@ -286,7 +285,7 @@ function App() {
             <div className="center-panel-container">
               <Routes>
                   <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} leaderboardInfo={leaderboardInfo} />}/>
-                  <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} />}/>
+                  <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} />}/>
               </Routes>
             </div>
           </Router>

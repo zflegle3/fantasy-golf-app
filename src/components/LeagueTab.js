@@ -12,8 +12,8 @@ function LeagueTab(props) {
     //props.userInfo
     //props.openSettingsModal()
 
-    console.log(props.leagueData);
-    console.log(props.userInfo);
+    // console.log(props.leagueData);
+    // console.log(props.userInfo);
 
 
     if (props.leagueData.settings.admin === `U-${props.userInfo.uid}`) {

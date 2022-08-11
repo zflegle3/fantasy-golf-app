@@ -20,14 +20,14 @@ function EditSettingsModal(props) {
     //props.closeSettingsModal
     //props.pullLeagueData()
 
-    console.log(props.leagueSettings);
-    console.log(props.userInfo);
+    // console.log(props.leagueSettings);
+    // console.log(props.userInfo);
 
 
     const handleEdits = (e) => {
         e.preventDefault();
         //Add some form validation for certain fields
-        console.log("Submit Edits");
+        // console.log("Submit Edits");
         let leagueNameIn = document.getElementById("edit-league-name").value;
         if (!leagueNameIn) { //in case of no league name updates, all other values populated as select inputs
             leagueNameIn = props.leagueSettings.settings.name;
@@ -37,7 +37,7 @@ function EditSettingsModal(props) {
         let leaguePlayersIn = document.getElementById("edit-league-roster-players").value;
         let leagueCutIn = document.getElementById("edit-league-roster-cut").value;
         let newLeagueVarsAll = [leagueNameIn, leagueTeamsIn, leagueFormatIn, leaguePlayersIn, leagueCutIn]
-        console.log(newLeagueVarsAll);
+        // console.log(newLeagueVarsAll);
         if (validateEdits(newLeagueVarsAll)) {//NEED CONDITIONAL TO NOT ALLOW CERTAIN UPDATES (ROSTER/TEAMS) AFTER DRAFT
             submitEdits(newLeagueVarsAll);
             // document.getElementById("edit-settings-form").reset();
@@ -74,46 +74,35 @@ function EditSettingsModal(props) {
 
     
     async function submitEdits(leagueVarsAll) {
-        console.log(leagueVarsAll,props.leagueSettings.leagueId);
+        // console.log(leagueVarsAll,props.leagueSettings.leagueId);
         let leagueDoc = doc(props.db,`leagues/${props.leagueSettings.leagueId}`);
         let teamsAll = props.leagueSettings.teams;
         let currentTeams = teamsAll.length;
-        console.log(teamsAll.length, leagueVarsAll[1]);
-        console.log(teamsAll);
-        //Update Roster #
-        let newRoster = []
+
+        let rosterArray=[];
         for (let i=0; i < leagueVarsAll[3]; i++) {
-            newRoster.push ({
-                playerName: `Player ${i+1}`,
-                playerId: i+1,
+            rosterArray.push({
+                playerName: `Player ${i}`,
+                playerId: i,
             });
         }
-        if (leagueVarsAll[3] != props.leagueSettings.settings.scoring.rosterSize) {
-            for (let i=0; i<teamsAll.length; i++) {
-                teamsAll[i].roster = newRoster;
-            }
+        //create teams per team qty
+        let teamArray = [{
+            teamName: "New Team 1",
+            managerId: props.userInfo.uid,
+            managerName: "Admin Name Temp",
+            roster: rosterArray,
+        }];
+        for (let i=1; i < leagueVarsAll[1]; i++) {
+            teamArray.push({
+                teamName: `New Team ${i+1}`,
+                managerId: "none",
+                managerName: "Manager Name Temp",
+                roster: rosterArray,
+            });
         }
-
-        //Update Team #
-        if (currentTeams > Number(leagueVarsAll[1])) {
-            console.log("remove some teams");
-            for (let i=0; i<(currentTeams-Number(leagueVarsAll[1])); i++) {
-                teamsAll.pop();
-            }
-        } 
-        if (Number(leagueVarsAll[1]) > currentTeams) {
-            console.log("add new teams",(Number(leagueVarsAll[1])-currentTeams));
-            for (let i=0; i<(Number(leagueVarsAll[1])-currentTeams); i++) {
-                console.log("adding team",currentTeams, i);
-                teamsAll.push({
-                    managerId: "none",
-                    managerName: "Manager Name Temp",
-                    roster: newRoster,
-                    teamName: `New Team ${teamsAll.length+1}`,
-                })
-            }
-        }
-        console.log(teamsAll);
+   
+        // console.log(teamArray);
         // let leagueDoc = doc(props.db,`leagues/league-test`);
         let dataNew = {
             settings: {
@@ -127,7 +116,7 @@ function EditSettingsModal(props) {
                     rosterSize: leagueVarsAll[3],
                 },
             },
-            teams: teamsAll,
+            teams: teamArray,
         }
         await updateDoc(leagueDoc, dataNew);
         props.pullLeagueData(props.leagueSettings.leagueId);

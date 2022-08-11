@@ -26,12 +26,14 @@ import settingsIcon from "../images/icons/cog-outline-wh.png";
 
 
 function League(props) {
-    //props.leagues
-    //props.userInfo
     //props.db
+    //props.leagues
+    //props.userInfo  
+    //props.leaderboardData
     const { id } = useParams();
     const [LeagueName, setLeagueName]= useState("League Name Temp");
     const [leagueSelectData, setLeagueSelectedData] = useState();
+    const [leagueLeaderboard, setLeagueLeaderboard] = useState();
 
 
     const openSettingsModal = () => {
@@ -50,19 +52,73 @@ function League(props) {
 
     useEffect(() => {
         console.log(`Pulling League Data,`);
-        let data = pullLeagueData(id);
-        console.log(data);
+        pullLeagueData(id);
     }, [id]);
 
 
     async function pullLeagueData(leagueIdToPull) {
-        console.log("Pull league data",leagueIdToPull);
+        //pulls league data to display
+        // console.log("Pull league data",leagueIdToPull);
         let leagueDoc = doc(props.db,`leagues/${leagueIdToPull}`);
         const leagueSnap  = await getDoc(leagueDoc);
         setLeagueSelectedData(leagueSnap.data());
         setLeagueName(leagueSnap.data().settings.name)
-        return(leagueSnap.data());
+        // return(leagueSnap.data());
+        //Update score with pulled data
+        console.log(leagueSnap.data());
+        updateScores(leagueSnap.data())
     }
+
+    const updateScores = (leagueData) => {
+        let upcomingEvents = leagueData.schedule.filter((tournament) => {
+            return tournament.completeStatus === false;
+        })
+        let nextEvent = upcomingEvents[0];
+        console.log(nextEvent);
+        console.log(props.leaderboardData);
+        let tempScoreCard = []
+        //if date between start and end date
+            //pull scorecard data for players (teams/rosters, leaderboard data)
+            let teams = leagueData.teams
+            for (let i=0; i< teams.length; i++) {
+                let tempTeam= []
+                for (let j=0; j< teams[0].roster.length; j++) {
+                    let playerData = props.leaderboardData.leaderboardRows.filter((playerSelected) => {
+                        // console.log(playerSelected);
+                        return Number(playerSelected.playerId) === teams[i].roster[j].playerId;
+                    })
+                    // console.log(props.leaderboardData.leaderboardRows);
+                    console.log(playerData);
+                    console.log(teams[i].roster[j].playerId);
+                    let rosterItem ={
+                        playerId: teams[i].roster[j].playerId,
+                        playerName: teams[i].roster[j].playerName,
+                        rounds: playerData[0].rounds,
+                        tot: playerData[0].total,
+                    }
+                    tempTeam.push(rosterItem);
+                }
+                tempScoreCard.push(tempTeam);
+            }
+            console.log(tempScoreCard);
+                //Pass in leaderboard data to League component 
+                //pull r1/r2/r3/r4/tot data from there and populate object above
+            //publish object to scorecard State to display in Leaderboard Component
+            //publish object to scorecard backend, maybe only publish to backend once final??
+
+
+
+            //calc scores 
+            //display on leaderboard
+        //if date after end date
+            //pull data 
+            //update Leaderboard Scores
+            //set completeStatus to True
+
+    }
+
+
+
 
 
 

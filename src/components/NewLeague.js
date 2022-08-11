@@ -46,7 +46,7 @@ function NewLeagueModal(props) {
         let newId = `L-${uuidv4()}`; 
         //create rosters per player qty
         let rosterArray=[];
-        for (let i=1; i < leagueVarsAll[3]; i++) {
+        for (let i=0; i < leagueVarsAll[3]; i++) {
             rosterArray.push({
                 playerName: `Player ${i}`,
                 playerId: i,
@@ -54,12 +54,12 @@ function NewLeagueModal(props) {
         }
         //create teams per team qty
         let teamArray = [{
-            teamnName: "New Team 1",
+            teamName: "New Team 1",
             managerId: props.userActive.uid,
             managerName: "Admin Name Temp",
             roster: rosterArray,
         }];
-        for (let i=1; i < leagueVarsAll[1]; i++) {
+        for (let i=0; i < leagueVarsAll[1]; i++) {
             teamArray.push({
                 teamName: `New Team ${i+1}`,
                 managerId: "none",
@@ -67,11 +67,10 @@ function NewLeagueModal(props) {
                 roster: rosterArray,
             });
         }
-        //create league schedule data per current date & 2022 schedule
-        //Update later to LM selecting schedule
-        const scheduleData = await createSchedule();
-        console.log(scheduleData);
 
+        //create league schedule data per current date & 2022 schedule
+        //Update later to LM selecting schedule in form
+        const scheduleData = await createSchedule();
 
         let data = {
             leagueId: newId,
@@ -151,11 +150,11 @@ function NewLeagueModal(props) {
             //pull data 
             scheduleData = scheduleSnap.data().schedule;
             //filter data by date
-            console.log(scheduleData);
+            // console.log(scheduleData);
             currentSchedule = scheduleData.filter((dateSelect) => {
                 return Date.now()-dateSelect.date.start.$date.$numberLong < 0;
-            })
-            console.log(currentSchedule);
+            }); //only pulls dates upcoming from current date 
+            // console.log(currentSchedule);
             currentSchedule = currentSchedule.map((tournament)=> {
                 return {
                     tournId: tournament.tournId,
@@ -169,7 +168,7 @@ function NewLeagueModal(props) {
         } else {
            console.log("No Schedule Doc found, handle error");
         }
-        console.log(currentSchedule);
+        // console.log(currentSchedule);
         return currentSchedule;
     }
 
