@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 import leagueIcon from "../images/icons/golf-flag-wh.png";
 import settingsIcon from "../images/icons/cog-outline-wh.png";
+//Components
+import RosterList from "./RosterList";
 
 
 
@@ -20,7 +22,7 @@ function TeamTab(props) {
     let teamSelected = props.leagueData.teams.filter((team) => {
         return team.managerId === props.userInfo.uid;
     });
-    console.log(teamSelected.teamName);
+    console.log(teamSelected[0]);
 
 
 
@@ -50,9 +52,14 @@ function TeamTab(props) {
                         <p>Golfers</p>
                         <p>World Rankings</p>
                         <p>Fedex Rankings</p>
+                        <p>R1</p>
+                        <p>R2</p>
+                        <p>R3</p>
+                        <p>R4</p>
+                        <p>Total</p>
                 </div>
             </div>
-            {/* <RosterList /> */}
+            <RosterList teamRoster={teamSelected[0].roster}/>
         </div>
     );
 };

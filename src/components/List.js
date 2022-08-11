@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import Roster from './Roster';
-uuidv4(); 
 
 function List(props) {
     //props.listType
