@@ -10,6 +10,7 @@ function LeagueTab(props) {
     //props.test
     //props.LeagueData
     //props.userInfo
+    //props.leagueLeaderboard
     //props.openSettingsModal()
 
     // console.log(props.leagueData);

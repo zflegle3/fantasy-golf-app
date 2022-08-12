@@ -38,8 +38,9 @@ function League(props) {
     const [leagueSelectData, setLeagueSelectedData] = useState();
     const [leagueLeaderboard, setLeagueLeaderboard] = useState();
 
-    console.log(props.worldRanksData);
-    console.log(props.fedexRanksData);
+    // console.log(props.worldRanksData);
+    // console.log(props.fedexRanksData);
+    console.log(props.leaderboardData);
 
 
     const openSettingsModal = () => {
@@ -76,50 +77,52 @@ function League(props) {
     }
 
     const updateScores = (leagueData) => {
+        
+        //determine next event on league's schedule
         let upcomingEvents = leagueData.schedule.filter((tournament) => {
             return tournament.completeStatus === false;
-        })
+        });
         let nextEvent = upcomingEvents[0];
         console.log(nextEvent);
+        //next event on pga schedule is passed in as props
         console.log(props.leaderboardData);
-        let tempScoreCard = []
-        //if date between start and end date
-            //pull scorecard data for players (teams/rosters, leaderboard data)
-            let teams = leagueData.teams
-            for (let i=0; i< teams.length; i++) {
-                let tempTeam= []
-                for (let j=0; j< teams[0].roster.length; j++) {
-                    let playerData = props.leaderboardData.leaderboardRows.filter((playerSelected) => {
-                        // console.log(playerSelected);
-                        return Number(playerSelected.playerId) === teams[i].roster[j].playerId;
-                    })
-                    // console.log(props.leaderboardData.leaderboardRows);
-                    console.log(playerData);
-                    console.log(teams[i].roster[j].playerId);
-                    let rosterItem ={
-                        playerId: teams[i].roster[j].playerId,
-                        playerName: teams[i].roster[j].playerName,
-                        rounds: playerData[0].rounds,
-                        tot: playerData[0].total,
+        //if id's match between pga and league events
+        if (nextEvent.tournId === props.leaderboardData.tournId) {
+            console.log("Live Tournament is on league schedule");
+            if (props.leaderboardData.roundStatus === "In Progress") { //tournament ongoing
+                console.log("Tournament is Live");
+                //Create Weekly Scorecard Object
+                let tempScoreCard = [];
+                let teams = leagueData.teams;
+                for (let i=0; i< teams.length; i++) { //for every team
+                    let tempTeam= [teams[i].teamName, teams[i].managerName];
+                    for (let j=0; j< teams[0].roster.length; j++) { //for every player on that team
+                        let playerData = props.leaderboardData.leaderboardRows.filter((playerSelected) => {
+                            // console.log(playerSelected);
+                            return Number(playerSelected.playerId) === teams[i].roster[j].playerId;
+                        })
+                        // console.log(props.leaderboardData.leaderboardRows);
+                        console.log(playerData);
+                        console.log(teams[i].roster[j].playerId);
+                        let rosterItem ={
+                            playerId: teams[i].roster[j].playerId,
+                            playerName: teams[i].roster[j].playerName,
+                            rounds: playerData[0].rounds,
+                            tot: playerData[0].total,
+                        }
+                        tempTeam.push(rosterItem);
                     }
-                    tempTeam.push(rosterItem);
+                    tempScoreCard.push(tempTeam);
                 }
-                tempScoreCard.push(tempTeam);
+                console.log(tempScoreCard);
+                //Set Stat with Object to display
+                setLeagueLeaderboard(tempScoreCard);
+            } else if (props.leaderboardData.tournId === "Official") { //tournament complete
+                //Create Weekly Scorecard Object
+                //Creare Season Scorecard Object
+                //Write data objects to League doc in firebase
             }
-            console.log(tempScoreCard);
-                //Pass in leaderboard data to League component 
-                //pull r1/r2/r3/r4/tot data from there and populate object above
-            //publish object to scorecard State to display in Leaderboard Component
-            //publish object to scorecard backend, maybe only publish to backend once final??
-
-
-
-            //calc scores 
-            //display on leaderboard
-        //if date after end date
-            //pull data 
-            //update Leaderboard Scores
-            //set completeStatus to True
+        }
 
     }
 
@@ -129,7 +132,6 @@ function League(props) {
 
 
     if (leagueSelectData) {
-        console.log(leagueSelectData);
         return (
             <div className="center-panel-content">
                 <div className="center-panel-header">
@@ -150,7 +152,7 @@ function League(props) {
                     </ul>
                     <div className="center-panel-display">
                         <Routes>
-                            <Route exact path="" element={<LeagueTab test={`${LeagueName}, League Home`} leagueData={leagueSelectData} userInfo={props.userInfo} openSettingsModal={openSettingsModal} />}/>
+                            <Route exact path="" element={<LeagueTab test={`${LeagueName}, League Home`} leagueData={leagueSelectData} userInfo={props.userInfo} openSettingsModal={openSettingsModal} leagueLeaderboard={leagueLeaderboard} />}/>
                             <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData}/>}/>
                             <Route exact path="players" element={<Test test={`${LeagueName}, Players`}/>}/>
                             <Route exact path="draft" element={<Test test={`${LeagueName}, Draft`}/>}/>
