@@ -202,7 +202,7 @@ function App() {
   //determines next tournament based on schedule data in database
   //called in pullScheduleData
     // console.log(latestSchedule);
-    let upcomingEvents = latestSchedule.filter(event => ((Date.now()-(event.date.end.$date.$numberLong))/86400000) < 3);
+    let upcomingEvents = latestSchedule.filter(event => ((Date.now()-(event.date.end.$date.$numberLong))/86400000) < 1);
     //filters out events by diff between tourn End date and todays date
     //Extra time (3days) for finalizing and to simplify render timeline during development
     console.log(upcomingEvents);

@@ -1,15 +1,8 @@
 
-function LeaderboardItem(props) {
+function LeaderboardItemLive(props) {
     //props.rowData
     //props.currentRound
     // console.log(props.rowData)
-
-
-    // let listItemsAll = props.dataArray.leaderboardRows.map((leaderboardRow) => (
-    //     <div key={uuidv4()} className="leaderboard-live-list" >
-    //         <LeaderboardItem />
-    //     </div>)
-    // );
 
     let roundData = []
     let roundScore;
@@ -37,7 +30,7 @@ function LeaderboardItem(props) {
 
 
     return (
-        <div className="leaderboard-item">
+        <div className="leaderboard-item-live">
             <p>{props.rowData.position}</p>
             <p>{props.rowData.firstName} {props.rowData.lastName}</p>
             <p>{props.rowData.total}</p>
@@ -52,4 +45,4 @@ function LeaderboardItem(props) {
     );
 }
 
-export default LeaderboardItem;
+export default LeaderboardItemLive;
