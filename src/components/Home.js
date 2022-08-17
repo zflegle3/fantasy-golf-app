@@ -13,7 +13,7 @@ import ScheduleTab from "./ScheduleTab";
 function Home(props) {
     //props.scheduleDataAll
     //props.leaderboardData
-    //props.leaderboardInfo
+    //props.eventInfo
     //props.worldRanksData
     //props.fedexRanksData
     // const [rankData, setRankData] = useState({rankings: []});
@@ -32,7 +32,7 @@ function Home(props) {
                 </ul>
                 <div className="center-panel-display">
                     <Routes>
-                        <Route exact path="" element={<ScheduleTab scheduleDataAll={props.scheduleDataAll} leaderboardData={props.leaderboardData} leaderboardInfo={props.leaderboardInfo}/>}/>
+                        <Route exact path="" element={<ScheduleTab scheduleDataAll={props.scheduleDataAll} leaderboardData={props.leaderboardData} eventInfo={props.eventInfo}/>}/>
                         <Route exact path="world-rankings" element={<WorldRanks worldRanksData={props.worldRanksData}/>}/>   
                         <Route exact path="fedex-rankings" element={<FedexRanks fedexRanksData={props.fedexRanksData}/>}/>
                         <Route exact path="news" element={<Test test={"Tab 3 test, Home"}/>}/>

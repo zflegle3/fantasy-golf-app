@@ -85,11 +85,11 @@ function App() {
   const [pageSelect, setPageSelect] = useState("login");
   const [userAuth, setUserAuth] = useState(false);
   const [userActive, setUserActive] = useState();
-  //Data passed to components
-  const [leagues, setLeagues] = useState([]);
+  //Data passed to components 
+  const [leagues, setLeagues] = useState([]); 
   const [scheduleDataAll, setScheduleDataAll] = useState();
   const [leaderboardData, setLeaderboardData] = useState();
-  const [leaderboardInfo, setLeaderboardInfo] = useState();
+  const [eventInfo, setLeaderboardInfo] = useState();
   const [worldRanksData, setWorldRanksData] = useState();
   const [fedexRanksData, setFedexRanksData] = useState();
 
@@ -202,7 +202,13 @@ function App() {
   //determines next tournament based on schedule data in database
   //called in pullScheduleData
     // console.log(latestSchedule);
-    let upcomingEvents = latestSchedule.filter(event => Date.now()-event.date.end.$date.$numberLong < 0);
+    let upcomingEvents = latestSchedule.filter(event => ((Date.now()-(event.date.end.$date.$numberLong))/86400000) < 3);
+    //filters out events by diff between tourn End date and todays date
+    //Extra time (3days) for finalizing and to simplify render timeline during development
+    console.log(upcomingEvents);
+    console.log(Date.now());
+    console.log(((Date.now()-upcomingEvents[0].date.end.$date.$numberLong)/86400000)-3);
+    console.log(upcomingEvents[0].tournId);
     let nextEvent = upcomingEvents[0];
     setLeaderboardInfo(nextEvent);
     pullLeaderboardData(nextEvent.tournId);
@@ -228,8 +234,11 @@ function App() {
             'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com'
           }
         };
+        // Error here, selecting next week's tourn id 
         const response = await fetch(`https://live-golf-data.p.rapidapi.com/leaderboard?tournId=${nextTournId}&year=2022`, options);
         if (!response.ok) {
+          console.log("Tournament", nextTournId, "has not started yet");
+          setLeaderboardData("no-current-events");
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const newData = await response.json();
@@ -323,7 +332,7 @@ function App() {
 
   // console.log(userActive);
   if (userAuth) {
-    if (leagues && scheduleDataAll && leaderboardData && leaderboardInfo && worldRanksData && fedexRanksData) {
+    if (leagues && scheduleDataAll && leaderboardData && eventInfo && worldRanksData && fedexRanksData) {
     //added conditional to check data is loaded before rendering App components to solve props bug
       return (
         <div className="app-layout">
@@ -363,8 +372,8 @@ function App() {
             </div>
             <div className="center-panel-container">
               <Routes>
-                  <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} leaderboardInfo={leaderboardInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/>
-                  <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/>
+                  <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/>
+                  <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/>
               </Routes>
             </div>
           </Router>

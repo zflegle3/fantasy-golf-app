@@ -9,26 +9,26 @@ import LiveLeaderboard from "./LiveLeaderboard";
 function ScheduleTab(props) {
     //props.scheduleDataAll
     //props.leaderboardData
-    //props.leaderboardInfo
+    //props.eventInfo
     // console.log(props.scheduleDataAll);
     console.log(props.leaderboardData);
-    console.log(props.leaderboardInfo);
+    console.log(props.eventInfo);
 
-    let startDate = new Date(Number(props.leaderboardInfo.date.start.$date.$numberLong)).toLocaleDateString('en-us', { weekday:"long", month:"short", day:"numeric"});
-    let endDate = new Date(Number(props.leaderboardInfo.date.end.$date.$numberLong)).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
+    let startDate = new Date(Number(props.eventInfo.date.start.$date.$numberLong)).toLocaleDateString('en-us', { weekday:"long", month:"short", day:"numeric"});
+    let endDate = new Date(Number(props.eventInfo.date.end.$date.$numberLong)).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
 
     return (
         <div className="center-panel-content-all">     
             <div className="schedule-upcoming-all">
                 <div className="leaderboard-live-header">
                     <div>
-                        <p>{props.leaderboardInfo.name}</p>
+                        <p>{props.eventInfo.name}</p>
                         <p>{`${props.leaderboardData.roundStatus} Round ${props.leaderboardData.roundId.$numberInt}`}</p>
                     </div>  
-                    <p>{`${props.leaderboardInfo.courses[0].courseName} in ${props.leaderboardInfo.courses[0].location.city}, ${props.leaderboardInfo.courses[0].location.state}`}</p>
+                    <p>{`${props.eventInfo.courses[0].courseName} in ${props.eventInfo.courses[0].location.city}, ${props.eventInfo.courses[0].location.state}`}</p>
                     <p>{`${startDate}-${endDate}`}</p>
                 </div>
-                <LiveLeaderboard leaderboardData={props.leaderboardData} leaderboardInfo={props.leaderboardInfo}/>
+                <LiveLeaderboard leaderboardData={props.leaderboardData} eventInfo={props.eventInfo}/>
             </div>       
             <div className="schedule-upcoming-all">
                 <div className="schedule-upcoming-header">

@@ -7,7 +7,7 @@ uuidv4();
 
 function LiveLeaderboard(props) {
     //props.leaderboardData
-    //props.leaderboardInfo
+    //props.eventInfo
     // const [scheduleArray, setScheduleArray] = useState([]);
 
 

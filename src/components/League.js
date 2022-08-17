@@ -31,6 +31,7 @@ function League(props) {
     //props.leagues
     //props.userInfo  
     //props.leaderboardData
+    //props.eventInfo
     //props.worldRanksData
     //props.fedexRanksData
     const { id } = useParams();
@@ -41,6 +42,7 @@ function League(props) {
     // console.log(props.worldRanksData);
     // console.log(props.fedexRanksData);
     console.log(props.leaderboardData);
+    console.log(props.eventInfo);
 
 
     const openSettingsModal = () => {
@@ -77,7 +79,6 @@ function League(props) {
     }
 
     const updateScores = (leagueData) => {
-        
         //determine next event on league's schedule
         let upcomingEvents = leagueData.schedule.filter((tournament) => {
             return tournament.completeStatus === false;
@@ -88,40 +89,78 @@ function League(props) {
         console.log(props.leaderboardData);
         //if id's match between pga and league events
         if (nextEvent.tournId === props.leaderboardData.tournId) {
-            console.log("Live Tournament is on league schedule");
-            if (props.leaderboardData.roundStatus === "In Progress") { //tournament ongoing
-                console.log("Tournament is Live");
-                //Create Weekly Scorecard Object
-                let tempScoreCard = [];
-                let teams = leagueData.teams;
-                for (let i=0; i< teams.length; i++) { //for every team
-                    let tempTeam= [teams[i].teamName, teams[i].managerName];
-                    for (let j=0; j< teams[0].roster.length; j++) { //for every player on that team
-                        let playerData = props.leaderboardData.leaderboardRows.filter((playerSelected) => {
-                            // console.log(playerSelected);
-                            return Number(playerSelected.playerId) === teams[i].roster[j].playerId;
-                        })
-                        // console.log(props.leaderboardData.leaderboardRows);
-                        console.log(playerData);
-                        console.log(teams[i].roster[j].playerId);
-                        let rosterItem ={
-                            playerId: teams[i].roster[j].playerId,
-                            playerName: teams[i].roster[j].playerName,
-                            rounds: playerData[0].rounds,
-                            tot: playerData[0].total,
-                        }
-                        tempTeam.push(rosterItem);
+            console.log("Current Event is on league schedule", props.leaderboardData.roundStatus);
+            //
+            console.log("Tournament is Live");
+            //Create Weekly Scorecard Object
+            let tempScoreCard = [];
+            let teams = leagueData.teams;
+            for (let i=0; i< teams.length; i++) { //for every team
+                let tempTeam= [teams[i].teamName, teams[i].managerName];
+                for (let j=0; j< teams[0].roster.length; j++) { //for every player on that team
+                    let playerData = props.leaderboardData.leaderboardRows.filter((playerSelected) => {
+                        // console.log(playerSelected);
+                        return Number(playerSelected.playerId) === teams[i].roster[j].playerId;
+                    })
+                    // console.log(props.leaderboardData.leaderboardRows);
+                    console.log(playerData);
+                    console.log(teams[i].roster[j].playerId);
+                    let rosterItem ={
+                        playerId: teams[i].roster[j].playerId,
+                        playerName: teams[i].roster[j].playerName,
+                        rounds: playerData[0].rounds,
+                        tot: playerData[0].total,
                     }
-                    tempScoreCard.push(tempTeam);
+                    tempTeam.push(rosterItem);
                 }
-                console.log(tempScoreCard);
-                //Set Stat with Object to display
-                setLeagueLeaderboard(tempScoreCard);
-            } else if (props.leaderboardData.tournId === "Official") { //tournament complete
+                tempScoreCard.push(tempTeam);
+            }
+            console.log(tempScoreCard);
+            //Set State with Object to display
+            setLeagueLeaderboard(tempScoreCard);
+
+            if (props.leaderboardData.roundStatus === "Official") {
+                console.log("Tournament complete, finalize scores");
                 //Create Weekly Scorecard Object
-                //Creare Season Scorecard Object
+                //Create Season Scorecard Object
                 //Write data objects to League doc in firebase
             }
+
+            // if (props.leaderboardData.roundStatus === "In Progress") { //tournament ongoing
+            //     console.log("Tournament is Live");
+            //     //Create Weekly Scorecard Object
+            //     let tempScoreCard = [];
+            //     let teams = leagueData.teams;
+            //     for (let i=0; i< teams.length; i++) { //for every team
+            //         let tempTeam= [teams[i].teamName, teams[i].managerName];
+            //         for (let j=0; j< teams[0].roster.length; j++) { //for every player on that team
+            //             let playerData = props.leaderboardData.leaderboardRows.filter((playerSelected) => {
+            //                 // console.log(playerSelected);
+            //                 return Number(playerSelected.playerId) === teams[i].roster[j].playerId;
+            //             })
+            //             // console.log(props.leaderboardData.leaderboardRows);
+            //             console.log(playerData);
+            //             console.log(teams[i].roster[j].playerId);
+            //             let rosterItem ={
+            //                 playerId: teams[i].roster[j].playerId,
+            //                 playerName: teams[i].roster[j].playerName,
+            //                 rounds: playerData[0].rounds,
+            //                 tot: playerData[0].total,
+            //             }
+            //             tempTeam.push(rosterItem);
+            //         }
+            //         tempScoreCard.push(tempTeam);
+            //     }
+            //     console.log(tempScoreCard);
+            //     //Set State with Object to display
+            //     setLeagueLeaderboard(tempScoreCard);
+            // } else if (props.leaderboardData.tournId === "Official") { //tournament complete
+            // } else {
+            //     console.log("Tournament complete, finalize scores");
+            //     //Create Weekly Scorecard Object
+            //     //Creare Season Scorecard Object
+            //     //Write data objects to League doc in firebase
+            // }
         }
 
     }
@@ -153,7 +192,7 @@ function League(props) {
                     <div className="center-panel-display">
                         <Routes>
                             <Route exact path="" element={<LeagueTab test={`${LeagueName}, League Home`} leagueData={leagueSelectData} userInfo={props.userInfo} openSettingsModal={openSettingsModal} leagueLeaderboard={leagueLeaderboard} />}/>
-                            <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData}/>}/>
+                            <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData} leagueLeaderboard={leagueLeaderboard}/>}/>
                             <Route exact path="players" element={<Test test={`${LeagueName}, Players`}/>}/>
                             <Route exact path="draft" element={<Test test={`${LeagueName}, Draft`}/>}/>
                         </Routes>
