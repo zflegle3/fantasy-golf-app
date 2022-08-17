@@ -20,7 +20,7 @@ import {
   } from "firebase/firestore";
 import { useHistory, useParams } from 'react-router-dom'
 //Components
-import List from "./List";
+import MessageList from "./MessageList";
 //img
 import sendIcon from "../images/icons/send-wh.png";
 
@@ -93,7 +93,7 @@ function ChatConsole(props) {
                     <button onClick={createNewMessage}><img className="league-message-input" src={sendIcon} alt="send icon" /></button>
                 </form>
 
-                <List listType="league-message" dataArray={leagueMsgData} />
+                <MessageList dataArray={leagueMsgData} />
             </div>
         );
     } else {

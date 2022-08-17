@@ -2,8 +2,10 @@
 import { useState, useEffect } from 'react';
 import settingsIcon from "../images/icons/cog-outline-wh.png";
 //Components
-import List from "./List";
-import LeagueSettingsList from "./LeagueSettingsList"
+import LeagueActivityList from "./LeagueActivityList";
+import WeekStandings from "./WeekStandings";
+import SeasonStandings from "./SeasonStandings";
+import LeagueSettingsList from "./LeagueSettingsList";
 
 
 function LeagueTab(props) {
@@ -16,21 +18,64 @@ function LeagueTab(props) {
     // console.log(props.leagueData);
     // console.log(props.userInfo);
 
+    //temp variable to work on styling while also working on scoring syste,
+    const seasonStandings =[
+        {   pos: 1,
+            teamName: "Everybody Hates Reed",
+            teamManager: "P. Lapresto",
+            points: 420,
+            teamWins: 5,            
+            playerWins: 2,            
+            pointsBack: 0,
+        },
+        {   pos: 2,
+            teamName: "Gilmore's Guys",
+            teamManager: "Z. Flegle",
+            points: 400,
+            teamWins: 4,            
+            playerWins: 1,            
+            pointsBack: 20,
+        },
+        {   pos: 3,
+            teamName: "D(ustin johnso)N",
+            teamManager: "B. Jackish",
+            points: 350,
+            teamWins: 2,            
+            playerWins: 0,            
+            pointsBack: 70,
+        },
+        {   pos: 4,
+            teamName: "BOFA Boys",
+            teamManager: "L. Tobergte",
+            points: 300,
+            teamWins: 1,            
+            playerWins: 1,            
+            pointsBack: 120,
+        },
+    ];
 
-    if (props.leagueData.settings.admin === `U-${props.userInfo.uid}`) {
+
+    if (props.leagueData.settings.admin === props.userInfo.uid) {
         return (
-            <div className="center-panel-content-all">            
-                <div className="league-standings-all">
+            <div className="center-panel-content-all"> 
+                <div className="season-standings-all">
                     <div className="league-section-header">
-                        <p>Team Standings</p>
+                        <p>Season Standings</p>
                     </div>
-                    <List dataArray={props.leagueData.teams} listType={"league-standings"} />
+                    <SeasonStandings dataArray={seasonStandings}/>
+                </div>  
+                <div className="week-standings-all">
+                    <div className="league-section-header">
+                        <p>Weekly Standings</p>
+                        <p>Add Event Details Here</p>
+                    </div>
+                    <WeekStandings dataArray={props.leagueData.teams}/>
                 </div>
                 <div className="league-activity-all">
                     <div className="league-section-header">
                         <p>League Activity</p>
                     </div>
-                    <List dataArray={props.leagueData.activity} listType={"league-activity"} />
+                    <LeagueActivityList dataArray={props.leagueData.activity} listType={"league-activity"} />
                 </div>
                 <div className="league-settings-all">
                     <div className="league-section-header">
@@ -43,18 +88,24 @@ function LeagueTab(props) {
         );
     } else {
         return (
-            <div className="center-panel-content-all">            
-                <div className="league-standings-all">
+            <div className="center-panel-content-all">   
+                <div className="season-standings-all">
+                    <div className="league-section-header">
+                        <p>Season Standings</p>
+                    </div>
+                    <SeasonStandings dataArray={seasonStandings} />
+                </div>           
+                <div className="week-standings-all">
                     <div className="league-section-header">
                         <p>Team Standings</p>
                     </div>
-                    <List dataArray={props.leagueData.teams} listType={"league-standings"} />
+                    <WeekStandings dataArray={props.leagueData.teams} listType={"league-standings"} />
                 </div>
                 <div className="league-activity-all">
                     <div className="league-section-header">
                         <p>League Activity</p>
                     </div>
-                    <List dataArray={props.leagueData.activity} listType={"league-activity"} />
+                    <LeagueActivityList dataArray={props.leagueData.activity} listType={"league-activity"} />
                 </div>
                 <div className="league-settings-all">
                     <div className="league-section-header">

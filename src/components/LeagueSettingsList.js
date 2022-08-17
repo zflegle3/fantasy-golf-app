@@ -1,5 +1,3 @@
-import List from "./List"
-
 
 function LeagueSettingsList(props) {
     //props.settingsData
