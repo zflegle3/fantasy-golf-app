@@ -23,8 +23,8 @@
     width: 100%;
     padding: 2.5rem;
     border-radius: 1rem;
-    background-color: var(--tab-highlight);
-    /* border: 1px solid red; */
+    background-color: var(--bkgnd-panel-sub);
+    border: 1px solid var(--bkgnd-panel);
 }
 
 .league-section-header {
@@ -54,7 +54,7 @@
 }
 
 .league-settings-item p:nth-child(1) {
-    color: var(--text-sub);
+    color: var(--text-sub-a);
     font-size: 1.5rem;
 }
 .league-settings-item p:nth-child(2) {
@@ -72,7 +72,8 @@
     width: 100%;
     padding: 2.5rem 2.5rem 2.5rem 2.5rem;
     border-radius: 1rem;
-    background-color: var(--tab-highlight);
+    background-color: var(--bkgnd-panel-sub);
+    border: 1px solid var(--bkgnd-panel);
     margin-top: 1rem;
     margin-bottom: 3rem;
 }
@@ -90,20 +91,41 @@
     margin-right: 1rem;
 }
  
-.league-standings-item-header {
+.week-standings-item-header {
     display: flex;
-    flex-direction: column;justify-content: flex-start;
+    flex-direction: row;
+    justify-content: flex-start;
     white-space: nowrap;
 }
 
-.league-standings-item-header p:nth-child(1) {
+.week-standings-item-header div:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.week-standings-item-header div:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.week-standings-item-header .team-title p:nth-child(1) {
     color: var(--text-main);
     font-size: 1.5rem;
     padding-bottom: 0.5rem;
 }
-.league-standings-item-header p:nth-child(2) {
+.week-standings-item-header .team-title  p:nth-child(2) {
     color: var(--text-sub);
-    font-size: 1.5rem;
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+.week-standings-item-header .team-score p:nth-child(1) {
+    color: var(--text-main);
+    font-size: 2rem;
+    padding-left: 1rem;
 }
 
 .standings-roster-list {
@@ -117,9 +139,8 @@
 .standings-roster-item p {
     font-size: 1.5rem;
     padding: 0.5rem;
-    background-color: var(--button-norm);
-    color: var(--text-hlght);
-
+    background-color: var(--tab-bkgnd);
+    color: var(--tab-select-bkgnd);
     margin-bottom: 0.5rem;
     white-space: nowrap;
     border-radius: 0.5rem;
@@ -134,7 +155,8 @@
     width: 100%;
     padding: 2.5rem 2.5rem 2.5rem 2.5rem;
     border-radius: 1rem;
-    background-color: var(--tab-highlight);
+    background-color: var(--bkgnd-panel-sub);
+    border: 1px solid var(--bkgnd-panel);
     margin-top: 1rem;
     margin-bottom: 3rem;
 }
@@ -149,6 +171,13 @@
 .season-standings-list-header p {
     font-size: 1.5rem;
     color: var(--text-main);
+    white-space: nowrap;
+    padding:0rem 0.5rem 0rem 0.5rem;
+    justify-self: center;
+}
+
+.season-standings-list-header p:nth-child(2){
+    justify-self: start;
 }
 
 .season-standings-item {
@@ -164,7 +193,8 @@
 .season-standings-item p {
     padding-right: 1rem;
     font-size: 1.5rem;
-    color: var(--text-sub);
+    color: var(--text-sub-a);
+    justify-self: center;
 }
 
 .season-standings-team-header {
@@ -175,7 +205,6 @@
 } 
 
 .season-standings-item p:nth-child(1) {
-    color: var(--text-main);
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
 }
@@ -187,8 +216,8 @@
 }
 
 .season-standings-team-header p:nth-child(2) {
-    color: var(--text-sub);
-    font-size: 1.5rem;
+    color: var(--text-sub-b);
+    font-size: 1.2rem;
     padding-bottom: 0.5rem;
 }
 
@@ -202,7 +231,8 @@
     width: 100%;
     padding: 2.5rem;
     border-radius: 1rem;
-    background-color: var(--tab-highlight);
+    background-color: var(--bkgnd-panel-sub);
+    border: 1px solid var(--bkgnd-panel);
     margin-bottom: 3rem;
 }
 

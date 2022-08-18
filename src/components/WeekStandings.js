@@ -11,8 +11,13 @@ function WeekStandings(props) {
     let listItemsAll = props.dataArray.map((dataItem) =>
         <div key={uuidv4()} className={"week-standings-item"}>
             <div className="week-standings-item-header">
-                <p>{dataItem.teamName}</p>
-                <p>{dataItem.managerName}</p>
+                <div className="team-title">
+                    <p>{dataItem.teamName}</p>
+                    <p>{dataItem.managerName}</p>
+                </div>
+                <div className="team-score">
+                    <p>-6</p>
+                </div>
             </div>
             <Roster players={dataItem.roster}/>
         </div>

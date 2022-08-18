@@ -184,10 +184,10 @@ function League(props) {
                 <div className="dual-content-panel">
                     <div className="center-panel">
                     <ul className="center-panel-tabs">
-                        <Link to={`/league/${id}`} className="center-panel-tab-item">League</Link>
-                        <Link to={`/league/${id}/roster`} className="center-panel-tab-item">Team</Link>
-                        <Link to={`/league/${id}/players`} className="center-panel-tab-item">Players</Link>
-                        <Link to={`/league/${id}/draft`} className="center-panel-tab-item">Draft</Link>
+                        <Link to={`/league/${id}`} className="center-panel-tab-item">LEAGUE</Link>
+                        <Link to={`/league/${id}/roster`} className="center-panel-tab-item">TEAM</Link>
+                        <Link to={`/league/${id}/players`} className="center-panel-tab-item">PLAYERS</Link>
+                        <Link to={`/league/${id}/draft`} className="center-panel-tab-item">DRAFT</Link>
                     </ul>
                     <div className="center-panel-display">
                         <Routes>

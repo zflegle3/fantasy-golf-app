@@ -5,39 +5,61 @@ Main Document Styles
 
 * {
   /* Define Varibles here */
-  /* Style A
+
+  /* Style Sleeper */
   --bkgnd-main: #181c28;
-  --bkgnd-sub: #004346;
-  --bkgnd-lt: #74B3CE;
-  --bkgnd-drk: #508991;
-  --text-main: #EBF5DF;
-  --text-sub: #BAD4AA;
-  --button-norm: red;
-  --button-hov: red;
-  --button-tgt: red; */
+  --bkgnd-sub: #1f2431;
+  --bkgnd-panel: rgba(58,70,91,0.5);
+  --bkgnd-panel-sub: rgba(58,70,91,0.25);
+  --bkgnd-alt-dark: #18202f;
 
-  /* Style B
-  --bkgnd-main: #1E2019;
-  --bkgnd-sub: #394032;
-  --bkgnd-lt: #4f5845;
-  --bkgnd-drk: #508991;
-  --text-main: #CFEE9E;
-  --text-sub:  #CFEE9E;
-  --button-norm: #2BC016;
-  --button-hov: red;
-  --button-tgt: red; */
+  --bkgnd-drk-odd: #212635;
+  /* --bkgnd-lt: #377771; */
+  /* --bkgnd-drk: #1b403f; */
 
-    /* Style C */
-  --bkgnd-main: #0D1F22;
-  --bkgnd-sub: #132d2c;
+  --tab-bkgnd: rgba(0,206,184,0.1);
+  --tab-select-bkgnd: #00ceb8;
+
+  --border-main: #3a465b;
+
+  /* --shadow-main: #18202f; */
+
+
+  --text-main: #FFF;
+  --text-sub:  #b9c4d4;
+  --text-sub-a:  #7988a1;
+  --text-sub-b:  #a3bbd3;
+
+  --text-sub-dark: #677897;
+  --text-select-dark: #022047; 
+  /* --text-hlght:  #E6E49F; */
+  /* --text-drk:  #0D1F22; */
+  /* --text-drk-alt:  #0b5556; */
+  /* --text-grey: #8BAAAD; */
+  /* --button-norm: #0A8754; */
+  /* --button-hov: #1b403f; */
+  /* --button-tgt: red; */
+  /* --tab-highlight: #1b403f; */
+  /* --select-highlight: #fff; */
+  /* --bkgnd-plain: #0D1F22; */
+  --error-red: #ff2b6d;
+  /* --misc: #69995D; */
+
+  
+
+
+
+  /* Style A */
+  /* --bkgnd-main: #0D1F22; */
+  /* --bkgnd-sub: #132d2c; */
   --bkgnd-lt: #377771;
   --bkgnd-drk: #1b403f;
 
   --shadow-main: #18202f;
 
 
-  --text-main: #FFF;
-  --text-sub:  #87BAAB;
+  /* --text-main: #FFF; */
+  /* --text-sub:  #87BAAB; */
   --text-hlght:  #E6E49F;
   --text-drk:  #0D1F22;
   --text-drk-alt:  #0b5556;
@@ -55,10 +77,7 @@ Main Document Styles
 
 
 
-  box-sizing: border-box;
-
-
-
+  
 
   /* --bkgnd-plain: rgb(207, 207, 207);
   --button-norm: rgb(151, 232, 51);
@@ -69,8 +88,12 @@ Main Document Styles
 
   /* Fonts */
   font-family: 'Mukta', sans-serif;
-
+  box-sizing: border-box;
 }
+
+
+
+
 
 /* App Container Styles
 ~~~~~~~~~~~~~~~~~~~~ */
@@ -94,7 +117,7 @@ Main Document Styles
   display: flex;
   flex-direction: column;
   background-color: var(--bkgnd-sub);
-  border: 1px solid var(--bkgnd-drk);
+  border: 1px solid rgba(163,187,211,0.05);
 }
 
 .center-panel-container {
@@ -154,7 +177,7 @@ Main Document Styles
 
 .nav-link p {
   font-size: 2rem;
-  color: var(--text-sub);
+  color: var(--text-sub-dark);
   font-weight: 400;
 }
 
@@ -182,8 +205,7 @@ Main Document Styles
   align-items: center;
   flex-direction: row;
   padding: .5rem 1rem .5rem 2rem;
-  background-color: var(--bkgnd-main);
-  /* border: 1px solid var(--bkgnd-lt); */
+  background-color: var(--bkgnd-alt-dark);
   border-radius: 0.5rem;
 }
 
@@ -277,8 +299,8 @@ Main Document Styles
   flex-grow: 1;
   border-radius: 1.5rem;
   /* overflow: hidden; */
-  border: 1px solid var(--bkgnd-lt);
-  background-color: var(--bkgnd-sub);
+  border: 1px solid var(--border-main);
+  background-color: var(--bkgnd-panel);
 }
 
 .center-panel-tabs {
@@ -290,9 +312,9 @@ Main Document Styles
 }
 
 .center-panel-tab-item {
-  font-size: 2rem;
-  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
-  background-color: var(--bkgnd-drk);
+  font-size: 1.75rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  background-color: var(--tab-bkgnd);
   border-radius: 1rem;
   margin-right: 1rem;
   border-radius: 1rem;
@@ -300,13 +322,13 @@ Main Document Styles
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--text-sub);
+  color: var(--tab-select-bkgnd);
   text-decoration: none;
 }
 
 .center-panel-tab-item.league-tab-selected {
   color: var(--text-sub);
-  background-color: var(--bkgnd-lt);
+  background-color: var(--tab-select-bkgnd);
 }
 
 .center-panel-display {
@@ -319,10 +341,11 @@ Main Document Styles
 
 .center-panel-content-all {
   position: relative;
-  /* background-color: #0A8754; */
   overflow-y: scroll;
   padding-bottom: 3rem;
 }
+
+
 
 .center-panel-header {
   display: flex;
@@ -356,7 +379,7 @@ Main Document Styles
 /* Right Panel Styles
 ~~~~~~~~~~~~~~~~~~~~ */
 .right-panel {
-  background-color: var(--tab-highlight);
+
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -365,10 +388,8 @@ Main Document Styles
   border-radius: 1.5rem;
   overflow: hidden;
   margin-left: 2rem;
-  border: 1px solid var(--bkgnd-sub);
-  border: 1px solid var(--bkgnd-lt);
-  background-color: var(--bkgnd-sub);
-
+  border: 1px solid var(--border-main);
+  background-color: var(--bkgnd-panel);
 }
 
 /* Layout Changes (small Screens 

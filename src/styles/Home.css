@@ -39,11 +39,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 1rem 0rem 0.5rem 0rem;
+    margin: 3rem 0rem 0.5rem 0rem;
 }
 
-.leaderboard-header P {
+.leaderboard-header p {
     font-size: 1.5rem;
+    color: var(--text-sub-b)
 }
 
 .leaderboard-item-live {
@@ -70,7 +71,8 @@
     width: 100%;
     padding: 2.5rem 2.5rem 2.5rem 2.5rem;
     border-radius: 1rem;
-    background-color: var(--tab-highlight);
+    background-color: var(--bkgnd-panel-sub);
+    border: 1px solid var(--bkgnd-panel);
     margin-top: 1rem;
     margin-bottom: 3rem;
 }
@@ -168,10 +170,10 @@
 
 /* Inactive Schedule Item Styling */
 .inactive-tournament {
-    background-color: var(--bkgnd-main); 
+    background-color: var(--bkgnd-drk-odd); 
 }
 .inactive-tournament p {
-    color: var(--text-grey);
+    color: var(--text-sub-a);
 }
 
 
@@ -186,7 +188,7 @@
 }
 
 .active-tournament .schedule-item-content p:nth-child(1) {
-    color: var(--text-drk);
+    color: var(--text-select-dark);
 }
 
 
