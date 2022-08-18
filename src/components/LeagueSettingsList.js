@@ -1,10 +1,10 @@
 
 function LeagueSettingsList(props) {
     //props.settingsData
-    console.log(props.settingsData);
+    // console.log(props.settingsData);
 
     const editSettings = () => {
-        console.log("Add edit settings handling");
+        // console.log("Add edit settings handling");
         //conditionally render out logo if not admin
     }
 

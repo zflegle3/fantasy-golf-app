@@ -9,16 +9,15 @@ import LeagueSettingsList from "./LeagueSettingsList";
 
 
 function LeagueTab(props) {
-    //props.test
-    //props.LeagueData
-    //props.userInfo
-    //props.leagueLeaderboard
-    //props.openSettingsModal()
+    //props.leagueData
+    //props.leagueWeekLeaderboardData
     //props.leaderboardData
-    // console.log(props.leagueData);
-    // console.log(props.userInfo);
+    //props.userInfo
+    //props.openSettingsModal() 
+    console.log(props.leagueWeekLeaderboardData);
 
-    //temp variable to work on styling while also working on scoring syste,
+    //temp variable to work on styling while also working on scoring system
+    //will be replaced by props.leagueSeasonLeaderboardData
     const seasonStandings =[
         {   pos: 1,
             teamName: "Everybody Hates Reed",
@@ -55,6 +54,7 @@ function LeagueTab(props) {
     ];
 
 
+
     if (props.leagueData.settings.admin === props.userInfo.uid) {
         return (
             <div className="center-panel-content-all"> 
@@ -69,7 +69,7 @@ function LeagueTab(props) {
                         <p>Weekly Standings</p>
                         <p>Add Event Details Here</p>
                     </div>
-                    <WeekStandings dataArray={props.leagueData.teams}  leaderboardData={props.leaderboardData}/>
+                    <WeekStandings leagueWeekLeaderboardData={props.leagueWeekLeaderboardData}/>
                 </div>
                 <div className="league-activity-all">
                     <div className="league-section-header">
@@ -99,7 +99,7 @@ function LeagueTab(props) {
                     <div className="league-section-header">
                         <p>Team Standings</p>
                     </div>
-                    <WeekStandings dataArray={props.leagueData.teams} leaderboardData={props.leaderboardData} />
+                    <WeekStandings leagueWeekLeaderboardData={props.leagueWeekLeaderboardData}/>
                 </div>
                 <div className="league-activity-all">
                     <div className="league-section-header">

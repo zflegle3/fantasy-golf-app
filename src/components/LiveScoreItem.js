@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 function LiveScoreItem(props) {
     //props.playerData
-    console.log(props.playerData.currentHole);
+    // console.log(props.playerData.currentHole);
 
     //make playerTeeTime a component and pass data and contionally render 
         //if player has started render Round/Total Score
@@ -21,7 +21,7 @@ function LiveScoreItem(props) {
 
     let playerRoundsArray = [];
     for (let i=0; i<4; i++) {
-        console.log(props.playerData.rounds[i]);
+        // console.log(props.playerData.rounds[i]);
         if (props.playerData.rounds[i]) {
             playerRoundsArray.push({
                 roundNum: `R${i+1}`,
@@ -34,9 +34,9 @@ function LiveScoreItem(props) {
             })
         }
     }
-    console.log(playerRoundsArray);
+    // console.log(playerRoundsArray);
     let playerRoundsDisplay = playerRoundsArray.map((roundData) => 
-        <div className={"player-round-item"}>
+        <div key={uuidv4()} className={"player-round-item"}>
             <p>{roundData.roundNum}</p>
             <p>{roundData.roundScore}</p>
         </div>

@@ -2,32 +2,21 @@ import { v4 as uuidv4 } from 'uuid';
 import Roster from './Roster';
 
 function WeekStandings(props) {
-    //props.listType
-    //props.dataArray
-    //props.leaderboardData
-    console.log(props.dataArray);
-    // console.log(props.listType);
+    //props.leagueWeekLeaderboardData
+    // console.log(props.leagueWeekLeaderboardData);
 
-    // let leagueLeaderboard = props.leaderboardData.filter{
-
-    // }
-    console.log(props.leaderboardData);
-    console.log(props.dataArray);
-
-
-
-    let listItemsAll = props.dataArray.map((dataItem) =>
+    let listItemsAll = props.leagueWeekLeaderboardData.leagueTeamScores.map((teamItem) =>
         <div key={uuidv4()} className={"week-standings-item"}>
             <div className="week-standings-item-header">
                 <div className="team-title">
-                    <p>{dataItem.teamName}</p>
-                    <p>{dataItem.managerName}</p>
+                    <p>{teamItem.teamName}</p>
+                    <p>{teamItem.managerName}</p>
                 </div>
                 <div className="team-score">
-                    <p>{-8}</p>
+                    <p>{teamItem.teamTotal}</p>
                 </div>
             </div>
-            <Roster players={dataItem.roster} leaderboardData ={props.leaderboardData}/>
+            <Roster playersAll={teamItem.roster}/>
         </div>
     );
 

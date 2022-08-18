@@ -3,7 +3,7 @@ import Roster from './Roster';
 
 function MessageList(props) {
     //props.dataArray
-    console.log(props.dataArray);
+    // console.log(props.dataArray);
 
 
     let listItemsTemp = props.dataArray.map((dataItem) =>

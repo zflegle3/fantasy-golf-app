@@ -3,7 +3,7 @@ import Roster from './Roster';
 
 function SeasonStandings(props) {
     //props.dataArray
-    console.log(props.dataArray);
+    // console.log(props.dataArray);
 
 
     let listItemsAll = props.dataArray.map((dataItem) =>
