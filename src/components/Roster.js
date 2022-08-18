@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import LiveScoreItem from "./LiveScoreItem.js"
 uuidv4(); 
 
 function Roster(props) {
@@ -19,13 +20,16 @@ function Roster(props) {
 
     console.log(playerScores);
 
-    //if player has started render Round/Total Score
-    //if player hasn't started render Tee Time
+    //make playerTeeTime a component and pass data and contionally render 
+        //if player has started render Round/Total Score
+        //if player hasn't started render Tee Time
+        //render past rounds & total or just total
+        //if player's current hole > 1 render score, else render tee time 
 
     let listItemsAll =  playerScores.map((player) =>
             <div key={uuidv4()} className="standings-roster-item">
                 <p>{player.firstName} {player.lastName}</p>
-                <p>{player.teeTime} </p>
+                <LiveScoreItem playerData={player}/>
             </div>
         );
 

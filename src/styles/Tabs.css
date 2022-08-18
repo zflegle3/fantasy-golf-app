@@ -148,12 +148,43 @@
     margin-bottom: 0.5rem;
 }
 
-.standings-roster-item p {
+.standings-roster-item > p {
     font-size: 1.5rem;
     padding: 0.5rem;
     color: var(--tab-select-bkgnd);
     white-space: nowrap;
     border-radius: 0.5rem;
+}
+
+
+.player-score-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-score-item > p {
+    font-size: 1.5rem;
+    color: var(--tab-select-bkgnd);
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.player-round-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.player-round-item p:nth-child(1) {
+    font-size: 1.25rem;
+    color: var(--tab-select-bkgnd);
+}
+
+.player-round-item p:nth-child(2) {
+    font-size: 1.25rem;
+    color: var(--tab-select-bkgnd);
 }
 
   /* Season Standings Styling
