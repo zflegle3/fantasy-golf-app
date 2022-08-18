@@ -191,7 +191,7 @@ function League(props) {
                     </ul>
                     <div className="center-panel-display">
                         <Routes>
-                            <Route exact path="" element={<LeagueTab test={`${LeagueName}, League Home`} leagueData={leagueSelectData} userInfo={props.userInfo} openSettingsModal={openSettingsModal} leagueLeaderboard={leagueLeaderboard} />}/>
+                            <Route exact path="" element={<LeagueTab test={`${LeagueName}, League Home`} leagueData={leagueSelectData} userInfo={props.userInfo} openSettingsModal={openSettingsModal} leagueLeaderboard={leagueLeaderboard} leaderboardData={props.leaderboardData}/>}/>
                             <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData} leagueLeaderboard={leagueLeaderboard}/>}/>
                             <Route exact path="players" element={<Test test={`${LeagueName}, Players`}/>}/>
                             <Route exact path="draft" element={<Test test={`${LeagueName}, Draft`}/>}/>

@@ -96,13 +96,13 @@
     flex-direction: row;
     justify-content: flex-start;
     white-space: nowrap;
+    padding-bottom: 0.5rem;
 }
 
 .week-standings-item-header div:nth-child(1) {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
 }
 
 .week-standings-item-header div:nth-child(2) {
@@ -113,19 +113,22 @@
 
 .week-standings-item-header .team-title p:nth-child(1) {
     color: var(--text-main);
-    font-size: 1.5rem;
+    font-size: 2rem;
     padding-bottom: 0.5rem;
 }
 .week-standings-item-header .team-title  p:nth-child(2) {
     color: var(--text-sub);
-    font-size: 1rem;
+    font-size: 1.25rem;
     padding-bottom: 0.5rem;
 }
 
 .week-standings-item-header .team-score p:nth-child(1) {
     color: var(--text-main);
-    font-size: 2rem;
-    padding-left: 1rem;
+    font-size: 2.5rem;
+    margin-left: 1rem;
+    padding: 1rem 1rem 1rem 1rem;
+    border: 1px solid white;
+    border-radius: 2rem;
 }
 
 .standings-roster-list {
@@ -136,12 +139,19 @@
     align-items: flex-start;
 }
 
+.standings-roster-item {
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--tab-bkgnd);
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 .standings-roster-item p {
     font-size: 1.5rem;
     padding: 0.5rem;
-    background-color: var(--tab-bkgnd);
     color: var(--tab-select-bkgnd);
-    margin-bottom: 0.5rem;
     white-space: nowrap;
     border-radius: 0.5rem;
 }

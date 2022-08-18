@@ -14,7 +14,7 @@ function LeagueTab(props) {
     //props.userInfo
     //props.leagueLeaderboard
     //props.openSettingsModal()
-
+    //props.leaderboardData
     // console.log(props.leagueData);
     // console.log(props.userInfo);
 
@@ -69,13 +69,13 @@ function LeagueTab(props) {
                         <p>Weekly Standings</p>
                         <p>Add Event Details Here</p>
                     </div>
-                    <WeekStandings dataArray={props.leagueData.teams}/>
+                    <WeekStandings dataArray={props.leagueData.teams}  leaderboardData={props.leaderboardData}/>
                 </div>
                 <div className="league-activity-all">
                     <div className="league-section-header">
                         <p>League Activity</p>
                     </div>
-                    <LeagueActivityList dataArray={props.leagueData.activity} listType={"league-activity"} />
+                    <LeagueActivityList dataArray={props.leagueData.activity}/>
                 </div>
                 <div className="league-settings-all">
                     <div className="league-section-header">
@@ -93,19 +93,19 @@ function LeagueTab(props) {
                     <div className="league-section-header">
                         <p>Season Standings</p>
                     </div>
-                    <SeasonStandings dataArray={seasonStandings} />
+                    <SeasonStandings dataArray={seasonStandings} leaderboardData={props.leaderboardData}/>
                 </div>           
                 <div className="week-standings-all">
                     <div className="league-section-header">
                         <p>Team Standings</p>
                     </div>
-                    <WeekStandings dataArray={props.leagueData.teams} listType={"league-standings"} />
+                    <WeekStandings dataArray={props.leagueData.teams} leaderboardData={props.leaderboardData} />
                 </div>
                 <div className="league-activity-all">
                     <div className="league-section-header">
                         <p>League Activity</p>
                     </div>
-                    <LeagueActivityList dataArray={props.leagueData.activity} listType={"league-activity"} />
+                    <LeagueActivityList dataArray={props.leagueData.activity} />
                 </div>
                 <div className="league-settings-all">
                     <div className="league-section-header">

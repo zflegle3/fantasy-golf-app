@@ -4,8 +4,16 @@ import Roster from './Roster';
 function WeekStandings(props) {
     //props.listType
     //props.dataArray
+    //props.leaderboardData
     console.log(props.dataArray);
     // console.log(props.listType);
+
+    // let leagueLeaderboard = props.leaderboardData.filter{
+
+    // }
+    console.log(props.leaderboardData);
+    console.log(props.dataArray);
+
 
 
     let listItemsAll = props.dataArray.map((dataItem) =>
@@ -16,10 +24,10 @@ function WeekStandings(props) {
                     <p>{dataItem.managerName}</p>
                 </div>
                 <div className="team-score">
-                    <p>-6</p>
+                    <p>{-8}</p>
                 </div>
             </div>
-            <Roster players={dataItem.roster}/>
+            <Roster players={dataItem.roster} leaderboardData ={props.leaderboardData}/>
         </div>
     );
 
