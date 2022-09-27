@@ -1,26 +1,22 @@
-# Fantasy Golf App - Sleeper Clone (In Progress)
-
-[Live Demo Here!](https://zflegle3.github.io/to-do-list/)
+# Fantasy Golf App - Sleeper.com Clone (In Progress)
 
 ## Summary
 
-This project was built as part of The Odin Project JavaScript curriculum. The objective of this project was to clone our favorite website to practice the JavaScript skills we have learned throughout the coursework. I chose to create a clone of [Sleeper.com](https://sleeper.com/) which is a fantasy football app but to apply a golf theme to the project. The finished project will be a fullstack application that allows users to play a seasson long PGA Tour based fantasy golf game.
+This project was built as part of The Odin Project Fullstack JavaScript Curriculum. The objective of this project was to clone our favorite website to practice the fullstack JavaScript skillset we have learned throughout the coursework. I chose to create a clone of [Sleeper.com](https://sleeper.com/) which is one of my favorite fantasy football applications. To add my own twist to this project I chose to apply a fantasy golf theme instead of a football theme. The finished project will be a fullstack application that allows users to play a season long PGA Tour based fantasy golf game with other users.
 
 
 
-## Current Features
+### Current Features:
 * Google Firebase Authentication via email and password
 * Google Firebase Cloud Firestore to store user, league, and application data
-* Live Golf Leaderboards, World Rankings, & Fedex Cup Rankings using [Slash Golf API] (https://slashgolf.dev/)
+* Live Golf Leaderboards, World Rankings, & Fedex Cup Rankings using [Slash Golf API](https://slashgolf.dev/)
 * League creation & scoring settings customization
 * Real time inter-league messaging
-* League 
 
-
-## Features In Work
-* Live League Draft
+### Features In Work:
+* Live league draft
 * Roster creation and season long roster customization (add/drop players)
-* League stadings (Weekly live leaderboards/ Regular Season / Playoffs)
+* League scoring and standings (Weekly live leaderboards/ Regular Season / Playoffs)
 
 
 
