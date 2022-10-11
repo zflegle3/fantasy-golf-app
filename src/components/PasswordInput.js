@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import { ReactComponent as EyeSvg } from '../images/icons/eye-outline.svg';
 import { ReactComponent as NoEyeSvg } from '../images/icons/eye-off-outline.svg';
 
+
 function PasswordInput(props) {
+    //props.passStatus
+
+    console.log(props.passStatus);
     const [hideState, setHideState] = useState(true);
 
     const handleClick = (e) => {
@@ -16,11 +20,11 @@ function PasswordInput(props) {
 
     if (hideState) {
         return(
-            <div className="form-item-container">
+            <div className={`form-item-container ${props.passStatus}`}>
                 <label htmlFor="pwd">Password</label>
-
+``
                 <div className="input-container">
-                    <input type="password" id="pwd" name="pwd" placeholder="Enter password" ></input>
+                    <input type="password" id="pwd-in" name="pwd" placeholder="Enter password" ></input>
                     <div id="show-pass" onClick={handleClick}>
                         <EyeSvg id="show-pass"/>
                     </div>
@@ -31,11 +35,11 @@ function PasswordInput(props) {
         );
     } else {
         return(
-            <div className="form-item-container">
+            <div className={`form-item-container ${props.passStatus}`}>
                 <label htmlFor="pwd">Password</label>
 
                 <div className="input-container">
-                    <input type="text" id="pwd" name="pwd" placeholder="Enter password" className="show"></input>
+                    <input type="text" id="pwd-in" name="pwd" placeholder="Enter password" className="show"></input>
                     <div id="hide-pass" onClick={handleClick}>
                         <NoEyeSvg id="hide-pass" />
                     </div>

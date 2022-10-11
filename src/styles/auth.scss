@@ -12,12 +12,6 @@
         width: 100vw;
         flex-direction: row;        
     }
-
-
-
-
-
-
 }
 
 
@@ -102,6 +96,7 @@
 
 .form-item-container.hidden {
     visibility: hidden;
+    height: 0px;
 }
 
 .input-container {
@@ -132,6 +127,10 @@
     border-radius: 0.2rem;
     box-shadow: 3px 3px rgba(0,0,0,0.15);
     transition: 0.5s;
+}
+
+.input-container input.show {
+
 }
 
 ::-webkit-input-placeholder {

@@ -27,44 +27,52 @@ function Login(props) {
     //props.auth
     //props.switchPage
     //props.db
-    const [passStatus, setPassStatus] = useState(false);//true when user is valid
+    const [passStatus, setPassStatus] = useState("hidden");//true when user is valid
     const [userValid, setUserValid] = useState("");
-    const [passValid, setPassValid] = useState("");
 
     async function userLogin(e) {
         e.preventDefault();
-        if (!userValid) {
-            //check if user is valid and set state/show password input if valid
-            let userEmailorNameIn = document.getElementById("email").value;
-            if (userEmailorNameIn.length >0) {
-                if (await checkUserName(userEmailorNameIn)) {
-                    console.log("set data by username");
-                    //displays password input
-                    setPassStatus(true);
-                } else if ( await checkEmail(userEmailorNameIn)) {
-                    console.log("set data by email");
-                    //displays password input
-                    setPassStatus(true);
+        let userEmailOrNameIn = document.getElementById("email-in");
+        console.log(userEmailOrNameIn)
+        if (await checkUser(userEmailOrNameIn.value)) {
+            //resets user error codes and displays password on valid user input
+            document.getElementById("user-error-login").className = "";
+            document.getElementById("user-error-login").textContent = "";
+            if (passStatus === "hidden")
+                setPassStatus("");
+            else {
+                let userPasswordIn = document.getElementById("pwd-in").value;
+                if (userPasswordIn.length >0) {
+                    console.log("login")
+                    logInEmailPassword(userValid.email,userPasswordIn);
                 } else {
-                    document.getElementById("user-error-login").className = "invalid";
-                    document.getElementById("user-error-login").textContent = `Sorry, we were unable to find anyone using ${userEmailorNameIn}`;
+                    document.getElementById("pass-error-login").className = "invalid";
+                    document.getElementById("pass-error-login").textContent = "Cannot be empty, ";
                 }
-            } else {
-                document.getElementById("user-error-login").className = "invalid";
-                document.getElementById("user-error-login").textContent = "Cannot be empty, ";
-            }
-        } else {
-            let userPasswordIn = document.getElementById("pwd").value;
-            if (userPasswordIn.length >0) {
-                console.log("login")
-                logInEmailPassword(userValid.email,userPasswordIn);
-            } else {
-                document.getElementById("pass-error-login").className = "invalid";
-                document.getElementById("pass-error-login").textContent = "Cannot be empty, ";
             }
         }
     };
 
+    async function checkUser(userEmailOrNameIn) {
+        if (userEmailOrNameIn.length > 0) {
+            if (await checkUserName(userEmailOrNameIn)) {
+                console.log("set data by username");
+                //username is valid
+                return(true);
+            } else if ( await checkEmail(userEmailOrNameIn)) {
+                console.log("set data by email");
+                //email is valid
+                return(true);
+            } else {
+                //invalid user credentials 
+                document.getElementById("user-error-login").className = "invalid";
+                document.getElementById("user-error-login").textContent = `Sorry, we were unable to find anyone using ${userEmailOrNameIn}`;
+            }
+        } else {
+            document.getElementById("user-error-login").className = "invalid";
+            document.getElementById("user-error-login").textContent = "Cannot be empty, ";
+        }
+    }
 
     async function checkUserName (userInput) {
         const userByNameQuery = query(
@@ -137,7 +145,7 @@ function Login(props) {
         }
     }
 
-    if (!passStatus) {
+    // if (!passStatus) {
         return(
             <div className="auth-container">
                 <div className="auth-left"></div>
@@ -147,10 +155,10 @@ function Login(props) {
                         <div className="auth-header">
                             <div className="auth-header-main">
                                 <h1>Login</h1>
-                                {/* <p id="signup" onClick={}>Sign Up</p> */}
+                                <p id="signup" onClick={props.switchPage}>Sign Up</p>
                             </div>
                             <div className="auth-header-sub">
-                                Sign in using email
+                                Sign in using email or username
                             </div>
 
                         </div>
@@ -161,11 +169,13 @@ function Login(props) {
                                 <label htmlFor="email">email or username</label>
 
                                 <div className="input-container">
-                                    <input type="email" id="email" name="email" placeholder="Enter email" ></input>
+                                    <input type="email" id="email-in" name="email" placeholder="Enter email" ></input>
                                 </div>
 
                                 <p id="user-error-login" ></p>
                             </div> 
+
+                            <PasswordInput passStatus={passStatus}/>
 
                             <div className="form-submit-container">
                                 <div className="form-btn-container">
@@ -182,69 +192,93 @@ function Login(props) {
                 </div>
             </div>
         )
-    } else {
-        return(
-            <div className="auth-container">
-                <div className="auth-left"></div>
-                <div className="auth-right">
-                    <div className="auth-content">
+    } 
+    // else {
+    //     return(
+    //         <div className="auth-container">
+    //             <div className="auth-left"></div>
+    //             <div className="auth-right">
+    //                 <div className="auth-content">
 
-                        <div className="auth-header">
-                            <div className="auth-header-main">
-                                <h1>Login</h1>
-                                {/* <p id="signup" onClick={}>Sign Up</p> */}
-                            </div>
-                            <div className="auth-header-sub">
-                                Sign in using email
-                            </div>
+    //                     <div className="auth-header">
+    //                         <div className="auth-header-main">
+    //                             <h1>Login</h1>
+    //                             <p id="signup" onClick={props.switchPage}>Sign Up</p>
+    //                         </div>
+    //                         <div className="auth-header-sub">
+    //                             Sign in using email or username
+    //                         </div>
 
-                        </div>
+    //                     </div>
 
-                        <form className="login-form">
+    //                     <form className="login-form">
 
-                            <div className="form-item-container">
-                                <label htmlFor="email">email or username</label>
+    //                         <div className="form-item-container">
+    //                             <label htmlFor="email">email or username</label>
 
-                                <div className="input-container">
-                                    <input type="email" id="email" name="email" placeholder="Enter email" ></input>
-                                </div>
+    //                             <div className="input-container">
+    //                                 <input type="email" id="email-in" name="email" placeholder="Enter email" ></input>
+    //                             </div>
 
-                                <p id="user-error-login" ></p>
-                            </div> 
+    //                             <p id="user-error-login" ></p>
+    //                         </div> 
 
-                            <PasswordInput />
+    //                         <PasswordInput />
 
-                            {/* <div className="form-item-container">
-                                <label htmlFor="pwd">Password</label>
+    //                         <div className="form-submit-container">
+    //                             <div className="form-btn-container">
+    //                                 <button onClick={userLogin}>Continue</button>
+    //                             </div>
+    //                             <p id="pass-reset">
+    //                                 Forgot password?
+    //                             </p>
 
-                                <div className="input-container">
-                                    <input type="password" id="pwd" name="pwd" placeholder="Enter password" ></input>
-                                    <div></div>
-                                </div>
+    //                         </div>
 
-                                <p id="pass-error-login">Your password was incorrect</p>
-                            </div>  */}
+    //                     </form>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     )
+    // }
 
-                            <div className="form-submit-container">
-                                <div className="form-btn-container">
-                                    <button onClick={userLogin}>Continue</button>
-                                </div>
-                                <p id="pass-reset">
-                                    Forgot password?
-                                </p>
-
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-}
+// }
 
 export default Login;
+
+// async function userLogin(e) {
+//     e.preventDefault();
+//     if (!userValid) {
+//         //check if user is valid and set state/show password input if valid
+//         let userEmailorNameIn = document.getElementById("email").value;
+//         if (userEmailorNameIn.length >0) {
+//             if (await checkUserName(userEmailorNameIn)) {
+//                 console.log("set data by username");
+//                 //displays password input
+//                 setPassStatus(true);
+//             } else if ( await checkEmail(userEmailorNameIn)) {
+//                 console.log("set data by email");
+//                 //displays password input
+//                 setPassStatus(true);
+//             } else {
+//                 document.getElementById("user-error-login").className = "invalid";
+//                 document.getElementById("user-error-login").textContent = `Sorry, we were unable to find anyone using ${userEmailorNameIn}`;
+//             }
+//         } else {
+//             document.getElementById("user-error-login").className = "invalid";
+//             document.getElementById("user-error-login").textContent = "Cannot be empty, ";
+//         }
+//     } else {
+//         let userPasswordIn = document.getElementById("pwd").value;
+//         if (userPasswordIn.length >0) {
+//             console.log("login")
+//             logInEmailPassword(userValid.email,userPasswordIn);
+//         } else {
+//             document.getElementById("pass-error-login").className = "invalid";
+//             document.getElementById("pass-error-login").textContent = "Cannot be empty, ";
+//         }
+//     }
+// };
 
 
 

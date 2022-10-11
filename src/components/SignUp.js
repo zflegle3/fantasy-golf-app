@@ -1,10 +1,14 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useState, useEffect } from 'react';
+import PasswordInput from "./PasswordInput"
 
 
 
 function SignUp(props) {
-
-
+    const [passStatus, setPassStatus] = useState(false);//true when user is valid
+    const [newUserValid, setNewUserValid] = useState("");
+    const [newEmailValid, setNewEmailValid] = useState("");
+    const [newPassValid, setNewPassValid] = useState("");
 
 
     const validateSignUp = (e) => {
@@ -13,6 +17,7 @@ function SignUp(props) {
         let emailCheck = false;
         let passCheck = false;
 
+        let userNameEl = document.getElementById("user-name");
         let emailEl = document.getElementById("email");
         let passEl = document.getElementById("pwd");
 
@@ -127,7 +132,17 @@ function SignUp(props) {
                     <form className="sign-up-form">
 
                         <div className="form-item-container">
-                            <label htmlFor="email">Email</label>
+                            <label htmlFor="user-name">username</label>
+
+                            <div className="input-container">
+                                <input type="text" id="user-name" name="user-name" placeholder="Enter new username" ></input>
+                            </div>
+
+                            <p id="user-name-error" >Username Error</p>
+                        </div>
+
+                        <div className="form-item-container">
+                            <label htmlFor="email">email</label>
 
                             <div className="input-container">
                                 <input type="email" id="email" name="email" placeholder="Enter email" ></input>
@@ -136,18 +151,22 @@ function SignUp(props) {
                             <p id="email-error" >Username Error</p>
                         </div>
 
+                        <PasswordInput />
                         <div className="form-item-container">
-                            <label htmlFor="pwd">Password</label>
-
-                            <div className="input-container">
-                                <input type="password" id="pwd" name="pwd" placeholder="Set a password" ></input>
-                            </div>
-
                             <p id="pass-error-signin-length">have at least 8 characters</p>
                             <p id="pass-error-signin-upper">have at least 1 Upper characters</p>
                             <p id="pass-error-signin-number">have at least 1 number</p>
                             <p id="pass-error-signin-special">have at least 1 special character (i.e. ! @ # $ % ^ & *)</p>
                         </div>
+
+                        {/* <div className="form-item-container">
+                            <label htmlFor="pwd">password</label>
+
+                            <div className="input-container">
+                                <input type="password" id="pwd" name="pwd" placeholder="Set a password" ></input>
+                            </div>
+
+                        </div> */}
 
                         <div className="form-submit-container">
                             <div className="form-btn-container">
