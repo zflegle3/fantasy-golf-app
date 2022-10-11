@@ -69,7 +69,7 @@ function LeagueTab(props) {
                         <p>Weekly Standings</p>
                         <p>Add Event Details Here</p>
                     </div>
-                    <WeekStandings leagueWeekLeaderboardData={props.leagueWeekLeaderboardData}/>
+                    {/* <WeekStandings leagueWeekLeaderboardData={props.leagueWeekLeaderboardData}/> */}
                 </div>
                 <div className="league-activity-all">
                     <div className="league-section-header">

@@ -1,25 +1,35 @@
-/* Auth Container Styles
-~~~~~~~~~~~~~~~~~~~~ */
-/* .app-landing {
+
+// Variables
+
+
+.app-landing {
     min-height: 100vh;
+
+
+    .auth-container {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+        flex-direction: row;        
+    }
+
+
+
+
+
+
 }
 
-.auth-container {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    flex-direction: row;
-} */
 
-/* .auth-left {
+.auth-left {
     min-width: 500px;
     height: 100vh;
     background-color: rebeccapurple;
     display: flex;
     flex: 2 2 0; /* flex grow , shrink,  basis */
     position: relative;
-    /* background-image: url("../images/pictures/9-hole-1.JPG"); */
-    /* background-image: url("../images/pictures/3-fairway-1.JPG"); */
+    // background-image: url("../images/pictures/9-hole-1.JPG");
+    // background-image: url("../images/pictures/3-fairway-1.JPG");
     background-image: url("../images/pictures/3-fairway-2.JPG");
     background-size: cover;
     background-repeat: no-repeat;
@@ -42,8 +52,8 @@
 }
 
 
-/* Auth Header Styles
-~~~~~~~~~~~~~~~~~~~~ */
+// Auth Header Styles
+// ~~~~~~~~~~~~~~~~~~~~
 .auth-header {
     margin-bottom: 40px
 }
@@ -83,18 +93,33 @@
 }
 
 
-/* Form Styles
-~~~~~~~~~~~~~~~~~~~~ */
+// Form Styles
+// ~~~~~~~~~~~~~~~~~~~~
 .form-item-container {
     min-width: 350px;
     margin-bottom: 2rem;
 }
 
+.form-item-container.hidden {
+    visibility: hidden;
+}
+
 .input-container {
     display: flex;
+    align-items: center;
     flex-grow: 1;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+
+    div {
+        width: 2.5rem;
+        height: 2.5rem;
+
+        svg {
+            height: 100%;
+            width: 100%;
+        }
+    }
 }
 
 .input-container input {
@@ -213,6 +238,3 @@
 p[id*="pass-error-signin"].invalid {
     color: var( --error-red);
 }
-
-
- */
