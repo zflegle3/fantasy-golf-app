@@ -222,9 +222,9 @@ function App() {
     return (
       <Router>
         <Routes>
-          <Route exact path="/" element={<Login db={db} auth={auth} switchPage={authSwitchPage} />}/>
-          <Route exact path="/sign-up" element={<SignUp db={db} auth={auth} switchPage={authSwitchPage} />}/>
-          <Route exact path="/forgot" element={<PasswordReset auth={auth} switchPage={authSwitchPage} />}/>
+          <Route exact path="/" element={<Login db={db} auth={auth}/>}/>
+          <Route exact path="/sign-up" element={<SignUp db={db} auth={auth}/>}/>
+          <Route exact path="/forgot" element={<PasswordReset db={db} auth={auth}/>}/>
         </Routes>
       </Router>
     )
