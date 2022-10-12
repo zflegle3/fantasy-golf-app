@@ -78,15 +78,12 @@ const db = getFirestore(app);
 
 
 
-
-
-
-
 function App() {
   const [pageSelect, setPageSelect] = useState("login");
   const [userAuth, setUserAuth] = useState(false);
   const [userActive, setUserActive] = useState();
   //Data passed to components 
+  const [userData, setUserData] = useState("");
   const [leagues, setLeagues] = useState([]); 
   const [scheduleDataAll, setScheduleDataAll] = useState();
   const [leaderboardData, setLeaderboardData] = useState();
@@ -94,6 +91,22 @@ function App() {
   const [worldRanksData, setWorldRanksData] = useState();
   const [fedexRanksData, setFedexRanksData] = useState();
 
+  async function pullUserData(user) { 
+    //pulls user data 
+    let userId = user.uid;
+    let userEmail = user.email;
+    let userDocPath = `users/U-${userId}`;
+    const userDoc = doc(db, `${userDocPath}`);
+    const userSnap  = await getDoc(userDoc);
+    if (userSnap.exists()) { //if valid store league ids in state
+      const userData = userSnap.data();
+      setUserData(userData);
+    } else {
+      console.log("No Doc found");
+      //USER DOC CREATED IN SIGN IN, HANDLE ERROR ONLY IF NEEDED
+      // await setDoc(doc(db, "users", `U-${userId}`), {email: `${userEmail}`,leagues: []});
+    }
+  }
 
   const authSwitchPage = (e) => {
     console.log("switch from login");
@@ -148,196 +161,8 @@ function App() {
   }, []);
 
 
-  async function pullUserData(user) { 
-    //pulls user data 
-    let userId = user.uid;
-    let userEmail = user.email;
-    let userDocPath = `users/U-${userId}`;
-    const userDoc = doc(db, `${userDocPath}`);
-    const userSnap  = await getDoc(userDoc);
-    if (userSnap.exists()) { //if valid store league ids in state
-      const userData = userSnap.data();
-      setLeagues(userData.leagues);
-    } else {//if not valid (Signed Up), populate empty doc w/ uId
-      console.log("No Doc found");
-      await setDoc(doc(db, "users", `U-${userId}`), {email: `${userEmail}`,leagues: []});
-    }
-  }
-
-  // async function pullScheduleData() { 
-  //   //updates schedule data monthly when loaded (reduce frequency?)
-  //   const scheduleDoc = doc(db, "schedules/2023-schedule");
-  //   const scheduleSnap = await getDoc(scheduleDoc);
-  //   console.log(scheduleSnap);
-  //   console.log(scheduleSnap.exists());
-  //   if (scheduleSnap.exists()) {
-  //     const scheduleData = scheduleSnap.data();
-  //     console.log(scheduleData);
-  //     // console.log("Setting Schedule Data",);
-  //     setScheduleDataAll(scheduleData.schedule);
-  //     getNextEvent(scheduleData.schedule);
-  //     const currentTimestamp = Timestamp.fromDate(new Date()); //current timestamp
-  //     let daysSinceUpdate = (currentTimestamp - scheduleData.lastUpdate)/86400;
-  //     if (daysSinceUpdate > 30) { //if last update more than 30days prior pull new data and populate
-  //       console.log("Updating schedule data.")
-  //       const options = {
-  //         method: 'GET',
-  //         headers: {
-  //           'X-RapidAPI-Key': '8a8c03b674msh32cd92a7c6fbf58p140730jsn7fb9bc80d982',
-  //           'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com'
-  //         }
-  //       };
-  //       const response = await fetch('https://live-golf-data.p.rapidapi.com/schedule?orgId=1&year=2023', options);
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-  //       const newData = await response.json();
-  //       setDoc(scheduleDoc, {
-  //         lastUpdate: Timestamp.fromDate(new Date()),
-  //         schedule: newData.schedule,
-  //       });
-  //     } else {
-  //       console.log("Schedule Data up to date");
-  //     }
-  //   } else {
-  //     console.log("Schedule Updating Error, no schedule doc found.");
-  //   }
-  // }
-
-  // const getNextEvent = (latestSchedule) => { 
-  // //determines next tournament based on schedule data in database
-  // //called in pullScheduleData
-  //   // console.log(latestSchedule);
-  //   let upcomingEvents = latestSchedule.filter(event => ((Date.now()-(event.date.end.$date.$numberLong))/86400000) < 1);
-  //   //filters out events by diff between tourn End date and todays date
-  //   //Extra time (3days) for finalizing and to simplify render timeline during development
-  //   console.log(upcomingEvents);
-  //   console.log(Date.now());
-  //   console.log(((Date.now()-upcomingEvents[0].date.end.$date.$numberLong)/86400000)-3);
-  //   console.log(upcomingEvents[0].tournId);
-  //   let nextEvent = upcomingEvents[0];
-  //   setLeaderboardInfo(nextEvent);
-  //   pullLeaderboardData(nextEvent.tournId);
-  // }
-
-
-  // async function pullLeaderboardData(nextTournId) { 
-  //   //updates Leaderboard data hourly(UPDATE FREQUENCY)
-  //   const leaderboardDoc = doc(db, "leaderboard-live/example-leaderboard");
-  //   const leaderboardSnap = await getDoc(leaderboardDoc);
-  //   if (leaderboardSnap.exists()) {
-  //     const leaderboardData = leaderboardSnap.data();
-  //     // console.log("Setting Live Leaderboard Data");
-  //     setLeaderboardData(leaderboardData.leaderboard);
-  //     const currentTimestamp = Timestamp.fromDate(new Date()); //current timestamp
-  //     let daysSinceUpdate = (currentTimestamp - leaderboardData.lastUpdate)/86400;
-  //     if (daysSinceUpdate > 30) { //CURRENTLY SET TO 30 DAYS, UPDATE TO HOURLY ONCE WORKING
-  //       console.log("Updating Leaderboard Data")
-  //       const options = {
-  //         method: 'GET',
-  //         headers: {
-  //           'X-RapidAPI-Key': '8a8c03b674msh32cd92a7c6fbf58p140730jsn7fb9bc80d982',
-  //           'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com'
-  //         }
-  //       };
-  //       // Error here, selecting next week's tourn id 
-  //       const response = await fetch(`https://live-golf-data.p.rapidapi.com/leaderboard?tournId=${nextTournId}&year=2022`, options);
-  //       if (!response.ok) {
-  //         console.log("Tournament", nextTournId, "has not started yet");
-  //         setLeaderboardData("no-current-events");
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-  //       const newData = await response.json();
-  //       console.log(newData);
-  //       setDoc(leaderboardDoc, {
-  //         lastUpdate: Timestamp.fromDate(new Date()),
-  //         leaderboard: newData,
-  //       });
-  //     } else {
-  //       console.log("Leaderboard data up to date");
-  //     }
-  //   } else {
-  //     console.log("Leaderboard Updaing Error, no leaderboard doc found.");
-  //   }
-  // }
-
-
-  // async function pullWorldRankData() {
-  //   //pull world rank data and set state
-  //   const worldRankDoc = doc(db, "rankings/world-rankings");
-  //   const worldRankSnap = await getDoc(worldRankDoc);
-  //   if (worldRankSnap.exists()) {
-  //     const worldRankData = worldRankSnap.data();
-  //     // console.log("Setting Live Leaderboard Data");
-  //     setWorldRanksData(worldRankData);
-  //     const currentTimestamp = Timestamp.fromDate(new Date());
-  //     let daysSinceUpdate = (currentTimestamp - worldRankData.lastUpdate)/86400;
-  //     if (daysSinceUpdate > 30) { //CURRENTLY SET TO 30 DAYS, UPDATE TO WEEKLY ONCE WORKING
-  //       console.log("Updating World Rankings Data")
-  //       const options = {
-  //         method: 'GET',
-  //         headers: {
-  //             'X-RapidAPI-Key': '8a8c03b674msh32cd92a7c6fbf58p140730jsn7fb9bc80d982',
-  //             'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com'
-  //         }
-  //       };
-  //       const response = await fetch('https://live-golf-data.p.rapidapi.com/stats?year=2022&statId=186', options);
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-  //       const newData = await response.json();
-  //       console.log(newData);
-  //       setDoc(worldRankDoc, {
-  //         lastUpdate: Timestamp.fromDate(new Date()),
-  //         worldRanks: newData,
-  //       });
-  //     } else {
-  //       console.log("World Rankings up to date");
-  //     }
-  //   } else {
-  //     console.log("World Rankings Updaing Error, no leaderboard doc found.");
-  //   }
-  // }
-
-  // async function pullFedexRankData() {
-  //   //pull world rank data and set state
-  //   const fedexRankDoc = doc(db, "rankings/fedex-rankings");
-  //   const fedexRankSnap = await getDoc(fedexRankDoc);
-  //   if (fedexRankSnap.exists()) {
-  //     const fedexRankData = fedexRankSnap.data();
-  //     setFedexRanksData(fedexRankData);
-  //     const currentTimestamp = Timestamp.fromDate(new Date());
-  //     let daysSinceUpdate = (currentTimestamp - fedexRankData.lastUpdate)/86400;
-  //     if (daysSinceUpdate > 30) { //CURRENTLY SET TO 30 DAYS, UPDATE TO WEEKLY ONCE WORKING
-  //       console.log("Updating Fedex Rankings Data")
-  //       const options = {
-  //         method: 'GET',
-  //         headers: {
-  //             'X-RapidAPI-Key': '8a8c03b674msh32cd92a7c6fbf58p140730jsn7fb9bc80d982',
-  //             'X-RapidAPI-Host': 'live-golf-data.p.rapidapi.com'
-  //         }
-  //       };
-  //       const response = await fetch('https://live-golf-data.p.rapidapi.com/stats?year=2022&statId=02671', options);
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-  //       const newData = await response.json();
-  //       console.log(newData);
-  //       setDoc(fedexRankDoc, {
-  //         lastUpdate: Timestamp.fromDate(new Date()),
-  //         fedexRanks: newData,
-  //       });
-  //     } else {
-  //       console.log("Fedex Rankings up to date");
-  //     }
-  //   } else {
-  //     console.log("Fedex Rankings Updaing Error, no leaderboard doc found.");
-  //   }
-  // }
-
-
   // console.log(userActive);
-  if (userAuth) {
+  if (userData) {
     // if (leagues && scheduleDataAll && leaderboardData && eventInfo && worldRanksData && fedexRanksData) {
     if (leagues) {
     //added conditional to check data is loaded before rendering App components to solve props bug
@@ -365,7 +190,7 @@ function App() {
                   <img src={addIcon}></img>
                 </div>
   
-                <LeagueLinks leagues={leagues} selectTabDisplay={selectTabDisplay}/>
+                <LeagueLinks leagues={userData.leagues} selectTabDisplay={selectTabDisplay}/>
               </div>
   
               <div className="nav-footer"> 
