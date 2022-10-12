@@ -14,7 +14,13 @@ import {
     where,
     limit,
     QuerySnapshot,
-  } from "firebase/firestore";
+} from "firebase/firestore";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link
+} from "react-router-dom";
 import { 
     signInWithEmailAndPassword,
 } from "firebase/auth";
@@ -33,7 +39,6 @@ function Login(props) {
     async function userLogin(e) {
         e.preventDefault();
         let userEmailOrNameIn = document.getElementById("email-in");
-        console.log(userEmailOrNameIn)
         if (await checkUser(userEmailOrNameIn.value)) {
             //resets user error codes and displays password on valid user input
             document.getElementById("user-error-login").className = "";
@@ -43,7 +48,6 @@ function Login(props) {
             else {
                 let userPasswordIn = document.getElementById("pwd-in").value;
                 if (userPasswordIn.length >0) {
-                    console.log("login")
                     logInEmailPassword(userValid.email,userPasswordIn);
                 } else {
                     document.getElementById("pass-error-login").className = "invalid";
@@ -56,11 +60,9 @@ function Login(props) {
     async function checkUser(userEmailOrNameIn) {
         if (userEmailOrNameIn.length > 0) {
             if (await checkUserName(userEmailOrNameIn)) {
-                console.log("set data by username");
                 //username is valid
                 return(true);
             } else if ( await checkEmail(userEmailOrNameIn)) {
-                console.log("set data by email");
                 //email is valid
                 return(true);
             } else {
@@ -85,13 +87,10 @@ function Login(props) {
         userByNameSnap.forEach((doc) => {
             userByNameDocs.push(doc.data());
         });
-        console.log(userByNameDocs);
         if (userByNameDocs.length > 0) {
-            console.log("valid username")
             setUserValid(userByNameDocs[0]);
             return true;
         } else {
-            console.log("invalid username")
             return false;
         }
     }
@@ -146,47 +145,49 @@ function Login(props) {
     // }
 
     return(
-        <div className="auth-container">
-            <div className="auth-left-login"></div>
-            <div className="auth-right">
-                <div className="auth-content">
+        <div className="app-landing">
+            <div className="auth-container">
+                <div className="auth-left-login"></div>
+                <div className="auth-right">
+                    <div className="auth-content">
 
-                    <div className="auth-header">
-                        <div className="auth-header-main">
-                            <h1>Login</h1>
-                            <p id="signup" onClick={props.switchPage}>Sign Up</p>
-                        </div>
-                        <div className="auth-header-sub">
-                            Sign in using email or username
+                        <div className="auth-header">
+                            <div className="auth-header-main">
+                                <h1>Login</h1>
+                                <Link to="/sign-up" id="signup">Sign Up</Link>
+                            </div>
+                            <div className="auth-header-sub">
+                                Sign in using email or username
+                            </div>
+
                         </div>
 
+                        <form className="login-form">
+
+                            <div className="form-item-container">
+                                <label htmlFor="email">email or username</label>
+
+                                <div className="input-container">
+                                    <input type="email" id="email-in" name="email" placeholder="Enter email" ></input>
+                                </div>
+
+                                <p id="user-error-login" ></p>
+                            </div> 
+
+                            <PasswordInput passStatus={passStatus}/>
+
+                            <div className="form-submit-container">
+                                <div className="form-btn-container">
+                                    <button onClick={userLogin}>Continue</button>
+                                </div>
+
+                                <Link to="/forgot" id="pass-reset">
+                                    Forgot password?
+                                </Link>
+                            </div>
+
+                        </form>
                     </div>
-
-                    <form className="login-form">
-
-                        <div className="form-item-container">
-                            <label htmlFor="email">email or username</label>
-
-                            <div className="input-container">
-                                <input type="email" id="email-in" name="email" placeholder="Enter email" ></input>
-                            </div>
-
-                            <p id="user-error-login" ></p>
-                        </div> 
-
-                        <PasswordInput passStatus={passStatus}/>
-
-                        <div className="form-submit-container">
-                            <div className="form-btn-container">
-                                <button onClick={userLogin}>Continue</button>
-                            </div>
-
-                            <p id="pass-reset">
-                                Forgot password?
-                            </p>
-                        </div>
-
-                    </form>
                 </div>
             </div>
         </div>

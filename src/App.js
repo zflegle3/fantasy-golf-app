@@ -32,6 +32,7 @@ import Home from "./components/Home";
 import League from "./components/League";
 import LeagueLinks from "./components/LeagueLinks";
 import NewLeagueModal from "./components/NewLeague";
+import PasswordReset from "./components/PasswordReset";
 
 //Firebase
 import { initializeApp } from "firebase/app";
@@ -218,26 +219,15 @@ function App() {
     }
     
   } else {
-    switch (pageSelect) {
-      case "login":
-        return (
-          <div className="app-landing">
-            <Login db={db} auth={auth} switchPage={authSwitchPage} />
-          </div>
-        );
-      case "signup":
-        return (
-          <div className="app-landing">
-            <SignUp db={db} auth={auth} switchPage={authSwitchPage} />
-          </div>
-        );
-      case "reset-pwd":
-          <div className="app-landing">
-            {/* <PasswordReset auth={auth} switchPage={authSwitchPage} /> */}
-          </div>
-        break;
-      default:
-    }
+    return (
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Login db={db} auth={auth} switchPage={authSwitchPage} />}/>
+          <Route exact path="/sign-up" element={<SignUp db={db} auth={auth} switchPage={authSwitchPage} />}/>
+          <Route exact path="/forgot" element={<PasswordReset auth={auth} switchPage={authSwitchPage} />}/>
+        </Routes>
+      </Router>
+    )
   }
 }
 

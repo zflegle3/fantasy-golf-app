@@ -40,9 +40,19 @@
     position: relative;
     background-image: url("../images/pictures/9-hole-1.JPG");
     // background-image: url("../images/pictures/9-hole-1-test.JPG");
-    // background-image: url("../images/pictures/3-fairway-1.JPG");
-    // background-image: url("../images/pictures/3-fairway-2.JPG");
-    // background-image: url("../images/pictures/3-fairway-2-test.JPG");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.auth-left-forgot {
+    min-width: 500px;
+    height: 100vh;
+    background-color: rebeccapurple;
+    display: flex;
+    flex: 2 2 0; /* flex grow , shrink,  basis */
+    position: relative;
+    background-image: url("../images/pictures/practice-green-1.JPG");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
