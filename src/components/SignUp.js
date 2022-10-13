@@ -1,64 +1,74 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { useState, useEffect } from 'react';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useState } from 'react';
 import PasswordInput from "./PasswordInput"
 import { 
-    getFirestore, 
     doc, 
-    getDoc,
     getDocs,
-    addDoc,
     setDoc,
     collection,
-    Timestamp,
     query,
     where,
     limit,
-    QuerySnapshot,
 } from "firebase/firestore";
 import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
+    // BrowserRouter as Router,
     Link
 } from "react-router-dom";
 
+import { ReactComponent as CheckSvg } from '../images/icons/check.svg';
+
 function SignUp(props) {
     //props.db
-    const [passStatus, setPassStatus] = useState(false);//true when user is valid
+    //props.auth
+    const [passStatus, setPassStatus] = useState("");//true when user is valid
     const [newUserValid, setNewUserValid] = useState("");
     const [newEmailValid, setNewEmailValid] = useState("");
     const [newPassValid, setNewPassValid] = useState("");
 
     async function validateSignUp(e) {
         e.preventDefault();
-        let userNameIn = document.getElementById("user-name").value;
-        let emailIn = document.getElementById("email").value;
-        let passwordIn = document.getElementById("pwd-in").value;
-
+        let userNameIn = document.getElementById("user-name-in").value;
+        let emailIn = document.getElementById("email-in").value;
+        let passwordIn = document.getElementById("pass-in").value;
+        resetErrors();
         if (await checkNewUserName(userNameIn)) {
             //add validation for username format in checkNewUserName
-            console.log("check email next");
             if (await checkNewEmail(emailIn)) {
-                console.log("check password next");
                 if (checkNewPass(passwordIn)) {
                     //creat new user
-                    console.log("Create User");
                     createAccount(userNameIn, emailIn, passwordIn);
+                } else {
+                    document.querySelector(".form-item-container.pass-in").classList.add("invalid");
+                    document.getElementById("pass-error").textContent = "Password does not meet criteria";
                 }
             }
         } 
     }
 
+    const resetErrors = () => {
+        let userNameItem = document.querySelector(".form-item-container.user-name-in");
+        if (userNameItem.classList.contains("invalid")) {
+            userNameItem.classList.remove("invalid");
+            document.getElementById("user-name-error").textContent = "Username Error";
+        }
+        let emailItem = document.querySelector(".form-item-container.email-in");
+        if (emailItem.classList.contains("invalid")) {
+            emailItem.classList.remove("invalid");
+            document.getElementById("email-error").textContent = "Email Error";
+        }
+        let passItem = document.querySelector(".form-item-container.pass-in");
+        if (passItem.classList.contains("invalid")) {
+            passItem.classList.remove("invalid");
+            document.getElementById("pass-error").textContent = "Password Error";
+        }
+    }
+
     //USERNAME VALIDATION
     async function checkNewUserName(userNameIn) {
-        console.log(userNameIn);
-        console.log(userNameIn.length);
         //LENGTH
         if (userNameIn.length > 2 && userNameIn.length < 16) {
-            //FORMAT
+            //FORMAT (Numbers and letters only 0-XX characters)
             if (validateUserNameFormat(userNameIn)) { 
-                //validate username format (Numbers and letters only 0-XX characters)
-                //check if userName is in firebase already 
                 const userByNameQuery = query(
                     collection(props.db,"users"),
                     where("userName", "==", userNameIn),
@@ -71,29 +81,25 @@ function SignUp(props) {
                 });
                 //AVAILABILITY IN DATABASE
                 if (userByNameDocs.length > 0) {
-                    console.log("invalid username")
-                    document.getElementById("user-name-error").className = "invalid";
-                    document.getElementById("user-name-error").textContent = `Whoops! ${userNameIn} is already taken `;
+                    document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
+                    document.getElementById("user-name-error").textContent = `Whoops! ${userNameIn} is already taken`;
                     return false;
                 } else {
-                    console.log("valid username");
                     document.getElementById("user-name-error").className = "";
                     document.getElementById("user-name-error").textContent = "";
                     return true;
                 };
             } else {
-                document.getElementById("user-name-error").className = "invalid";
-                document.getElementById("user-name-error").textContent = `Only letter ans numbers, between 3 to 15 characters`;
+                document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
+                document.getElementById("user-name-error").textContent = `Only letter and numbers, between 3 to 15 characters`;
             }
         } else {
-            console.log("username length error");
-            //handle Error 
             if (userNameIn.length < 1) {
-                document.getElementById("user-name-error").className = "invalid";
+                document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
                 document.getElementById("user-name-error").textContent = "Cannot be empty";
             } else {
-                document.getElementById("user-name-error").className = "invalid";
-                document.getElementById("user-name-error").textContent = `Only letter ans numbers, between 3 to 15 characters`;
+                document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
+                document.getElementById("user-name-error").textContent = `Only letter and numbers, between 3 to 15 characters`;
             }
         };
     }
@@ -117,23 +123,20 @@ function SignUp(props) {
                 });
                 //AVAILABILITY IN DATABASE
                 if (userByEmailDocs.length > 0) {
-                    console.log("invalid email")
-                    document.getElementById("email-error").className = "invalid";
+                    document.querySelector(".form-item-container.email-in").classList.add("invalid");
                     document.getElementById("email-error").textContent = `Whoops! ${emailIn} is already taken `;
                     return false;
                 } else {
-                    console.log("valid username");
-                    document.getElementById("email-error").className = "";
-                    document.getElementById("email-error").textContent = "";
+                    // document.getElementById("email-error").className = "";
+                    // document.getElementById("email-error").textContent = "";
                     return true;
                 };
             } else {
-                console.log("invalid email");
-                document.getElementById("email-error").className = "invalid";
+                document.querySelector(".form-item-container.email-in").classList.add("invalid");
                 document.getElementById("email-error").textContent = "Oops, that looks like an invalid email";
             }
         } else {
-            document.getElementById("email-error").className = "invalid";
+            document.querySelector(".form-item-container.email-in").classList.add("invalid");
             document.getElementById("email-error").textContent = "Cannot be empty";
         };
     }
@@ -150,7 +153,6 @@ function SignUp(props) {
     };
 
     const checkNewPass = (passwordIn) => {
-        console.log(passwordIn);
         let passTest = true;
         let passErrorLen = document.getElementById("pass-error-signin-length");
         let passErrorUp = document.getElementById("pass-error-signin-upper");
@@ -160,30 +162,30 @@ function SignUp(props) {
         //8 characters
         if(passwordIn.length < 8) {
             passTest = false;
-            passErrorLen.classList = "invalid";
-        } else {
             passErrorLen.classList = "";
+        } else {
+            passErrorLen.classList = "valid";
         }
         //uppercase
         if(!passwordIn.match(/[A-Z]/g)) {
             passTest = false;
-            passErrorUp.classList = "invalid";
-        } else {
             passErrorUp.classList = "";
+        } else {
+            passErrorUp.classList = "valid";
         }
         //number
         if(!passwordIn.match(/[0-9]/g)) {
             passTest = false;
-            passErrorNum.classList = "invalid";
-        } else {
             passErrorNum.classList = "";
+        } else {
+            passErrorNum.classList = "valid";
         }
         // special character
         if(!passwordIn.match(/[!@#\$%\^&\*]/g)) {
             passTest = false;
-            passErrorSp.classList = "invalid";
-        } else {
             passErrorSp.classList = "";
+        } else {
+            passErrorSp.classList = "valid";
         }
         return passTest;
     };
@@ -192,75 +194,97 @@ function SignUp(props) {
     const createAccount = async (userNameIn, userEmail, userPassword) => {
         createUserWithEmailAndPassword(props.auth, userEmail, userPassword)
             .then((userCredential) => {
-                console.log("user created",userCredential.user.uid);
-                //write user doc to db 
-                //set user data to app state
+                //write user doc to db, user data to be pulled in App component
                 setDoc(doc(props.db, "users", `U-${userCredential.user.uid}`), {userName: userNameIn, email: `${userCredential.user.email}`,leagues: []});
             })
             .catch(error => console.log("ERROR!", error))
     }
 
+    const addFocus = (e) => {
+        e.target.parentElement.parentElement.classList.add("focus");
+    }
+
+    const removeFocus = (e) => {
+        e.target.parentElement.parentElement.classList.remove("focus");
+    }
+
     
     return (
-        <div className="app-landing">
-            <div className="auth-container">
-                <div className="auth-left-signup"></div>
-                <div className="auth-right">
-                    <div className="auth-content">
-                        <div className="auth-header">
-                            <div className="auth-header-main">
-                                <h1>Sign Up</h1>
-                                <Link to="/" id="signup">Login</Link>
-                            </div>
-                            <div className="auth-header-sub">
-                                Let's get started by creating an account
-                            </div>
+        <div className="auth-container">
+            <div className="auth-left-signup"></div>
+            <div className="auth-right">
+                <div className="auth-content">
+                    <div className="auth-header">
+                        <div className="auth-header-main">
+                            <h1>Sign Up</h1>
+                            <Link to="/" id="signup">Login</Link>
                         </div>
-                        
-                        <form className="sign-up-form">
-
-                            <div className="form-item-container">
-                                <label htmlFor="user-name">username</label>
-
-                                <div className="input-container">
-                                    <input type="text" id="user-name" name="user-name" placeholder="Enter new username" ></input>
-                                </div>
-
-                                <p id="user-name-error" >Username Error</p>
-                            </div>
-
-                            <div className="form-item-container">
-                                <label htmlFor="email">email</label>
-
-                                <div className="input-container">
-                                    <input type="email" id="email" name="email" placeholder="Enter email" ></input>
-                                </div>
-
-                                <p id="email-error" >Username Error</p>
-                            </div>
-
-                            <PasswordInput />
-                            <div className="form-item-container">
-                                <p id="pass-error-signin-length">have at least 8 characters</p>
-                                <p id="pass-error-signin-upper">have at least 1 Upper characters</p>
-                                <p id="pass-error-signin-number">have at least 1 number</p>
-                                <p id="pass-error-signin-special">have at least 1 special character (i.e. ! @ # $ % ^ & *)</p>
-                            </div>
-
-                            <div className="form-submit-container">
-                                <div className="form-btn-container">
-                                    <button onClick={validateSignUp}>Continue</button>
-                                </div>
-                            </div>
-
-
-
-                        </form>
-
+                        <div className="auth-header-sub">
+                            Let's get started by creating an account
+                        </div>
                     </div>
                     
+                    <form className="sign-up-form">
+
+                        <div className="form-item-container user-name-in">
+                            <label htmlFor="user-name">username</label>
+
+                            <div className="input-container">
+                                <input type="text" id="user-name-in" name="user-name" placeholder="Enter new username" onFocus={addFocus} onBlur={removeFocus}></input>
+                            </div>
+
+                            <p id="user-name-error" >Username Error</p>
+                        </div>
+
+                        <div className="form-item-container email-in">
+                            <label htmlFor="email">email</label>
+
+                            <div className="input-container">
+                                <input type="email-in" id="email-in" name="email-in" placeholder="Enter email" onFocus={addFocus} onBlur={removeFocus}></input>
+                            </div>
+
+                            <p id="email-error" >Email Error</p>
+                        </div>
+
+                        <PasswordInput passStatus={passStatus}/>
+
+                        <div className="pass-error-container">
+                            <div id="pass-error-signin-length">
+                                <div>
+                                    <CheckSvg />
+                                </div>
+                                <p>have at least 8 characters</p>
+                            </div>
+                            <div id="pass-error-signin-upper">
+                                <div>
+                                    <CheckSvg />
+                                </div>
+                                <p >have at least 1 Upper characters</p>
+                            </div>
+                            <div id="pass-error-signin-number">
+                                <div>
+                                    <CheckSvg />
+                                </div>
+                                <p >have at least 1 number</p>
+                            </div>
+                            <div id="pass-error-signin-special">
+                                <div>
+                                    <CheckSvg />
+                                </div>
+                                <p >have at least 1 special character (i.e. ! @ # $ % ^ & *)</p>
+                            </div>
+                        </div>
+
+                        <div className="form-submit-container">
+                            <div className="form-btn-container">
+                                <button onClick={validateSignUp}>CONTINUE</button>
+                            </div>
+                        </div>
+
+                    </form>
 
                 </div>
+                
             </div>
         </div>
     );

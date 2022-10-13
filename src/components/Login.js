@@ -1,61 +1,61 @@
 
-import { useState, useEffect } from 'react';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useState } from 'react';
 import { 
-    getFirestore, 
-    doc, 
-    getDoc,
     getDocs,
-    addDoc,
-    setDoc,
     collection,
-    Timestamp,
     query,
     where,
     limit,
-    QuerySnapshot,
 } from "firebase/firestore";
 import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
+    // BrowserRouter as Router,
     Link
 } from "react-router-dom";
 import { 
     signInWithEmailAndPassword,
 } from "firebase/auth";
-
 import PasswordInput from "./PasswordInput"
 
 
 function Login(props) {
-    //props.logInEmailPassword (removed)
     //props.auth
-    //props.switchPage
     //props.db
     const [passStatus, setPassStatus] = useState("hidden");//true when user is valid
-    const [userValid, setUserValid] = useState("");
+    const [userValid, setUserValid] = useState("x");
 
     async function userLogin(e) {
         e.preventDefault();
         let userEmailOrNameIn = document.getElementById("email-in");
         if (await checkUser(userEmailOrNameIn.value)) {
-            //resets user error codes and displays password on valid user input
-            document.getElementById("user-error-login").className = "";
-            document.getElementById("user-error-login").textContent = "";
-            if (passStatus === "hidden")
+
+            resetErrors();
+            if (passStatus === "hidden") //used as class toggle pass input
                 setPassStatus("");
             else {
-                let userPasswordIn = document.getElementById("pwd-in").value;
+                let userPasswordIn = document.getElementById("pass-in").value;
                 if (userPasswordIn.length >0) {
                     logInEmailPassword(userValid.email,userPasswordIn);
                 } else {
-                    document.getElementById("pass-error-login").className = "invalid";
-                    document.getElementById("pass-error-login").textContent = "Cannot be empty";
+                    document.querySelector(".form-item-container.pass-in").classList.add("invalid");
+                    document.getElementById("pass-error").textContent = "Cannot be empty";
                 }
             }
         }
     };
+
+    const resetErrors = () => {
+    //resets user input error codes
+        let emailItem = document.querySelector(".form-item-container.email-in");
+        if (emailItem.classList.contains("invalid")) {
+            emailItem.classList.remove("invalid");
+            document.getElementById("email-error").textContent = "Email Error";
+        }
+        let passItem = document.querySelector(".form-item-container.pass-in");
+        if (passItem.classList.contains("invalid")) {
+            passItem.classList.remove("invalid");
+            document.getElementById("pass-error").textContent = "Password Error";
+        }
+    }
 
     async function checkUser(userEmailOrNameIn) {
         if (userEmailOrNameIn.length > 0) {
@@ -67,12 +67,12 @@ function Login(props) {
                 return(true);
             } else {
                 //invalid user credentials 
-                document.getElementById("user-error-login").className = "invalid";
-                document.getElementById("user-error-login").textContent = `Sorry, we were unable to find anyone using ${userEmailOrNameIn}`;
+                document.querySelector(".form-item-container.email-in").classList.add("invalid");
+                document.getElementById("email-error").textContent = `Sorry, we were unable to find anyone using ${userEmailOrNameIn}`;
             }
         } else {
-            document.getElementById("user-error-login").className = "invalid";
-            document.getElementById("user-error-login").textContent = "Cannot be empty";
+            document.querySelector(".form-item-container.email-in").classList.add("invalid");
+            document.getElementById("email-error").textContent = "Cannot be empty";
         }
     }
 
@@ -107,87 +107,77 @@ function Login(props) {
             userByNameDocs.push(doc.data());
         });
         if (userByNameDocs.length > 0) {
-            console.log("valid email")
             setUserValid(userByNameDocs[0]);
             return true;
         } else {
-            console.log("invalid email")
             return false;
         }
     }
 
     const logInEmailPassword = async (emailIn, passwordIn) => {
         //Pulls User Credentials from Firebase
-        console.log("logging in");
         try {
             const userCredential = await signInWithEmailAndPassword(props.auth, emailIn, passwordIn);
-            console.log(userCredential.user);
-            //Send UserCredential to App State??
-            //props.checkAuthState(userCredential.user);
         }
         catch(error) {
-            console.log(error.code);
+            // console.log(error.code);
             if (error.code ==="auth/wrong-password") {
-            document.getElementById("pass-error-login").className = "invalid";
-            document.getElementById("pass-error-login").textContent = "Your password was incorrect.";
+                document.querySelector(".form-item-container.pass-in").classList.add("invalid");
+            document.getElementById("pass-error").textContent = "Your password was incorrect.";
            }
         }
     }
 
-    // const resetInput = (e) => {
-    //     //reset errors on input changes
-    //     if (e.target.classList.contains("invalid")) {
-    //         e.target.className="";
-    //         e.target.textContent ="";
-    //         document.getElementById("user-error-login").className = "";
-    //         document.getElementById("pass-error-login").className = "";
-    //     }
-    // }
+    const addFocus = (e) => {
+        e.target.parentElement.parentElement.classList.add("focus");
+    }
+
+    const removeFocus = (e) => {
+        e.target.parentElement.parentElement.classList.remove("focus");
+    }
 
     return(
-        <div className="app-landing">
-            <div className="auth-container">
-                <div className="auth-left-login"></div>
-                <div className="auth-right">
-                    <div className="auth-content">
+        <div className="auth-container">
+            <div className="auth-left-login"></div>
+            <div className="auth-right">
+                <div className="auth-content">
 
-                        <div className="auth-header">
-                            <div className="auth-header-main">
-                                <h1>Login</h1>
-                                <Link to="/sign-up" id="signup">Sign Up</Link>
-                            </div>
-                            <div className="auth-header-sub">
-                                Sign in using email or username
-                            </div>
-
+                    <div className="auth-header">
+                        <div className="auth-header-main">
+                            <h1>Login</h1>
+                            <Link to="/sign-up" id="signup">Sign Up</Link>
+                        </div>
+                        <div className="auth-header-sub">
+                            Sign in using email or username
                         </div>
 
-                        <form className="login-form">
+                    </div>
 
-                            <div className="form-item-container">
-                                <label htmlFor="email">email or username</label>
+                    <form className="login-form">
 
-                                <div className="input-container">
-                                    <input type="email" id="email-in" name="email" placeholder="Enter email" ></input>
-                                </div>
+                        <div className="form-item-container email-in" >
+                            <label htmlFor="email">email or username</label>
 
-                                <p id="user-error-login" ></p>
-                            </div> 
-
-                            <PasswordInput passStatus={passStatus}/>
-
-                            <div className="form-submit-container">
-                                <div className="form-btn-container">
-                                    <button onClick={userLogin}>Continue</button>
-                                </div>
-
-                                <Link to="/forgot" id="pass-reset">
-                                    Forgot password?
-                                </Link>
+                            <div className="input-container">
+                                <input type="email" id="email-in" name="email" placeholder="Enter email" onFocus={addFocus} onBlur={removeFocus}></input>
                             </div>
 
-                        </form>
-                    </div>
+                            <p id="email-error" >Email Error</p>
+                        </div> 
+
+                        <PasswordInput passStatus={passStatus}/>
+
+                        <div className="form-submit-container">
+                            <div className="form-btn-container">
+                                <button onClick={userLogin}>CONTINUE</button>
+                            </div>
+
+                            <Link to="/forgot" id="pass-reset">
+                                Forgot password?
+                            </Link>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
