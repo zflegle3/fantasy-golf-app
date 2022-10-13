@@ -29,9 +29,10 @@ import settingsIcon from "./images/icons/cog-outline-wh.png";
 import SignUp from "./components/auth/SignUp";
 import Login from "./components/auth/Login";
 import PasswordReset from "./components/auth/PasswordReset";
+import ControlPanel from "./components/ControlPanel";
+
 import Home from "./components/Home";
 import League from "./components/League";
-import LeagueLinks from "./components/LeagueLinks";
 import NewLeagueModal from "./components/NewLeague";
 
 
@@ -47,6 +48,7 @@ import {
   setDoc,
   collection,
   Timestamp,
+  FirebaseAuth,
 } from "firebase/firestore";
 import { 
   getAuth,
@@ -122,26 +124,6 @@ function App() {
     console.log("Log Out");
   };
 
-  const selectTabDisplay = (e) => {
-    let allTabs = document.querySelectorAll("[id=nav-tab]");
-    for (let i=0; i< allTabs.length; i++) {
-      allTabs[i].classList =  "nav-link";
-    };
-    let selected = e.target;
-    if (!selected.id) {
-      selected = e.target.parentElement;
-    }
-    selected.classList = "nav-link tab-selected";
-  }
-
-  const createNewLeague = (e) => {
-    // console.log("New League");
-    let newLeagueModal = document.getElementById("new-league-modal-form");
-    newLeagueModal.classList = "visable";
-  }
-
-
-
   useEffect(() => {
     onAuthStateChanged( auth, user => {
     //Pulls required app data on user login
@@ -164,61 +146,26 @@ function App() {
 
 
   console.log(userData);
-  if (userData) {
-    // if (leagues && scheduleDataAll && leaderboardData && eventInfo && worldRanksData && fedexRanksData) {
-    if (userData.leagues) {
-    //added conditional to check data is loaded before rendering App components to solve props bug
-      return (
-        <div className="app-layout">
-          <div className="new-league-modal-form" id="new-league-modal-form">
-            <NewLeagueModal userActive={userActive} db={db} setLeagues={setLeagues} />
-          </div>
-          <Router>
-            <div className="left-panel-container">
-              <div className="nav-header">
-                  <img src={logoIcon}></img>
-                  <h1 className="header-logo">Site Name</h1>
-              </div>
-  
-              <div className="nav-body">
-  
-                {/* <Link to="/" className="nav-link tab-selected" id="nav-tab" onClick={selectTabDisplay}>
-                  <img src={logoIcon}></img>
-                  <p>Golf Home</p>
-                </Link> */}
-  
-                <div className="nav-link " id="new-league" onClick={createNewLeague}>
-                  <p>New League</p>
-                  <img src={addIcon}></img>
-                </div>
-  
-                <LeagueLinks leagues={userData.leagues} selectTabDisplay={selectTabDisplay}/>
-              </div>
-  
-              <div className="nav-footer"> 
-                <img src={profileIcon}></img>
-                <div className="profile-container">
-                  <p>{userActive.email}</p>
-                  <button onClick={userLogOut}> Log Out</button>
-                </div>
-                <img src={settingsIcon}></img>
-              </div>
-            </div>
-            <div className="center-panel-container">
-              <Routes>
-                  {/* <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/> */}
-                  {/* <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/> */}
-              </Routes>
-            </div>
-          </Router>
+if (userData) {
+  return (
+    <div className="app-layout">
+      {/* <div className="new-league-modal-form" id="new-league-modal-form">
+        <NewLeagueModal userActive={userActive} db={db} setLeagues={setLeagues} />
+      </div> */}
+      <Router>
+        <ControlPanel userData={userData} userLogOut={userLogOut}/>
+
+
+
+        <div className="center-panel-container">
+          <Routes>
+              {/* <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/> */}
+              {/* <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/> */}
+          </Routes>
         </div>
-      );
-    } else {
-      return(
-        <div>Loading</div>
-      )
-    }
-    
+      </Router>
+    </div>
+  );
   } else {
     return (
       <Router>
