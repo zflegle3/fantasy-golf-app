@@ -109,6 +109,12 @@ Main Document Styles
   display: flex; 
 }
 
+.app-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
 .left-panel-container {
   height: 100vh;
   width: 250px;
@@ -241,7 +247,7 @@ Main Document Styles
 ~~~~~~~~~~~~~~~~~~~~ */
 /* See Tabs for Tab Component Styling */
 .center-panel-container {
-  /* position: relative; */
+  position: relative;
   height: 100vh;
   display: flex;
   flex-direction: column;

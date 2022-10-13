@@ -30,10 +30,10 @@ import SignUp from "./components/auth/SignUp";
 import Login from "./components/auth/Login";
 import PasswordReset from "./components/auth/PasswordReset";
 import ControlPanel from "./components/ControlPanel";
+import ContentPanel from "./components/ContentPanel";
 
 import Home from "./components/Home";
 import League from "./components/League";
-import NewLeagueModal from "./components/NewLeague";
 
 
 //Firebase
@@ -95,6 +95,8 @@ function App() {
   const [worldRanksData, setWorldRanksData] = useState();
   const [fedexRanksData, setFedexRanksData] = useState();
 
+  const [newLeagueOpen, setNewLeagueOpen] = useState(false);
+
   async function pullUserData(user) { 
     //pulls user data 
     let userId = user.uid;
@@ -146,24 +148,15 @@ function App() {
 
 
   console.log(userData);
+  console.log(newLeagueOpen);
 if (userData) {
   return (
     <div className="app-layout">
-      {/* <div className="new-league-modal-form" id="new-league-modal-form">
-        <NewLeagueModal userActive={userActive} db={db} setLeagues={setLeagues} />
-      </div> */}
-      <Router>
-        <ControlPanel userData={userData} userLogOut={userLogOut}/>
-
-
-
-        <div className="center-panel-container">
-          <Routes>
-              {/* <Route exact path="/*" element={<Home scheduleDataAll={scheduleDataAll} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/> */}
-              {/* <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/> */}
-          </Routes>
-        </div>
-      </Router>
+      <div className="app-container">
+        <ControlPanel userData={userData} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
+        <ContentPanel setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/>
+      </div>
+      <div id="modal" className="modal"></div>
     </div>
   );
   } else {
@@ -180,3 +173,8 @@ if (userData) {
 }
 
 export default App;
+
+
+{/* <div className="new-league-modal-form" id="new-league-modal-form">
+  <NewLeagueModal userActive={userActive} db={db} setLeagues={setLeagues} />
+</div> */}

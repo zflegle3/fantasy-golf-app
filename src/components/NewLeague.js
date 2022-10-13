@@ -14,6 +14,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 function NewLeagueModal(props) {
+    //props.newLeagueOpen
+    //props.setNewLeagueOpen()
     //props.userActive
     //props.db
     // const [rankData, setRankData] = useState({rankings: []});
@@ -172,89 +174,95 @@ function NewLeagueModal(props) {
         return currentSchedule;
     }
 
+    console.log(props.newLeagueOpen);
+    if (!props.newLeagueOpen) {
 
-    return (
-    <div className="new-league-modal">
-        <form className="new-league-form" id="new-league-form" >
+    } else {
+        return (
+            <div className="new-league-modal">
+                <form className="new-league-form" id="new-league-form" >
 
-            <div className="new-league-header">
-                <h1 className="new-league-main-txt">Create a new League</h1>
-                <p className="new-league-sub-txt">Don't worry, you can make changes to all settings later</p>
+                    <div className="new-league-header">
+                        <h1 className="new-league-main-txt">Create a new League</h1>
+                        <p className="new-league-sub-txt">Don't worry, you can make changes to all settings later</p>
+                    </div>
+
+                    <div className="new-league-input">
+                        <label htmlFor="name">League Name</label>
+                        <div className="input-container">
+                            <input type="text" id="new-league-name" name="name" placeholder="Enter the name of your league" ></input>
+                        </div>
+                    </div>
+
+                    <div className="new-league-input">
+                        <label htmlFor="teams">Number of Teams</label>
+                        <div className="input-container">
+                            <select id="new-league-teams" name="teams" defaultValue={6}>
+                                <option value={4}>4</option>
+                                <option value={5}>5</option>
+                                <option value={6}>6</option>
+                                <option value={7}>7</option>
+                                <option value={8}>8</option>
+                                <option value={9}>9</option>
+                                <option value={10}>10</option>
+                                <option value={11}>11</option>
+                                <option value={12}>12</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="new-league-header">
+                        <p className="new-league-sub-txt">Scoring and Roster Settings:</p>
+                    </div>
+
+                    <div className="new-league-input">
+                        <label htmlFor="format">Game Format</label>
+                        <p>Tournament - teams play against the entire league each week</p>
+                        <p>Head to Head - teams play against one team each week </p>
+                        <div className="input-container">
+                            <select id="new-league-format" name="format" defaultValue={"league-play"}>
+                                <option value="league-play" >Tournament</option>
+                                <option value="h2h-play">Head to Head</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="new-league-input">
+                        <label htmlFor="roster-players">Golfers Per Roster</label>
+                        <p>number of players allowed on a team's roster</p>
+                        <div className="input-container">
+                            <input type="number" id="new-league-roster-players" name="roster-players"  min="4" max="10" placeholder="4" ></input>
+                        </div>
+                    </div>
+
+                    <div className="new-league-input">
+                        <label htmlFor="roster-cut">Team Cut</label>
+                        <p>the number of players who's scores will not count to team score</p>
+                        <div className="input-container">
+                            <input type="number" id="new-league-roster-cut" name="roster-cut"  min="0" max="4" placeholder="0" ></input>
+                        </div>
+                        <p id="new-league-error" ></p>
+                    </div>
+
+                    <div className="new-league-error-div">
+                        <p id="new-league-error" className="invalid"></p>
+                    </div>
+
+
+                    <div className="form-submit-container">
+                        <div className="form-btn-container">
+                            <button onClick={submitModal}>Continue</button>
+                        </div>
+                        <div id="cancel-new-league" onClick={() => props.setNewLeagueOpen(false)}>
+                            Cancel
+                        </div>
+                    </div>
+                </form>
             </div>
+        );
 
-            <div className="new-league-input">
-                <label htmlFor="name">League Name</label>
-                <div className="input-container">
-                    <input type="text" id="new-league-name" name="name" placeholder="Enter the name of your league" ></input>
-                </div>
-            </div>
+    }
 
-            <div className="new-league-input">
-                <label htmlFor="teams">Number of Teams</label>
-                <div className="input-container">
-                    <select id="new-league-teams" name="teams" defaultValue={6}>
-                        <option value={4}>4</option>
-                        <option value={5}>5</option>
-                        <option value={6}>6</option>
-                        <option value={7}>7</option>
-                        <option value={8}>8</option>
-                        <option value={9}>9</option>
-                        <option value={10}>10</option>
-                        <option value={11}>11</option>
-                        <option value={12}>12</option>
-                    </select>
-                </div>
-            </div>
-
-            <div className="new-league-header">
-                <p className="new-league-sub-txt">Scoring and Roster Settings:</p>
-            </div>
-
-            <div className="new-league-input">
-                <label htmlFor="format">Game Format</label>
-                <p>Tournament - teams play against the entire league each week</p>
-                <p>Head to Head - teams play against one team each week </p>
-                <div className="input-container">
-                    <select id="new-league-format" name="format" defaultValue={"league-play"}>
-                        <option value="league-play" >Tournament</option>
-                        <option value="h2h-play">Head to Head</option>
-                    </select>
-                </div>
-            </div>
-
-            <div className="new-league-input">
-                <label htmlFor="roster-players">Golfers Per Roster</label>
-                <p>number of players allowed on a team's roster</p>
-                <div className="input-container">
-                    <input type="number" id="new-league-roster-players" name="roster-players"  min="4" max="10" placeholder="4" ></input>
-                </div>
-            </div>
-
-            <div className="new-league-input">
-                <label htmlFor="roster-cut">Team Cut</label>
-                <p>the number of players who's scores will not count to team score</p>
-                <div className="input-container">
-                    <input type="number" id="new-league-roster-cut" name="roster-cut"  min="0" max="4" placeholder="0" ></input>
-                </div>
-                <p id="new-league-error" ></p>
-            </div>
-
-            <div className="new-league-error-div">
-                <p id="new-league-error" className="invalid"></p>
-            </div>
-
-
-            <div className="form-submit-container">
-                <div className="form-btn-container">
-                    <button onClick={submitModal}>Continue</button>
-                </div>
-                <p id="cancel-new-league" onClick={closeModal}>
-                    Cancel
-                </p>
-            </div>
-        </form>
-    </div>
-    );
 }
 
 export default NewLeagueModal;

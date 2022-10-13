@@ -14,11 +14,13 @@ import LeagueLinks from "./LeagueLinks";
 function ControlPanel(props) {
     //props.userData
     //props.userLogOut
+    //props.setNewLeagueOpen()
 
     const createNewLeague = (e) => {
-        // console.log("New League");
+        console.log("New League");
         // let newLeagueModal = document.getElementById("new-league-modal-form");
         // newLeagueModal.classList = "visable";
+        props.setNewLeagueOpen(true);
     }
 
     const selectTabDisplay = (e) => {
@@ -48,7 +50,7 @@ function ControlPanel(props) {
             <p>Golf Home</p>
           </Link> */}
 
-          <div className="nav-link " id="new-league" onClick={createNewLeague}>
+          <div className="nav-link " id="new-league" onClick={() => props.setNewLeagueOpen(true)}>
             <p>New League</p>
             <img src={addIcon}></img>
           </div>
