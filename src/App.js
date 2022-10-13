@@ -26,13 +26,14 @@ import profileIcon from "./images/icons/golf-cart-wh.png";
 import settingsIcon from "./images/icons/cog-outline-wh.png";
 
 //Components
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
+import SignUp from "./components/auth/SignUp";
+import Login from "./components/auth/Login";
+import PasswordReset from "./components/auth/PasswordReset";
 import Home from "./components/Home";
 import League from "./components/League";
 import LeagueLinks from "./components/LeagueLinks";
 import NewLeagueModal from "./components/NewLeague";
-import PasswordReset from "./components/PasswordReset";
+
 
 //Firebase
 import { initializeApp } from "firebase/app";
@@ -162,10 +163,10 @@ function App() {
   }, []);
 
 
-  // console.log(userActive);
+  console.log(userData);
   if (userData) {
     // if (leagues && scheduleDataAll && leaderboardData && eventInfo && worldRanksData && fedexRanksData) {
-    if (leagues) {
+    if (userData.leagues) {
     //added conditional to check data is loaded before rendering App components to solve props bug
       return (
         <div className="app-layout">

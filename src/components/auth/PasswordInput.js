@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ReactComponent as EyeSvg } from '../images/icons/eye-outline.svg';
-import { ReactComponent as NoEyeSvg } from '../images/icons/eye-off-outline.svg';
+import { ReactComponent as EyeSvg } from "../../images/icons/eye-off-outline.svg"
+import { ReactComponent as NoEyeSvg } from '../../images/icons/eye-outline.svg';
 
 
 function PasswordInput(props) {

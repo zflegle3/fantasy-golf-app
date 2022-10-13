@@ -15,7 +15,7 @@ import {
     Link
 } from "react-router-dom";
 
-import { ReactComponent as CheckSvg } from '../images/icons/check.svg';
+import { ReactComponent as CheckSvg } from '../../images/icons/check.svg';
 
 function SignUp(props) {
     //props.db
