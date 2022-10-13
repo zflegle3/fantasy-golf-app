@@ -1,17 +1,35 @@
 /* Display Settings
 ~~~~~~~~~~~~~~~~~~~~ */
-#new-league-modal-form {
-    /* visibility: hidden; */
+.modal-overlay {
     position: absolute;
-    z-index: 10;
-    height: 100%;
-    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(204, 26, 26, 0.55);
+    z-index: 1000;
+}
+
+.new-league-modal {
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    background-color: var(--bkgnd-lt);
+    border-radius: 1rem;
+    padding: 6rem 4rem 3rem 4rem;
+}
+
+
+#new-league-modal-form {
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--text-main);
-    background-color: rgba(155, 155, 155, 0.55);
-    transition: 2s;
+    /* background-color: rgba(155, 155, 155, 0.55); */
+    /* transition: 2s; */
 }
 
 #new-league-modal-form.visable {
@@ -20,11 +38,7 @@
     width: 100%;
 }
 
-.new-league-modal {
-    padding: 6rem 4rem 3rem 4rem;
-    background-color: var(--bkgnd-lt);
-    border-radius: 1rem;
-}
+
 
 .new-league-form {
     display: flex;

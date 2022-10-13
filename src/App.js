@@ -114,15 +114,9 @@ function App() {
     }
   }
 
-  const authSwitchPage = (e) => {
-    console.log("switch from login");
-    e.preventDefault();
-    setPageSelect(e.target.id);
-  };
-
   const userLogOut = async () => {
     await signOut(auth);
-    setUserActive();
+    setUserData("");
     console.log("Log Out");
   };
 
@@ -148,15 +142,16 @@ function App() {
 
 
   console.log(userData);
-  console.log(newLeagueOpen);
 if (userData) {
   return (
     <div className="app-layout">
       <div className="app-container">
-        <ControlPanel userData={userData} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
-        <ContentPanel setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/>
+        <Router>
+          <ControlPanel userData={userData} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
+          <ContentPanel userData={userData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/>
+        </Router>
       </div>
-      <div id="modal" className="modal"></div>
+      <div id="modal-portal"></div>
     </div>
   );
   } else {
@@ -173,8 +168,3 @@ if (userData) {
 }
 
 export default App;
-
-
-{/* <div className="new-league-modal-form" id="new-league-modal-form">
-  <NewLeagueModal userActive={userActive} db={db} setLeagues={setLeagues} />
-</div> */}

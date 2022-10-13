@@ -1,4 +1,10 @@
 import { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 //images
 import addIcon from "../images/icons/plus-circle-outline-wh.png";
@@ -45,15 +51,25 @@ function ControlPanel(props) {
 
         <div className="nav-body">
 
-          {/* <Link to="/" className="nav-link tab-selected" id="nav-tab" onClick={selectTabDisplay}>
+          <Link to="/messages" className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
             <img src={logoIcon}></img>
-            <p>Golf Home</p>
-          </Link> */}
+            <p>Direct Messages</p>
+          </Link>
+
+          <Link to="/inbox" className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
+            <img src={logoIcon}></img>
+            <p>Inbox</p>
+          </Link>
 
           <div className="nav-link " id="new-league" onClick={() => props.setNewLeagueOpen(true)}>
-            <p>New League</p>
+            <p>LEAGUES</p>
             <img src={addIcon}></img>
           </div>
+
+          <Link to="/draftboards" className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
+            <img src={logoIcon}></img>
+            <p>MOCK DRAFTS</p>
+          </Link>
 
           <LeagueLinks leagues={props.userData.leagues} selectTabDisplay={selectTabDisplay}/>
         </div>
@@ -64,7 +80,9 @@ function ControlPanel(props) {
             <p>{props.userData.userName}</p>
             <button onClick={props.userLogOut}> Log Out</button>
           </div>
-          <img src={settingsIcon}></img>
+          <Link to="/account-settings" className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
+            <img src={settingsIcon}></img>
+          </Link>
         </div>
       </div>
     );
