@@ -43,10 +43,6 @@ function NewLeagueModal(props) {
         }
     })
 
-    // const closeModal = () => {
-    //     let modalClose = document.getElementById("new-league-modal-form");
-    //     modalClose.classList= "";
-    // }
 
     // async function createSchedule() {
     //     let scheduleData = [];
@@ -205,7 +201,7 @@ function NewLeagueModal(props) {
 
     const backStep = () => {
         let currentStep = step;
-        console.log(--currentStep);
+        --currentStep;
         setStep(currentStep);
     }
 
@@ -213,12 +209,14 @@ function NewLeagueModal(props) {
         let btnClasses = ["selected",""];
         setDraftBtnSelect(btnClasses);
         setDraftType("snake");
+        document.getElementById("input-error-draft-type").classList.remove("invalid");
     }
 
     const selectLinear = () => {
         let btnClasses = ["","selected"];
         setDraftBtnSelect(btnClasses);
         setDraftType("linear");
+        document.getElementById("input-error-draft-type").classList.remove("invalid");
     }
 
 
@@ -229,7 +227,7 @@ function NewLeagueModal(props) {
         setLeagueSettings(tempSettings);
         //increment to next step
         let currentStep = step;
-        console.log(++currentStep);
+        ++currentStep;
         setStep(currentStep);
     }
 
@@ -240,7 +238,7 @@ function NewLeagueModal(props) {
         setLeagueSettings(tempSettings);
         //increment to next step
         let currentStep = step;
-        console.log(++currentStep);
+        ++currentStep;
         setStep(currentStep);
     }
 
@@ -250,7 +248,6 @@ function NewLeagueModal(props) {
         let leagueNameIn = document.getElementById("new-league-name").value;
         let leagueTeamsIn = document.getElementById("new-league-teams").value;
         // let leagueLogoIn = document.getElementById("new-league-logo").value;
-        console.log(leagueNameIn);
         //clear previous errors
         document.getElementById("input-error-name").classList="";
         document.getElementById("input-error-name").innerHTML="League Name Error";
@@ -261,14 +258,13 @@ function NewLeagueModal(props) {
         if (leagueNameIn.length > 0) {
             // if (checkUrl(leagueLogoIn)) {
                 //save inputs
-                console.log("valid and submit")
                 let tempSettings = {...leagueSettings};
                 tempSettings.name = leagueNameIn;
                 tempSettings.teamCount = leagueTeamsIn;
                 setLeagueSettings(tempSettings);
                 //increment step
                 let currentStep = step;
-                console.log(++currentStep);
+                ++currentStep;
                 setStep(currentStep);
             // } else {
             //     document.getElementById("input-error-logo").classList.add("invalid");
@@ -283,22 +279,20 @@ function NewLeagueModal(props) {
     }
 
     const logScoring= (e) => {
-        e.stopPropagation()
-        // console.log(e.target);
+        e.stopPropagation();
         //pull input values
         let rosterSizeIn = document.getElementById("new-league-team-size").value;
         let rosterCutIn = document.getElementById("new-league-team-cut").value;
         //validate inputs (cut < roster size)
         if (rosterCutIn < rosterSizeIn) {
             //save inputs
-            console.log("valid and submit")
             let tempSettings = {...leagueSettings};
             tempSettings.scoring.rosterSize = rosterSizeIn;
             tempSettings.scoring.rosterCut = rosterCutIn;
             setLeagueSettings(tempSettings);
             //increment step
             let currentStep = step;
-            console.log(++currentStep);
+            ++currentStep;
             setStep(currentStep);
 
         } else {
@@ -311,8 +305,7 @@ function NewLeagueModal(props) {
 
     const logDraft= (e) => {
         e.stopPropagation()
-        // console.log(e.target);
-        document.getElementById("input-error-draft-type").classList.remove("invalid");
+        // document.getElementById("input-error-draft-type").classList.remove("invalid");
         document.getElementById("input-error-draft-date").classList.remove("invalid");
         let draftDateIn = new Date(document.getElementById("new-league-draft-date").value);
         let todayDate = new Date();
@@ -334,20 +327,8 @@ function NewLeagueModal(props) {
             document.getElementById("input-error-draft-date").classList.add("invalid");
             document.getElementById("input-error-draft-date").innerHTML="Draft date must be at least 24 hours in the future.";
         }
-        //pull input values
-        //validate inputs
-            //save inputs
-            //increment step and switch page
-        //handle errors
-
-
-        // let currentStep = step;
-        // console.log(++currentStep);
-        // setStep(currentStep);
     }
 
-    let minDate = new Date();
-    // console.log(user);
     console.log(leagueSettings);
     if (step === 1) {
         return(
