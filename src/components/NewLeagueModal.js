@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 //SVGs & Images
 import { ReactComponent as PgaSvg } from '../images/icons/golf-pga.svg';
 import { ReactComponent as LivSvg } from '../images/icons/golf-liv.svg';
+import{ReactComponent as BackArrSvg} from "../images/icons/arrow-left.svg";
 
 function NewLeagueModal(props) {
     //props.userData
@@ -25,12 +26,17 @@ function NewLeagueModal(props) {
         proLeague: "",
         teamCount: 10,
         logoSrc: "",
-        scoing: {
+        scoring: {
             format: "",
             missCutScore: "",
             rosterCut: 2,
             rosterSize: 6,
         },
+        draft: {
+            type: "",
+            date: "",
+            order: "",
+        }
     })
 
     const closeModal = () => {
@@ -187,17 +193,104 @@ function NewLeagueModal(props) {
         return(validValues);
     }
 
+    const checkUrl = (urlIn) => {
+        return urlIn.match(
+            /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+          );
+    }
+
+    const backStep = () => {
+        let currentStep = step;
+        console.log(--currentStep);
+        setStep(currentStep);
+    }
+
+
     const logLeague = (e) => {
-        e.stopPropagation()
-        console.log(e.target);
+        e.stopPropagation();
+        //add league to league settings state
+        let tempSettings = {...leagueSettings};
+        tempSettings.proLeague = e.target.id;
+        setLeagueSettings(tempSettings);
+        //increment to next step
         let currentStep = step;
         console.log(++currentStep);
         setStep(currentStep);
     }
 
-    const logSize= (e) => {
+    const logDetails= (e) => {
+        e.stopPropagation()
+        //pull input values
+        let leagueNameIn = document.getElementById("new-league-name").value;
+        let leagueTeamsIn = document.getElementById("new-league-teams").value;
+        // let leagueLogoIn = document.getElementById("new-league-logo").value;
+        console.log(leagueNameIn);
+        //clear previous errors
+        document.getElementById("input-error-name").classList="";
+        document.getElementById("input-error-name").innerHTML="League Name Error";
+        //LOGO SUBMISSION TEMPORARILT DISABLED
+        // document.getElementById("input-error-logo").classList="";
+        // document.getElementById("input-error-logo").innerHTML="Logo URL Error";
+        //validate input values (Name)
+        if (leagueNameIn.length > 0) {
+            // if (checkUrl(leagueLogoIn)) {
+                //save inputs
+                console.log("valid and submit")
+                let tempSettings = {...leagueSettings};
+                tempSettings.name = leagueNameIn;
+                tempSettings.teamCount = leagueTeamsIn;
+                setLeagueSettings(tempSettings);
+                //increment step
+                let currentStep = step;
+                console.log(++currentStep);
+                setStep(currentStep);
+            // } else {
+            //     document.getElementById("input-error-logo").classList.add("invalid");
+            //     document.getElementById("input-error-logo").innerHTML="Whoops, that doesn't look like a valid URL";
+            // }
+        } else {
+            //add error messages
+            document.getElementById("input-error-name").classList.add("invalid");
+            document.getElementById("input-error-name").innerHTML="Please enter a league name";
+        }
+
+    }
+
+    const logScoring= (e) => {
         e.stopPropagation()
         // console.log(e.target);
+        //pull input values
+        let rosterSizeIn = document.getElementById("new-league-team-size").value;
+        let rosterCutIn = document.getElementById("new-league-team-cut").value;
+        //validate inputs (cut < roster size)
+        if (rosterCutIn < rosterSizeIn) {
+            //save inputs
+            console.log("valid and submit")
+            let tempSettings = {...leagueSettings};
+            tempSettings.scoring.rosterSize = rosterSizeIn;
+            tempSettings.scoring.rosterCut = rosterCutIn;
+            setLeagueSettings(tempSettings);
+            //increment step
+            let currentStep = step;
+            console.log(++currentStep);
+            setStep(currentStep);
+
+        } else {
+            //handle errors
+            document.getElementById("input-error-team-cut").classList.add("invalid");
+            document.getElementById("input-error-team-cut").innerHTML="Please select a number less than the total roster size.";
+        }
+
+    }
+
+    const submitLeague= (e) => {
+        e.stopPropagation()
+        // console.log(e.target);
+        //pull input values
+        //validate inputs
+            //save inputs
+            //increment step and switch page
+        //handle errors
         let currentStep = step;
         console.log(++currentStep);
         setStep(currentStep);
@@ -209,6 +302,9 @@ function NewLeagueModal(props) {
     if (step === 1) {
         return(
             <div className="new-league-modal">
+                <div className="step-back disable">
+                    <BackArrSvg />
+                </div>
                 <div className="new-league-header">
                     <p>{`Step ${step} of 4`}</p>
                     <div className="progress-container">
@@ -222,18 +318,18 @@ function NewLeagueModal(props) {
 
                 <div className="league-options-row">
                     <div id="pga" className="league-option-btn" onClick={logLeague}>
-                        <div className="pga-img">
-                            <PgaSvg />
-                            <p>PGA Tour</p>
+                        <div id="pga" className="pga-img">
+                            <PgaSvg id="pga"/>
+                            <p id="pga">PGA Tour</p>
                         </div>
                         <p> Draft and manage a team of players from the PGA tour.</p>
                         <p>TEAMS: 4 to 12</p>
                     </div>
 
                     <div id="liv" className="league-option-btn" onClick={logLeague}>
-                        <div className="liv-img">
-                            <LivSvg />
-                            <p>LIV GOLF</p>
+                        <div id="liv" className="liv-img">
+                            <LivSvg id="liv"/>
+                            <p id="liv">LIV GOLF</p>
 
                         </div>
                         <p> Draft and manage a team of players from LIV Golf.</p>
@@ -246,6 +342,9 @@ function NewLeagueModal(props) {
     } else if (step === 2) {
         return(
             <div className="new-league-modal">
+                <div className="step-back" onClick={backStep}>
+                    <BackArrSvg />
+                </div>
                 <div className="new-league-header">
                     <p>{`Step ${step} of 4`}</p>
                     <div className="progress-container">
@@ -254,6 +353,7 @@ function NewLeagueModal(props) {
                 </div>
 
                 <div className="new-league-header">
+
                     <h1 className="new-league-main-txt">Choose your league size</h1>
                     <p>Don't worry, you can still make changes to all settings later</p>
                 </div>
@@ -261,16 +361,16 @@ function NewLeagueModal(props) {
                 <div className="league-inputs-container">
                     <div className="league-input-item">
                         <div className="league-input-header">
-                            <label for="name" className="league-input-label">LEAGUE NAME</label>
+                            <label htmlFor="name" className="league-input-label">LEAGUE NAME</label>
                             <div className="league-input-spacer"></div>
                         </div>
                         <input type="text" id="new-league-name" name="name" placeholder={leagueSettings.name} ></input>
-                        <p className='input-error name'>Name Error</p>
+                        <p id='input-error-name'>Name Error</p>
                     </div>
 
                     <div className="league-input-item">
                         <div className="league-input-header">
-                            <label for="teams" className="league-input-label">NUMBER OF TEAMS</label>
+                            <label htmlFor="teams" className="league-input-label">NUMBER OF TEAMS</label>
                             <div className="league-input-spacer"></div>
                         </div>
                         <select id="new-league-teams" name="teams" defaultValue={leagueSettings.teamCount}>
@@ -284,29 +384,30 @@ function NewLeagueModal(props) {
                             <option value={11}>11</option>
                             <option value={12}>12</option>
                         </select>
-                        <p className='input-error teams'>Teams Error</p>
+                        <p id='input-error-teams'>Name Error</p>
                     </div>
 
-                    <div className="league-input-item">
+                    {/* LOGO SUBMISSION TEMPORARILY PAUSED  */}
+                    {/* <div className="league-input-item">
                         <div className="league-input-header">
-                            <label for="logo" className="league-input-label">LOGO (optional)</label>
+                            <label htmlFor="logo" className="league-input-label">LOGO (optional)</label>
                             <div className="league-input-spacer"></div>
                         </div>
-                        <input type="text" id="new-league-name" name="logo" placeholder="Enter a URL of an image From the web" ></input>
-                        <p className='input-error logo'>Logo Error</p>
-                    </div>
+                        <input type="text" id="new-league-logo" name="logo" placeholder="Enter the URL of an image From the web" ></input>
+                        <p id='input-error-logo'>Logo URL Error</p>
+                    </div> */}
 
                 </div>
 
-                <div className="new-league-btn" onClick={logSize}>NEXT</div>
+                <div className="new-league-btn" onClick={logDetails}>NEXT</div>
             </div> 
         );
     } else if (step === 3) { //Scoring
-        // missCutScore: "",
-        // rosterCut: "",
-        // rosterSize: "4",
         return(
             <div className="new-league-modal">
+                <div className="step-back" onClick={backStep}>
+                    <BackArrSvg />
+                </div>
                 <div className="new-league-header">
                     <p>{`Step ${step} of 4`}</p>
                     <div className="progress-container">
@@ -323,7 +424,71 @@ function NewLeagueModal(props) {
 
                     <div className="league-input-item">
                         <div className="league-input-header">
-                            <label for="teams" className="league-input-label">ROSTER SIZE</label>
+                            <label htmlFor="team-size" className="league-input-label">ROSTER SIZE</label>
+                            <div className="league-input-spacer"></div>
+                        </div>
+                        <p className="input-notes">{"The number of total players on a team's roster (including bench spots)"}</p>
+                        <select id="new-league-team-size" name="team-size" defaultValue={leagueSettings.scoring.rosterSize}>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                            <option value={6}>6</option>
+                            <option value={7}>7</option>
+                            <option value={8}>8</option>
+                            <option value={9}>9</option>
+                            <option value={10}>10</option>
+                        </select>
+                        <p id='input-error-team-size'>Name Error</p>
+                    </div>
+
+                    <div className="league-input-item">
+                        <div className="league-input-header">
+                            <label htmlFor="team-cut" className="league-input-label">ROSTER CUT</label>
+                            <div className="league-input-spacer"></div>
+                        </div>
+                        <p className="input-notes">The number of bench players who's scores will not count towards the team score each week.</p>
+                        <select id="new-league-team-cut" name="team-cut" defaultValue={leagueSettings.scoring.rosterCut}>
+                            <option value={0}>0</option>
+                            <option value={1}>1</option>
+                            <option value={2}>2</option>
+                            <option value={3}>3</option>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                            <option value={6}>6</option>
+                            <option value={7}>7</option>
+                            <option value={8}>8</option>
+                        </select>
+                        <p id='input-error-team-cut'>Name Error</p>
+                    </div>
+
+                </div>
+
+                <div className="new-league-btn" onClick={logScoring}>NEXT</div>
+            </div> 
+        );
+    } 
+    else if (step === 4) { //Draft Type
+        return(
+            <div className="new-league-modal">
+                <div className="step-back" onClick={backStep}>
+                    <BackArrSvg />
+                </div>
+                <div className="new-league-header">
+                    <p>{`Step ${step} of 4`}</p>
+                    <div className="progress-container">
+                        <div className="progress-bar" style={{ width: `${(step/4)*100}%` }}></div>
+                    </div>
+                </div>
+
+                <div className="new-league-header">
+                    <h1 className="new-league-main-txt">Define your draft</h1>
+                    <p>Don't worry, you can still make changes to all settings later</p>
+                </div>
+
+                <div className="league-inputs-container">
+
+                    <div className="league-input-item">
+                        <div className="league-input-header">
+                            <label htmlFor="teams" className="league-input-label">ROSTER SIZE</label>
                             <div className="league-input-spacer"></div>
                         </div>
                         <select id="new-league-teams" name="teams" defaultValue={leagueSettings.rosterSize}>
@@ -340,7 +505,7 @@ function NewLeagueModal(props) {
 
                     <div className="league-input-item">
                         <div className="league-input-header">
-                            <label for="teams" className="league-input-label">ROSTER CUT</label>
+                            <label htmlFor="teams" className="league-input-label">ROSTER CUT</label>
                             <div className="league-input-spacer"></div>
                         </div>
                         <select id="new-league-teams" name="teams" defaultValue={leagueSettings.rosterCut}>
@@ -355,26 +520,11 @@ function NewLeagueModal(props) {
                         <p className='input-error teams'>Teams Error</p>
                     </div>
 
-
-
-
-                    <div className="league-input-item">
-                        <div className="league-input-header">
-                            <label for="logo" className="league-input-label">LOGO (optional)</label>
-                            <div className="league-input-spacer"></div>
-                        </div>
-                        <input type="text" id="new-league-name" name="logo" placeholder="Enter a URL of an image From the web" ></input>
-                        <p className='input-error logo'>Logo Error</p>
-                    </div>
-
                 </div>
 
-                <div className="new-league-btn" onClick={logSize}>NEXT</div>
+                <div className="new-league-btn" onClick={submitLeague}>CREATE LEAGUE</div>
             </div> 
         );
-    } 
-    else if (step === 4) { //Draft Type
-        return(<div>Format</div>);
     } 
     // return (
     //     <div className="new-league-modal">

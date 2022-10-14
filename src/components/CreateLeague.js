@@ -17,9 +17,10 @@ import NewLeagueModal from "./NewLeagueModal";
 
 
 function CreateLeague(props) {
+    //props.userData
 
     return (
-        <NewLeagueModal setNewLeagueOpen={props.setNewLeagueOpen}/>
+        <NewLeagueModal userData={props.userData} setNewLeagueOpen={props.setNewLeagueOpen}/>
     );
 }
 

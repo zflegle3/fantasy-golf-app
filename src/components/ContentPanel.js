@@ -35,7 +35,7 @@ function ContentPanel(props) {
         return(
             <div className="center-panel-container">
                     <Routes>
-                        <Route exact path="/create-league" element={<CreateLeague />}/>
+                        <Route exact path="/create-league" element={<CreateLeague userData={props.userData}/>}/>
                         <Route exact path="/messages" element={<DirectMessages />}/>
                         <Route exact path="/inbox" element={<Inbox />}/>
                         <Route exact path="/draftboards" element={<MockDraft />}/>

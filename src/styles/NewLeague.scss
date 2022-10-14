@@ -4,7 +4,7 @@ $form-text-sub-b: #7988a1;
 $form-text-btn: #022047;
 $form-text-hl: #00ceb8;
 $form-bg-main: #2d3649;
-
+$form-bg-hover: #1c212d;
 
 $error-red: #ff2b6d;
 
@@ -34,13 +34,46 @@ $pga-b: #F1373D;
     min-width: 500px;
     background-color: $form-bg-main;
     border-radius: 2.4rem;
-    padding: 6rem 4rem 3rem 4rem;
+    padding: 2.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
+    .step-back {
+        height: 3.5rem;
+        width: 3.5rem;
+        position: absolute;
+        left: 2rem;
+        top: 2rem;
+        padding: 0.5rem;
+        border-radius: 10rem;
+        transition: 0.2s;
+
+        svg {
+            width: 100%;
+            height: 100%;
+            fill: $form-text-sub-a;
+            transition: 0.2s;
+        }
+    }
+
+    .step-back.disable {
+        visibility: hidden;
+    }
+
+    .step-back:hover {
+        background-color: $form-bg-hover;
+        transition: 0.2s;
+
+        svg {
+            fill: $form-text-main;
+            transition: 0.2s;
+        }
+    }
+
     .new-league-header {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -178,6 +211,15 @@ $pga-b: #F1373D;
                 }
             }
 
+            p.input-notes {
+                padding-bottom: 0.5rem;
+                font-size: 1rem;
+                color: $form-text-sub-b;
+                font-family: 'poppins', sans-serif;
+                font-weight: 600;
+                line-height: 1.2;
+            }
+
             input, select {
                 border: 1px solid $form-text-main;
                 border-radius: 10rem;
@@ -189,21 +231,27 @@ $pga-b: #F1373D;
                 padding: 0.5rem 1.5rem;
                 color: $form-text-main;
                 margin-bottom: 0.5rem;
+                cursor: pointer;
             }
 
             ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
                 color: $form-text-sub-b
             }
 
-            input:focus, input:focus-visible  {
+            input:focus, input:focus-visible, select:focus, select:focus-visible  {
                 border: 1px solid $form-text-hl;
                 transition: border 0.2s;
                 outline: none;
             }
             
-            p.input-error {
+            p[id*="input-error"] {
                 font-size: 1.2rem;
                 color: $error-red;
+                visibility: hidden;
+            }
+
+            p[id*="input-error"].invalid {
+                visibility: visible;
             }
 
             
@@ -213,14 +261,18 @@ $pga-b: #F1373D;
     .new-league-btn {
         width: 420px;
         font-size: 1.5rem;
-        background-color: $form-text-hl;
+        // background-color: $form-text-hl;
+        background: linear-gradient(315deg,#00b7b3,#4ce2a7);
         border-radius: 10rem;
         padding: 1.5rem;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
+    }
 
+    .new-league-btn:hover {
+        background: linear-gradient(100deg,#00b7b3,#4ce2a7);
     }
 
 
