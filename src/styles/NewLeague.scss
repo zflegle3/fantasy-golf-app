@@ -1,0 +1,268 @@
+$form-text-main: #fff;
+$form-text-sub-a: #b9c4d4;
+$form-text-sub-b: #7988a1;
+$form-text-hl: #00ceb8;
+$form-bg-main: #2d3649;
+
+$error-red: #ff2b6d;
+
+$pga-a: #003C80;
+$pga-b: #F1373D;
+
+
+/* Display Settings
+~~~~~~~~~~~~~~~~~~~~ */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(204, 26, 26, 0.55);
+    z-index: 1000;
+}
+
+.new-league-modal {
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    min-width: 500px;
+    background-color: $form-bg-main;
+    border-radius: 2.4rem;
+    padding: 6rem 4rem 3rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .new-league-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 3rem;
+
+        h1 {
+            font-size: 2.5rem;
+            padding-bottom: 1rem;
+            font-family: poppins, sans-serif;
+            font-weight: 700;
+            font-style: italic;
+            color: $form-text-main;
+        }
+        
+        p {
+            font-size: 1.5rem;
+            color: $form-text-sub-b;
+            padding-bottom: 0.5rem;
+        }
+        div.progress-container {
+            background-color: $form-text-sub-b;
+            width: 250px;
+            height: 5px;
+            border-radius: 10rem;
+            overflow: hidden;
+            // display: flex;
+            // justify-content: flex-start;
+            // align-items: center;
+
+            .progress-bar {
+                height: 5px;
+                background-color: $form-text-hl;
+                transition: width 0.5s;
+            }
+        }
+    }
+
+    .league-options-row {
+        display: flex;
+        justify-content: space-around;
+
+        .league-option-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 2rem;
+            width: 240px;
+            cursor: pointer;
+            
+            div {
+                width: 200px;
+                height: 200px;
+                background-color: red;
+                border-radius: 1.5rem;
+                padding: 0.5rem;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                margin-bottom: 0.5rem;
+
+
+                p{
+                    font-size: 2rem;
+                    font-family: poppins, sans-serif;
+                    font-weight: 700;
+                    font-style: italic;
+
+                }
+
+                svg {
+                    width: 100%;
+                    flex-grow: 1;
+                }
+            }
+
+            .pga-img {
+                background: linear-gradient(41deg, rgba(0,60,128,1) 30%, rgba(241,55,61,1) 70%);
+
+                p {
+                    color: white;
+                }
+            }
+
+            .liv-img {
+                background: linear-gradient(319deg, #CBFB7E 30%, #6AE8EC 70%);
+                p {
+                    color: black;
+                }
+            }
+
+            p {
+                font-size: 1.2rem;
+                line-height: 1.2;
+                color: $form-text-sub-a;
+                font-family: 'poppins', sans-serif;
+                font-weight: 600;
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
+
+    .league-inputs-container {
+        width: 450px;
+        margin: 0rem 2rem 2rem 2rem;
+
+        .league-input-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-top: 3rem;
+
+            .league-input-header {
+                width: 100%;
+                padding-bottom: 0.5rem;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin-bottom: 0.5rem;
+
+                label {
+                    font-size: 1.2rem;
+                    padding-right: 1rem;
+                    color: $form-text-main;
+                }
+                div {
+                    flex-grow: 1;
+                    // border-top-style: dashed;
+                    // border-width: 1px;
+                    // border-color: $form-text-hl;
+                    border-bottom: 1px dashed $form-text-sub-b;
+                }
+            }
+
+            input, select {
+                border: 1px solid $form-text-main;
+                border-radius: 10rem;
+                transition: border 0.2s;
+                background-color: transparent;
+                font-family: poppins, sans-serif;
+                font-weight: 700;
+                font-size: 1.5rem;
+                padding: 0.5rem 1.5rem;
+                color: $form-text-main;
+                margin-bottom: 0.5rem;
+            }
+
+            ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: $form-text-sub-b
+            }
+
+            input:focus, input:focus-visible  {
+                border: 1px solid $form-text-hl;
+                transition: border 0.2s;
+                outline: none;
+            }
+            
+            p.input-error {
+                font-size: 1.2rem;
+                color: $error-red;
+            }
+
+            
+        }
+    }
+
+
+}
+
+
+#new-league-modal-form {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // color: var(--text-main);
+    /* background-color: rgba(155, 155, 155, 0.55); */
+    /* transition: 2s; */
+}
+
+#new-league-modal-form.visable {
+    // visibility: visible;
+    // height: 100%;
+    // width: 100%;
+}
+
+
+
+.new-league-form {
+    // display: flex;
+    // flex-direction: column;
+}
+
+
+
+
+
+// .new-league-input {
+//     display: flex;
+//     flex-direction: column;
+// }
+
+// .new-league-input {
+//     display: flex;
+//     flex-direction: column;
+// }
+
+/* Form Settings
+~~~~~~~~~~~~~~~~~~~~ */
+
+
+/* Error Handling Settings
+~~~~~~~~~~~~~~~~~~~~ */
+
+// .new-league-error-div {
+//     visibility: hidden;
+
+// }
+
+// #new-league-error {
+//     font-size: 1.5rem;
+//     color: var(--error-red);
+
+// }
+
