@@ -1,8 +1,10 @@
 $form-text-main: #fff;
 $form-text-sub-a: #b9c4d4;
 $form-text-sub-b: #7988a1;
+$form-text-btn: #022047;
 $form-text-hl: #00ceb8;
 $form-bg-main: #2d3649;
+
 
 $error-red: #ff2b6d;
 
@@ -145,7 +147,7 @@ $pga-b: #F1373D;
     }
 
     .league-inputs-container {
-        width: 450px;
+        width: 400px;
         margin: 0rem 2rem 2rem 2rem;
 
         .league-input-item {
@@ -206,6 +208,19 @@ $pga-b: #F1373D;
 
             
         }
+    }
+
+    .new-league-btn {
+        width: 420px;
+        font-size: 1.5rem;
+        background-color: $form-text-hl;
+        border-radius: 10rem;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
     }
 
 

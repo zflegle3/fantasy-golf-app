@@ -28,8 +28,8 @@ function NewLeagueModal(props) {
         scoing: {
             format: "",
             missCutScore: "",
-            rosterCut: "",
-            rosterSize: "4",
+            rosterCut: 2,
+            rosterSize: 6,
         },
     })
 
@@ -195,6 +195,14 @@ function NewLeagueModal(props) {
         setStep(currentStep);
     }
 
+    const logSize= (e) => {
+        e.stopPropagation()
+        // console.log(e.target);
+        let currentStep = step;
+        console.log(++currentStep);
+        setStep(currentStep);
+    }
+
 
 
     console.log(leagueSettings);
@@ -202,9 +210,9 @@ function NewLeagueModal(props) {
         return(
             <div className="new-league-modal">
                 <div className="new-league-header">
-                    <p>{`Step ${step} of 3`}</p>
+                    <p>{`Step ${step} of 4`}</p>
                     <div className="progress-container">
-                        <div className="progress-bar" style={{ width: `${(step/3)*100}%` }}></div>
+                        <div className="progress-bar" style={{ width: `${(step/4)*100}%` }}></div>
                     </div>
                 </div>
 
@@ -219,7 +227,7 @@ function NewLeagueModal(props) {
                             <p>PGA Tour</p>
                         </div>
                         <p> Draft and manage a team of players from the PGA tour.</p>
-                        <p>PLAYERS: 4 to 12</p>
+                        <p>TEAMS: 4 to 12</p>
                     </div>
 
                     <div id="liv" className="league-option-btn" onClick={logLeague}>
@@ -228,8 +236,8 @@ function NewLeagueModal(props) {
                             <p>LIV GOLF</p>
 
                         </div>
-                        <p> Draft and manage a team of players from the PGA tour.</p>
-                        <p>PLAYERS: 4 to 10</p>
+                        <p> Draft and manage a team of players from LIV Golf.</p>
+                        <p>TEAMS: 4 to 10</p>
                     </div>
                 </div>
 
@@ -238,61 +246,135 @@ function NewLeagueModal(props) {
     } else if (step === 2) {
         return(
             <div className="new-league-modal">
-            <div className="new-league-header">
-                <p>{`Step ${step} of 3`}</p>
-                <div className="progress-container">
-                    <div className="progress-bar" style={{ width: `${(step/3)*100}%` }}></div>
-                </div>
-            </div>
-
-            <div className="new-league-header">
-                <h1 className="new-league-main-txt">Choose your league size</h1>
-                <p>Don't worry, you can still make changes to all settings later</p>
-            </div>
-
-            <div className="league-inputs-container">
-                <div className="league-input-item">
-                    <div className="league-input-header">
-                        <label for="name" className="league-input-label">LEAGUE NAME</label>
-                        <div className="league-input-spacer"></div>
+                <div className="new-league-header">
+                    <p>{`Step ${step} of 4`}</p>
+                    <div className="progress-container">
+                        <div className="progress-bar" style={{ width: `${(step/4)*100}%` }}></div>
                     </div>
-                    <input type="text" id="new-league-name" name="name" placeholder={leagueSettings.name} ></input>
-                    <p className='input-error name'>Name Error</p>
                 </div>
 
-                <div className="league-input-item">
-                    <div className="league-input-header">
-                        <label for="teams" className="league-input-label">NUMBER OF TEAMS</label>
-                        <div className="league-input-spacer"></div>
-                    </div>
-                    <select id="new-league-teams" name="teams" defaultValue={leagueSettings.teamCount}>
-                        <option value={4}>4</option>
-                        <option value={5}>5</option>
-                        <option value={6}>6</option>
-                        <option value={7}>7</option>
-                        <option value={8}>8</option>
-                        <option value={9}>9</option>
-                        <option value={10}>10</option>
-                        <option value={11}>11</option>
-                        <option value={12}>12</option>
-                    </select>
-                    <p className='input-error teams'>Teams Error</p>
+                <div className="new-league-header">
+                    <h1 className="new-league-main-txt">Choose your league size</h1>
+                    <p>Don't worry, you can still make changes to all settings later</p>
                 </div>
 
-                <div className="league-input-item">
-                    <div className="league-input-header">
-                        <label for="logo" className="league-input-label">LOGO (optional)</label>
-                        <div className="league-input-spacer"></div>
+                <div className="league-inputs-container">
+                    <div className="league-input-item">
+                        <div className="league-input-header">
+                            <label for="name" className="league-input-label">LEAGUE NAME</label>
+                            <div className="league-input-spacer"></div>
+                        </div>
+                        <input type="text" id="new-league-name" name="name" placeholder={leagueSettings.name} ></input>
+                        <p className='input-error name'>Name Error</p>
                     </div>
-                    <input type="text" id="new-league-name" name="logo" placeholder="Enter a URL of an image From the web" ></input>
-                    <p className='input-error logo'>Logo Error</p>
+
+                    <div className="league-input-item">
+                        <div className="league-input-header">
+                            <label for="teams" className="league-input-label">NUMBER OF TEAMS</label>
+                            <div className="league-input-spacer"></div>
+                        </div>
+                        <select id="new-league-teams" name="teams" defaultValue={leagueSettings.teamCount}>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                            <option value={6}>6</option>
+                            <option value={7}>7</option>
+                            <option value={8}>8</option>
+                            <option value={9}>9</option>
+                            <option value={10}>10</option>
+                            <option value={11}>11</option>
+                            <option value={12}>12</option>
+                        </select>
+                        <p className='input-error teams'>Teams Error</p>
+                    </div>
+
+                    <div className="league-input-item">
+                        <div className="league-input-header">
+                            <label for="logo" className="league-input-label">LOGO (optional)</label>
+                            <div className="league-input-spacer"></div>
+                        </div>
+                        <input type="text" id="new-league-name" name="logo" placeholder="Enter a URL of an image From the web" ></input>
+                        <p className='input-error logo'>Logo Error</p>
+                    </div>
+
                 </div>
-                
-            </div>
-        </div> 
+
+                <div className="new-league-btn" onClick={logSize}>NEXT</div>
+            </div> 
         );
-    } else if (step === 3) {
-        return(<div></div>);
+    } else if (step === 3) { //Scoring
+        // missCutScore: "",
+        // rosterCut: "",
+        // rosterSize: "4",
+        return(
+            <div className="new-league-modal">
+                <div className="new-league-header">
+                    <p>{`Step ${step} of 4`}</p>
+                    <div className="progress-container">
+                        <div className="progress-bar" style={{ width: `${(step/4)*100}%` }}></div>
+                    </div>
+                </div>
+
+                <div className="new-league-header">
+                    <h1 className="new-league-main-txt">Choose how you'll keep score</h1>
+                    <p>Don't worry, you can still make changes to all settings later</p>
+                </div>
+
+                <div className="league-inputs-container">
+
+                    <div className="league-input-item">
+                        <div className="league-input-header">
+                            <label for="teams" className="league-input-label">ROSTER SIZE</label>
+                            <div className="league-input-spacer"></div>
+                        </div>
+                        <select id="new-league-teams" name="teams" defaultValue={leagueSettings.rosterSize}>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                            <option value={6}>6</option>
+                            <option value={7}>7</option>
+                            <option value={8}>8</option>
+                            <option value={9}>9</option>
+                            <option value={10}>10</option>
+                        </select>
+                        <p className='input-error teams'>Teams Error</p>
+                    </div>
+
+                    <div className="league-input-item">
+                        <div className="league-input-header">
+                            <label for="teams" className="league-input-label">ROSTER CUT</label>
+                            <div className="league-input-spacer"></div>
+                        </div>
+                        <select id="new-league-teams" name="teams" defaultValue={leagueSettings.rosterCut}>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                            <option value={6}>6</option>
+                            <option value={7}>7</option>
+                            <option value={8}>8</option>
+                            <option value={9}>9</option>
+                            <option value={10}>10</option>
+                        </select>
+                        <p className='input-error teams'>Teams Error</p>
+                    </div>
+
+
+
+
+                    <div className="league-input-item">
+                        <div className="league-input-header">
+                            <label for="logo" className="league-input-label">LOGO (optional)</label>
+                            <div className="league-input-spacer"></div>
+                        </div>
+                        <input type="text" id="new-league-name" name="logo" placeholder="Enter a URL of an image From the web" ></input>
+                        <p className='input-error logo'>Logo Error</p>
+                    </div>
+
+                </div>
+
+                <div className="new-league-btn" onClick={logSize}>NEXT</div>
+            </div> 
+        );
+    } 
+    else if (step === 4) { //Draft Type
+        return(<div>Format</div>);
     } 
     // return (
     //     <div className="new-league-modal">
