@@ -140,7 +140,7 @@ function App() {
     });
   }, []);
 
-
+  console.log(getAuth());
   console.log(userData);
 if (userData) {
   return (

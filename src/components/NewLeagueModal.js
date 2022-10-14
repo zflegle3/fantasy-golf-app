@@ -15,11 +15,15 @@ import { v4 as uuidv4 } from 'uuid';
 //SVGs & Images
 import { ReactComponent as PgaSvg } from '../images/icons/golf-pga.svg';
 import { ReactComponent as LivSvg } from '../images/icons/golf-liv.svg';
-import{ReactComponent as BackArrSvg} from "../images/icons/arrow-left.svg";
+import { ReactComponent as BackArrSvg} from "../images/icons/arrow-left.svg";
+import SnakeImg from "../images/icons/snake.png"
+import LinearImg from "../images/icons/top-right.png"
 
 function NewLeagueModal(props) {
     //props.userData
     const [step, setStep] = useState(1)
+    const [draftType, setDraftType] = useState("");
+    const [draftBtnSelect, setDraftBtnSelect] = useState(["",""])
     const [leagueSettings, setLeagueSettings] = useState({
         admin: "userID",
         name: "League Name",
@@ -39,165 +43,165 @@ function NewLeagueModal(props) {
         }
     })
 
-    const closeModal = () => {
-        let modalClose = document.getElementById("new-league-modal-form");
-        modalClose.classList= "";
-    }
+    // const closeModal = () => {
+    //     let modalClose = document.getElementById("new-league-modal-form");
+    //     modalClose.classList= "";
+    // }
 
-    async function createSchedule() {
-        let scheduleData = [];
-        let currentSchedule = [];
-        const scheduleDocRef = doc(props.db,"schedules/2022-schedule");
-        const scheduleSnap = await getDoc(scheduleDocRef);
-        if (scheduleSnap.exists()) {
-            //pull data 
-            scheduleData = scheduleSnap.data().schedule;
-            //filter data by date
-            // console.log(scheduleData);
-            currentSchedule = scheduleData.filter((dateSelect) => {
-                return Date.now()-dateSelect.date.start.$date.$numberLong < 0;
-            }); //only pulls dates upcoming from current date 
-            // console.log(currentSchedule);
-            currentSchedule = currentSchedule.map((tournament)=> {
-                return {
-                    tournId: tournament.tournId,
-                    tournName: tournament.name,
-                    startDate: tournament.date.start.$date.$numberLong,
-                    endDate: tournament.date.end.$date.$numberLong,
-                    Scorecard: [],
-                    completeStatus: false,
-                }
-            })
-        } else {
-           console.log("No Schedule Doc found, handle error");
-        }
-        // console.log(currentSchedule);
-        return currentSchedule;
-    }
+    // async function createSchedule() {
+    //     let scheduleData = [];
+    //     let currentSchedule = [];
+    //     const scheduleDocRef = doc(props.db,"schedules/2022-schedule");
+    //     const scheduleSnap = await getDoc(scheduleDocRef);
+    //     if (scheduleSnap.exists()) {
+    //         //pull data 
+    //         scheduleData = scheduleSnap.data().schedule;
+    //         //filter data by date
+    //         // console.log(scheduleData);
+    //         currentSchedule = scheduleData.filter((dateSelect) => {
+    //             return Date.now()-dateSelect.date.start.$date.$numberLong < 0;
+    //         }); //only pulls dates upcoming from current date 
+    //         // console.log(currentSchedule);
+    //         currentSchedule = currentSchedule.map((tournament)=> {
+    //             return {
+    //                 tournId: tournament.tournId,
+    //                 tournName: tournament.name,
+    //                 startDate: tournament.date.start.$date.$numberLong,
+    //                 endDate: tournament.date.end.$date.$numberLong,
+    //                 Scorecard: [],
+    //                 completeStatus: false,
+    //             }
+    //         })
+    //     } else {
+    //        console.log("No Schedule Doc found, handle error");
+    //     }
+    //     // console.log(currentSchedule);
+    //     return currentSchedule;
+    // }
 
     const submitModal = (e) => {
-        e.preventDefault();
-        //pull values from form
-        let leagueNameIn = document.getElementById("new-league-name").value;
-        let leagueTeamsIn = document.getElementById("new-league-teams").value;
-        let leagueFormatIn = document.getElementById("new-league-format").value;
-        let leaguePlayersIn = document.getElementById("new-league-roster-players").value;
-        let leagueCutIn = document.getElementById("new-league-roster-cut").value;
-        let leagueVarsAll = [leagueNameIn, leagueTeamsIn, leagueFormatIn, leaguePlayersIn, leagueCutIn]
-        if (validateModal(leagueVarsAll)) {
-            createLeagueDoc(leagueVarsAll);
-            closeModal();
-            document.getElementById("new-league-form").reset();
-        } else {
-            console.log("handle error new league");
-        }
+        // e.preventDefault();
+        // //pull values from form
+        // let leagueNameIn = document.getElementById("new-league-name").value;
+        // let leagueTeamsIn = document.getElementById("new-league-teams").value;
+        // let leagueFormatIn = document.getElementById("new-league-format").value;
+        // let leaguePlayersIn = document.getElementById("new-league-roster-players").value;
+        // let leagueCutIn = document.getElementById("new-league-roster-cut").value;
+        // let leagueVarsAll = [leagueNameIn, leagueTeamsIn, leagueFormatIn, leaguePlayersIn, leagueCutIn]
+        // if (validateModal(leagueVarsAll)) {
+        //     createLeagueDoc(leagueVarsAll);
+        //     closeModal();
+        //     document.getElementById("new-league-form").reset();
+        // } else {
+        //     console.log("handle error new league");
+        // }
     } 
 
-    async function createLeagueDoc(leagueVarsAll) { 
-        //create league ID, format: L-leagueid
-        let newId = `L-${uuidv4()}`; 
-        //create rosters per player qty
-        let rosterArray=[];
-        for (let i=0; i < leagueVarsAll[3]; i++) {
-            rosterArray.push({
-                playerName: `Player ${i}`,
-                playerId: i,
-            });
-        }
-        //create teams per team qty
-        let teamArray = [{
-            teamName: "New Team 1",
-            managerId: props.userActive.uid,
-            managerName: "Admin Name Temp",
-            roster: rosterArray,
-        }];
-        for (let i=0; i < leagueVarsAll[1]; i++) {
-            teamArray.push({
-                teamName: `New Team ${i+1}`,
-                managerId: "none",
-                managerName: "Manager Name Temp",
-                roster: rosterArray,
-            });
-        }
+    // async function createLeagueDoc(leagueVarsAll) { 
+    //     //create league ID, format: L-leagueid
+    //     let newId = `L-${uuidv4()}`; 
+    //     //create rosters per player qty
+    //     let rosterArray=[];
+    //     for (let i=0; i < leagueVarsAll[3]; i++) {
+    //         rosterArray.push({
+    //             playerName: `Player ${i}`,
+    //             playerId: i,
+    //         });
+    //     }
+    //     //create teams per team qty
+    //     let teamArray = [{
+    //         teamName: "New Team 1",
+    //         managerId: props.userActive.uid,
+    //         managerName: "Admin Name Temp",
+    //         roster: rosterArray,
+    //     }];
+    //     for (let i=0; i < leagueVarsAll[1]; i++) {
+    //         teamArray.push({
+    //             teamName: `New Team ${i+1}`,
+    //             managerId: "none",
+    //             managerName: "Manager Name Temp",
+    //             roster: rosterArray,
+    //         });
+    //     }
 
         //create league schedule data per current date & 2022 schedule
         //Update later to LM selecting schedule in form
-        const scheduleData = await createSchedule();
+        // const scheduleData = await createSchedule();
 
-        let data = {
-            leagueId: newId,
-            activity: [{
-                item: "Created new League, Test",
-                time: Date(),
-                user: props.userActive.uid,
-            }],
-            schedule: scheduleData,
-            settings: {
-                admin: props.userActive.uid,
-                name: leagueVarsAll[0],
-                scoring: {
-                    missCutScore: -1,
-                    rosterCut: leagueVarsAll[4],
-                    rosterSize: leagueVarsAll[3],
-                    format: leagueVarsAll[2],
-                },
-                teamCount: leagueVarsAll[1],
-            },
-            teams: teamArray,
-        };
+        // let data = {
+        //     leagueId: newId,
+        //     activity: [{
+        //         item: "Created new League, Test",
+        //         time: Date(),
+        //         user: props.userActive.uid,
+        //     }],
+        //     schedule: scheduleData,
+        //     settings: {
+        //         admin: props.userActive.uid,
+        //         name: leagueVarsAll[0],
+        //         scoring: {
+        //             missCutScore: -1,
+        //             rosterCut: leagueVarsAll[4],
+        //             rosterSize: leagueVarsAll[3],
+        //             format: leagueVarsAll[2],
+        //         },
+        //         teamCount: leagueVarsAll[1],
+        //     },
+        //     teams: teamArray,
+        // };
         //create new league doc
-        await setDoc(doc(props.db, "leagues", `${newId}`), data);
+        // await setDoc(doc(props.db, "leagues", `${newId}`), data);
         
         //add league info to user doc 
-        const userDoc = doc(props.db, `users/U-${props.userActive.uid}`);
-        const userSnap  = await getDoc(userDoc);
-        if (userSnap.exists()) {
-            let userData = userSnap.data();
-            //pull data 
-            let leaguesAll = userData.leagues;
-            //write new data to doc db
-            leaguesAll.push({
-                id: newId,
-                logo: "imgSrc",
-                name: leagueVarsAll[0],
-            });
-            updateDoc(userDoc,{leagues: leaguesAll})
-            //update display with league info
-            props.setLeagues(leaguesAll);
-        } else {
-           console.log("No User Doc found, handle error");
-        }
-    }
+    //     const userDoc = doc(props.db, `users/U-${props.userActive.uid}`);
+    //     const userSnap  = await getDoc(userDoc);
+    //     if (userSnap.exists()) {
+    //         let userData = userSnap.data();
+    //         //pull data 
+    //         let leaguesAll = userData.leagues;
+    //         //write new data to doc db
+    //         leaguesAll.push({
+    //             id: newId,
+    //             logo: "imgSrc",
+    //             name: leagueVarsAll[0],
+    //         });
+    //         updateDoc(userDoc,{leagues: leaguesAll})
+    //         //update display with league info
+    //         props.setLeagues(leaguesAll);
+    //     } else {
+    //        console.log("No User Doc found, handle error");
+    //     }
+    // }
 
-    const validateModal = (formVals) => {
-        let validValues = true;
-        let errorOut = document.getElementById("new-league-error");
-        if (formVals[0].length < 1) {
-            errorOut.textContent = "Please enter a league name";
-            return false;
-        } else if (formVals[1].length < 1) {
-            errorOut.textContent = "Please select the number of teams";
-            return false;
-        } else if (formVals[2].length < 1) {
-            errorOut.textContent = "Please select a league format";
-            return false;
-        } else if (formVals[3].length < 1) {
-            errorOut.textContent = "Please select the number of golfers per team";
-            return false;
-        } else if (formVals[4].length < 1) {
-            errorOut.textContent = "Please select the team cut";
-            validValues = false;
-            return false;
-        }
-        errorOut.textContent = "";
-        return(validValues);
-    }
+    // const validateModal = (formVals) => {
+    //     let validValues = true;
+    //     let errorOut = document.getElementById("new-league-error");
+    //     if (formVals[0].length < 1) {
+    //         errorOut.textContent = "Please enter a league name";
+    //         return false;
+    //     } else if (formVals[1].length < 1) {
+    //         errorOut.textContent = "Please select the number of teams";
+    //         return false;
+    //     } else if (formVals[2].length < 1) {
+    //         errorOut.textContent = "Please select a league format";
+    //         return false;
+    //     } else if (formVals[3].length < 1) {
+    //         errorOut.textContent = "Please select the number of golfers per team";
+    //         return false;
+    //     } else if (formVals[4].length < 1) {
+    //         errorOut.textContent = "Please select the team cut";
+    //         validValues = false;
+    //         return false;
+    //     }
+    //     errorOut.textContent = "";
+    //     return(validValues);
+    // }
 
-    const checkUrl = (urlIn) => {
-        return urlIn.match(
-            /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
-          );
-    }
+    // const checkUrl = (urlIn) => {
+    //     return urlIn.match(
+    //         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+    //       );
+    // }
 
     const backStep = () => {
         let currentStep = step;
@@ -205,12 +209,34 @@ function NewLeagueModal(props) {
         setStep(currentStep);
     }
 
+    const selectSnake = () => {
+        let btnClasses = ["selected",""];
+        setDraftBtnSelect(btnClasses);
+        setDraftType("snake");
+    }
 
-    const logLeague = (e) => {
-        e.stopPropagation();
+    const selectLinear = () => {
+        let btnClasses = ["","selected"];
+        setDraftBtnSelect(btnClasses);
+        setDraftType("linear");
+    }
+
+
+    const logPga = () => {
         //add league to league settings state
         let tempSettings = {...leagueSettings};
-        tempSettings.proLeague = e.target.id;
+        tempSettings.proLeague = "pga";
+        setLeagueSettings(tempSettings);
+        //increment to next step
+        let currentStep = step;
+        console.log(++currentStep);
+        setStep(currentStep);
+    }
+
+    const logLiv = () => {
+        //add league to league settings state
+        let tempSettings = {...leagueSettings};
+        tempSettings.proLeague = "liv";
         setLeagueSettings(tempSettings);
         //increment to next step
         let currentStep = step;
@@ -283,21 +309,45 @@ function NewLeagueModal(props) {
 
     }
 
-    const submitLeague= (e) => {
+    const logDraft= (e) => {
         e.stopPropagation()
         // console.log(e.target);
+        document.getElementById("input-error-draft-type").classList.remove("invalid");
+        document.getElementById("input-error-draft-date").classList.remove("invalid");
+        let draftDateIn = new Date(document.getElementById("new-league-draft-date").value);
+        let todayDate = new Date();
+        let dateDiff = (draftDateIn - todayDate);
+        if (dateDiff > 86000000) {
+            if (draftType) {
+                let tempSettings = {...leagueSettings};
+                tempSettings.draft = {
+                    type: draftType,
+                    date: draftDateIn,
+                    order: "",
+                }
+                setLeagueSettings(tempSettings);
+            } else {
+                document.getElementById("input-error-draft-type").classList.add("invalid");
+                document.getElementById("input-error-draft-type").innerHTML="Please select a draft type.";
+            }
+        } else {
+            document.getElementById("input-error-draft-date").classList.add("invalid");
+            document.getElementById("input-error-draft-date").innerHTML="Draft date must be at least 24 hours in the future.";
+        }
         //pull input values
         //validate inputs
             //save inputs
             //increment step and switch page
         //handle errors
-        let currentStep = step;
-        console.log(++currentStep);
-        setStep(currentStep);
+
+
+        // let currentStep = step;
+        // console.log(++currentStep);
+        // setStep(currentStep);
     }
 
-
-
+    let minDate = new Date();
+    // console.log(user);
     console.log(leagueSettings);
     if (step === 1) {
         return(
@@ -317,19 +367,19 @@ function NewLeagueModal(props) {
                 </div>
 
                 <div className="league-options-row">
-                    <div id="pga" className="league-option-btn" onClick={logLeague}>
+                    <div id="pga" className="league-option-btn" onClick={logPga}>
                         <div id="pga" className="pga-img">
-                            <PgaSvg id="pga"/>
-                            <p id="pga">PGA Tour</p>
+                            <PgaSvg />
+                            <p>PGA Tour</p>
                         </div>
                         <p> Draft and manage a team of players from the PGA tour.</p>
                         <p>TEAMS: 4 to 12</p>
                     </div>
 
-                    <div id="liv" className="league-option-btn" onClick={logLeague}>
+                    <div id="liv" className="league-option-btn" onClick={logLiv}>
                         <div id="liv" className="liv-img">
-                            <LivSvg id="liv"/>
-                            <p id="liv">LIV GOLF</p>
+                            <LivSvg />
+                            <p>LIV GOLF</p>
 
                         </div>
                         <p> Draft and manage a team of players from LIV Golf.</p>
@@ -354,7 +404,7 @@ function NewLeagueModal(props) {
 
                 <div className="new-league-header">
 
-                    <h1 className="new-league-main-txt">Choose your league size</h1>
+                    <h1 className="new-league-main-txt">Set your league size</h1>
                     <p>Don't worry, you can still make changes to all settings later</p>
                 </div>
 
@@ -445,7 +495,7 @@ function NewLeagueModal(props) {
                             <label htmlFor="team-cut" className="league-input-label">ROSTER CUT</label>
                             <div className="league-input-spacer"></div>
                         </div>
-                        <p className="input-notes">The number of bench players who's scores will not count towards the team score each week.</p>
+                        <p className="input-notes">The number of bench players who's scores will not count towards the team score each week (bench spots)</p>
                         <select id="new-league-team-cut" name="team-cut" defaultValue={leagueSettings.scoring.rosterCut}>
                             <option value={0}>0</option>
                             <option value={1}>1</option>
@@ -488,132 +538,46 @@ function NewLeagueModal(props) {
 
                     <div className="league-input-item">
                         <div className="league-input-header">
-                            <label htmlFor="teams" className="league-input-label">ROSTER SIZE</label>
+                            <label htmlFor="draft-date" className="league-input-label">DRAFT DATE</label>
                             <div className="league-input-spacer"></div>
                         </div>
-                        <select id="new-league-teams" name="teams" defaultValue={leagueSettings.rosterSize}>
-                            <option value={4}>4</option>
-                            <option value={5}>5</option>
-                            <option value={6}>6</option>
-                            <option value={7}>7</option>
-                            <option value={8}>8</option>
-                            <option value={9}>9</option>
-                            <option value={10}>10</option>
-                        </select>
-                        <p className='input-error teams'>Teams Error</p>
+
+                        <input type="datetime-local" name="draft-date" id="new-league-draft-date"></input>
+
+                        <p id='input-error-draft-date'>Name Error</p>
+
                     </div>
 
                     <div className="league-input-item">
                         <div className="league-input-header">
-                            <label htmlFor="teams" className="league-input-label">ROSTER CUT</label>
+                            <label htmlFor="draft-type" className="league-input-label">DRAFT TYPE</label>
                             <div className="league-input-spacer"></div>
                         </div>
-                        <select id="new-league-teams" name="teams" defaultValue={leagueSettings.rosterCut}>
-                            <option value={4}>4</option>
-                            <option value={5}>5</option>
-                            <option value={6}>6</option>
-                            <option value={7}>7</option>
-                            <option value={8}>8</option>
-                            <option value={9}>9</option>
-                            <option value={10}>10</option>
-                        </select>
-                        <p className='input-error teams'>Teams Error</p>
+
+                        <div className={`new-league-draft-type snake ${draftBtnSelect[0]}`}  defaultValue={leagueSettings.rosterCut} onClick={selectSnake}>
+                            <div className="draft-type-logo snake" ></div>
+                            <div className="draft-type-details" >
+                                <p className="draft-type-title" >Snake Draft</p>
+                                <p className="draft-type-info" >Each round, the draft order reverses</p>
+                            </div>
+                        </div>
+
+                        <div className={`new-league-draft-type snake ${draftBtnSelect[1]}`}  defaultValue={leagueSettings.rosterCut} onClick={selectLinear}>
+                            <div className="draft-type-logo linear" ></div>
+                            <div className="draft-type-details" >
+                                <p className="draft-type-title" >Linear Draft</p>
+                                <p className="draft-type-info" >Each round, the draft order repeats</p>
+                            </div>
+                        </div>
+                        <p id='input-error-draft-type'>Name Error</p>
                     </div>
 
                 </div>
 
-                <div className="new-league-btn" onClick={submitLeague}>CREATE LEAGUE</div>
+                <div className="new-league-btn" onClick={logDraft}>CREATE LEAGUE</div>
             </div> 
         );
     } 
-    // return (
-    //     <div className="new-league-modal">
-    //         <div className="new-league-header">
-    //             <p>{`Step 1 of 3`}</p>
-    //             <div className="progress-container">
-    //                 <div className="progress-bar"></div>
-    //             </div>
-    //         </div>
-    //         <form className="new-league-form" id="new-league-form" >
-
-    //             <div className="new-league-header">
-    //                 <h1 className="new-league-main-txt">Create a new League</h1>
-    //                 <p className="new-league-sub-txt">Don't worry, you can make changes to all settings later</p>
-    //             </div>
-
-    //             <div className="new-league-input">
-    //                 <label htmlFor="name">League Name</label>
-    //                 <div className="input-container">
-    //                     <input type="text" id="new-league-name" name="name" placeholder="Enter the name of your league" ></input>
-    //                 </div>
-    //             </div>
-
-    //             <div className="new-league-input">
-    //                 <label htmlFor="teams">Number of Teams</label>
-    //                 <div className="input-container">
-    //                     <select id="new-league-teams" name="teams" defaultValue={6}>
-    //                         <option value={4}>4</option>
-    //                         <option value={5}>5</option>
-    //                         <option value={6}>6</option>
-    //                         <option value={7}>7</option>
-    //                         <option value={8}>8</option>
-    //                         <option value={9}>9</option>
-    //                         <option value={10}>10</option>
-    //                         <option value={11}>11</option>
-    //                         <option value={12}>12</option>
-    //                     </select>
-    //                 </div>
-    //             </div>
-
-    //             <div className="new-league-header">
-    //                 <p className="new-league-sub-txt">Scoring and Roster Settings:</p>
-    //             </div>
-
-    //             <div className="new-league-input">
-    //                 <label htmlFor="format">Game Format</label>
-    //                 <p>Tournament - teams play against the entire league each week</p>
-    //                 <p>Head to Head - teams play against one team each week </p>
-    //                 <div className="input-container">
-    //                     <select id="new-league-format" name="format" defaultValue={"league-play"}>
-    //                         <option value="league-play" >Tournament</option>
-    //                         <option value="h2h-play">Head to Head</option>
-    //                     </select>
-    //                 </div>
-    //             </div>
-
-    //             <div className="new-league-input">
-    //                 <label htmlFor="roster-players">Golfers Per Roster</label>
-    //                 <p>number of players allowed on a team's roster</p>
-    //                 <div className="input-container">
-    //                     <input type="number" id="new-league-roster-players" name="roster-players"  min="4" max="10" placeholder="4" ></input>
-    //                 </div>
-    //             </div>
-
-    //             <div className="new-league-input">
-    //                 <label htmlFor="roster-cut">Team Cut</label>
-    //                 <p>the number of players who's scores will not count to team score</p>
-    //                 <div className="input-container">
-    //                     <input type="number" id="new-league-roster-cut" name="roster-cut"  min="0" max="4" placeholder="0" ></input>
-    //                 </div>
-    //                 <p id="new-league-error" ></p>
-    //             </div>
-
-    //             <div className="new-league-error-div">
-    //                 <p id="new-league-error" className="invalid"></p>
-    //             </div>
-
-
-    //             <div className="form-submit-container">
-    //                 <div className="form-btn-container">
-    //                     <button onClick={submitModal}>Continue</button>
-    //                 </div>
-    //                 <div id="cancel-new-league" onClick={() => props.setNewLeagueOpen(false)}>
-    //                     Cancel
-    //                 </div>
-    //             </div>
-    //         </form>
-    //     </div> 
-    // );
 }
 
 export default NewLeagueModal;

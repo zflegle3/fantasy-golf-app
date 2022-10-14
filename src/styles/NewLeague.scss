@@ -5,11 +5,15 @@ $form-text-btn: #022047;
 $form-text-hl: #00ceb8;
 $form-bg-main: #2d3649;
 $form-bg-hover: #1c212d;
+$form-bg-select: rgba(0,206,184,0.2);
 
 $error-red: #ff2b6d;
 
 $pga-a: #003C80;
 $pga-b: #F1373D;
+
+$liv-a: #CBFB7E;
+$liv-b: #6AE8EC;
 
 
 /* Display Settings
@@ -154,7 +158,7 @@ $pga-b: #F1373D;
             }
 
             .pga-img {
-                background: linear-gradient(41deg, rgba(0,60,128,1) 30%, rgba(241,55,61,1) 70%);
+                background: linear-gradient(41deg, $pga-a 30%, $pga-b 70%);
 
                 p {
                     color: white;
@@ -162,7 +166,7 @@ $pga-b: #F1373D;
             }
 
             .liv-img {
-                background: linear-gradient(319deg, #CBFB7E 30%, #6AE8EC 70%);
+                background: linear-gradient(319deg, $liv-a 30%, $liv-b 70%);
                 p {
                     color: black;
                 }
@@ -254,6 +258,70 @@ $pga-b: #F1373D;
                 visibility: visible;
             }
 
+            .new-league-draft-type {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 0.5rem;
+                border-radius: 2rem;
+                cursor: pointer;
+                border: 2px solid transparent;
+
+                .draft-type-logo {
+                    height: 4rem;
+                    width: 4rem;
+                    border: 1px solid $form-text-sub-b;
+                    border-radius: 10rem;
+                    padding: 0.5rem;
+                    margin-right: 1rem;
+                    background-color: $form-bg-main;
+                }
+
+                .draft-type-logo.snake {
+                    background-image: url("../images//icons//snake.png");
+                    background-position: center;
+                    background-size: 70%;
+                    background-repeat: no-repeat;
+                }
+
+                .draft-type-logo.linear {
+                    background-image: url("../images//icons//top-right.png");
+                    background-position: center;
+                    background-size: 70%;
+                    background-repeat: no-repeat;
+                }
+
+                .draft-type-details {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+
+                    p.draft-type-title {
+                        font-size: 1.4rem;
+                        font-family: poppins, sans-serif;
+                        font-weight: 700;
+                        color: $form-text-main;
+                        padding-bottom: 0.5rem;
+                    }
+
+                    p.draft-type-info {
+                        font-size: 1.2rem;
+                        font-family: poppins, sans-serif;
+                        font-weight: 400;
+                        color: $form-text-sub-a;
+                    }
+                }
+
+
+            }
+
+            .new-league-draft-type.selected {
+                border: 2px solid $form-text-hl;
+                background-color: $form-bg-select;
+            }
+
             
         }
     }
@@ -279,57 +347,5 @@ $pga-b: #F1373D;
 }
 
 
-#new-league-modal-form {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // color: var(--text-main);
-    /* background-color: rgba(155, 155, 155, 0.55); */
-    /* transition: 2s; */
-}
 
-#new-league-modal-form.visable {
-    // visibility: visible;
-    // height: 100%;
-    // width: 100%;
-}
-
-
-
-.new-league-form {
-    // display: flex;
-    // flex-direction: column;
-}
-
-
-
-
-
-// .new-league-input {
-//     display: flex;
-//     flex-direction: column;
-// }
-
-// .new-league-input {
-//     display: flex;
-//     flex-direction: column;
-// }
-
-/* Form Settings
-~~~~~~~~~~~~~~~~~~~~ */
-
-
-/* Error Handling Settings
-~~~~~~~~~~~~~~~~~~~~ */
-
-// .new-league-error-div {
-//     visibility: hidden;
-
-// }
-
-// #new-league-error {
-//     font-size: 1.5rem;
-//     color: var(--error-red);
-
-// }
 
