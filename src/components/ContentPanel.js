@@ -19,9 +19,13 @@ import Inbox from "./Inbox";
 import DirectMessages from "./DirectMessages";
 
 function ContentPanel(props) {
+    //props.db
     //props.userData
+    //props.userId
     //props.setNewLeagueOpen()
     //props.newLeagueOpen
+    //props.refreshUserData
+    console.log(props.userId);
 
 
 
@@ -34,16 +38,16 @@ function ContentPanel(props) {
         //return normal routes w/ default redirecting to new league route
         return(
             <div className="center-panel-container">
-                    <Routes>
-                        <Route exact path="/create-league" element={<CreateLeague userData={props.userData}/>}/>
-                        <Route exact path="/messages" element={<DirectMessages />}/>
-                        <Route exact path="/inbox" element={<Inbox />}/>
-                        <Route exact path="/draftboards" element={<MockDraft />}/>
-                        <Route exact path="/account-settings" element={<AccountSettings />}/>
-                        <Route path="*" element={<Navigate to="/create-league" replace />}/>
-                    </Routes>
-            <ModalContainer setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/>
-          </div>
+                <Routes>
+                    <Route exact path="/create-league" element={<CreateLeague userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData}/>}/>
+                    <Route exact path="/messages" element={<DirectMessages />}/>
+                    <Route exact path="/inbox" element={<Inbox />}/>
+                    <Route exact path="/draftboards" element={<MockDraft />}/>
+                    <Route exact path="/account-settings" element={<AccountSettings />}/>
+                    <Route path="*" element={<Navigate to="/create-league" replace />}/>
+                </Routes>
+                <ModalContainer userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/>
+            </div>
         )
     } else {
         //return normal routes w/ default redirecting to first league 
@@ -58,8 +62,8 @@ function ContentPanel(props) {
                         <Route exact path="/account-settings" element={<AccountSettings />}/>
                         <Route path="*" element={<Navigate to={`/league/${props.userData.leagues[0].id}`} replace />}/>
                     </Routes>
-            <ModalContainer setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/>
-          </div>
+                <ModalContainer userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/>
+            </div>
         )
     }
 }

@@ -19,18 +19,19 @@ import NewLeagueModal from "./NewLeagueModal";
 function ModalContainer(props) {
     //props.newLeagueOpen
     //props.setNewLeagueOpen()
-    //props.userActive
+    //props.userData
+    //props.userId
     //props.db
-    // const [rankData, setRankData] = useState({rankings: []});
+    //props.refreshUserData()
 
-    console.log(props.newLeagueOpen);
+    console.log(props.userId);
     if (!props.newLeagueOpen) {
         return null;
     } else {
         return ReactDom.createPortal(
             <>  
                 <div className="modal-overlay" onClick={() => props.setNewLeagueOpen(false)}></div>
-                <NewLeagueModal setNewLeagueOpen={props.setNewLeagueOpen}/>
+                <NewLeagueModal userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen}/>
             </>,
             document.getElementById("modal-portal")
         );

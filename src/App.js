@@ -88,6 +88,7 @@ function App() {
   const [userActive, setUserActive] = useState();
   //Data passed to components 
   const [userData, setUserData] = useState("");
+  const [userId, setUserId] = useState("");
   const [leagues, setLeagues] = useState([]); 
   const [scheduleDataAll, setScheduleDataAll] = useState();
   const [leaderboardData, setLeaderboardData] = useState();
@@ -97,10 +98,17 @@ function App() {
 
   const [newLeagueOpen, setNewLeagueOpen] = useState(false);
 
-  async function pullUserData(user) { 
+  const pullUserData = (user) => { 
     //pulls user data 
     let userId = user.uid;
-    let userEmail = user.email;
+    setUserId(userId);
+    // let userEmail = user.email;
+    refreshUserData(userId)
+
+  }
+
+  async function refreshUserData(userId) {
+    console.log("updating user");
     let userDocPath = `users/U-${userId}`;
     const userDoc = doc(db, `${userDocPath}`);
     const userSnap  = await getDoc(userDoc);
@@ -140,15 +148,15 @@ function App() {
     });
   }, []);
 
-  console.log(getAuth());
+  console.log(userId);
   console.log(userData);
 if (userData) {
   return (
     <div className="app-layout">
       <div className="app-container">
         <Router>
-          <ControlPanel userData={userData} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
-          <ContentPanel userData={userData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/>
+          <ControlPanel userData={userData} userId={userId} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
+          <ContentPanel userData={userData} userId={userId} db={db} refreshUserData={refreshUserData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/>
         </Router>
       </div>
       <div id="modal-portal"></div>

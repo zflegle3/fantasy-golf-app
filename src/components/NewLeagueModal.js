@@ -21,15 +21,18 @@ import LinearImg from "../images/icons/top-right.png"
 
 function NewLeagueModal(props) {
     //props.userData
+    //props.userId
+    //props.db
+    //props.refreshUserData
     const [step, setStep] = useState(1)
     const [draftType, setDraftType] = useState("");
     const [draftBtnSelect, setDraftBtnSelect] = useState(["",""])
     const [leagueSettings, setLeagueSettings] = useState({
-        admin: "userID",
+        admin: props.userId,
         name: "League Name",
         proLeague: "",
-        teamCount: 10,
         logoSrc: "",
+        teamCount: 8,
         scoring: {
             format: "",
             missCutScore: "",
@@ -40,164 +43,8 @@ function NewLeagueModal(props) {
             type: "",
             date: "",
             order: "",
-        }
+        },
     })
-
-
-    // async function createSchedule() {
-    //     let scheduleData = [];
-    //     let currentSchedule = [];
-    //     const scheduleDocRef = doc(props.db,"schedules/2022-schedule");
-    //     const scheduleSnap = await getDoc(scheduleDocRef);
-    //     if (scheduleSnap.exists()) {
-    //         //pull data 
-    //         scheduleData = scheduleSnap.data().schedule;
-    //         //filter data by date
-    //         // console.log(scheduleData);
-    //         currentSchedule = scheduleData.filter((dateSelect) => {
-    //             return Date.now()-dateSelect.date.start.$date.$numberLong < 0;
-    //         }); //only pulls dates upcoming from current date 
-    //         // console.log(currentSchedule);
-    //         currentSchedule = currentSchedule.map((tournament)=> {
-    //             return {
-    //                 tournId: tournament.tournId,
-    //                 tournName: tournament.name,
-    //                 startDate: tournament.date.start.$date.$numberLong,
-    //                 endDate: tournament.date.end.$date.$numberLong,
-    //                 Scorecard: [],
-    //                 completeStatus: false,
-    //             }
-    //         })
-    //     } else {
-    //        console.log("No Schedule Doc found, handle error");
-    //     }
-    //     // console.log(currentSchedule);
-    //     return currentSchedule;
-    // }
-
-    const submitModal = (e) => {
-        // e.preventDefault();
-        // //pull values from form
-        // let leagueNameIn = document.getElementById("new-league-name").value;
-        // let leagueTeamsIn = document.getElementById("new-league-teams").value;
-        // let leagueFormatIn = document.getElementById("new-league-format").value;
-        // let leaguePlayersIn = document.getElementById("new-league-roster-players").value;
-        // let leagueCutIn = document.getElementById("new-league-roster-cut").value;
-        // let leagueVarsAll = [leagueNameIn, leagueTeamsIn, leagueFormatIn, leaguePlayersIn, leagueCutIn]
-        // if (validateModal(leagueVarsAll)) {
-        //     createLeagueDoc(leagueVarsAll);
-        //     closeModal();
-        //     document.getElementById("new-league-form").reset();
-        // } else {
-        //     console.log("handle error new league");
-        // }
-    } 
-
-    // async function createLeagueDoc(leagueVarsAll) { 
-    //     //create league ID, format: L-leagueid
-    //     let newId = `L-${uuidv4()}`; 
-    //     //create rosters per player qty
-    //     let rosterArray=[];
-    //     for (let i=0; i < leagueVarsAll[3]; i++) {
-    //         rosterArray.push({
-    //             playerName: `Player ${i}`,
-    //             playerId: i,
-    //         });
-    //     }
-    //     //create teams per team qty
-    //     let teamArray = [{
-    //         teamName: "New Team 1",
-    //         managerId: props.userActive.uid,
-    //         managerName: "Admin Name Temp",
-    //         roster: rosterArray,
-    //     }];
-    //     for (let i=0; i < leagueVarsAll[1]; i++) {
-    //         teamArray.push({
-    //             teamName: `New Team ${i+1}`,
-    //             managerId: "none",
-    //             managerName: "Manager Name Temp",
-    //             roster: rosterArray,
-    //         });
-    //     }
-
-        //create league schedule data per current date & 2022 schedule
-        //Update later to LM selecting schedule in form
-        // const scheduleData = await createSchedule();
-
-        // let data = {
-        //     leagueId: newId,
-        //     activity: [{
-        //         item: "Created new League, Test",
-        //         time: Date(),
-        //         user: props.userActive.uid,
-        //     }],
-        //     schedule: scheduleData,
-        //     settings: {
-        //         admin: props.userActive.uid,
-        //         name: leagueVarsAll[0],
-        //         scoring: {
-        //             missCutScore: -1,
-        //             rosterCut: leagueVarsAll[4],
-        //             rosterSize: leagueVarsAll[3],
-        //             format: leagueVarsAll[2],
-        //         },
-        //         teamCount: leagueVarsAll[1],
-        //     },
-        //     teams: teamArray,
-        // };
-        //create new league doc
-        // await setDoc(doc(props.db, "leagues", `${newId}`), data);
-        
-        //add league info to user doc 
-    //     const userDoc = doc(props.db, `users/U-${props.userActive.uid}`);
-    //     const userSnap  = await getDoc(userDoc);
-    //     if (userSnap.exists()) {
-    //         let userData = userSnap.data();
-    //         //pull data 
-    //         let leaguesAll = userData.leagues;
-    //         //write new data to doc db
-    //         leaguesAll.push({
-    //             id: newId,
-    //             logo: "imgSrc",
-    //             name: leagueVarsAll[0],
-    //         });
-    //         updateDoc(userDoc,{leagues: leaguesAll})
-    //         //update display with league info
-    //         props.setLeagues(leaguesAll);
-    //     } else {
-    //        console.log("No User Doc found, handle error");
-    //     }
-    // }
-
-    // const validateModal = (formVals) => {
-    //     let validValues = true;
-    //     let errorOut = document.getElementById("new-league-error");
-    //     if (formVals[0].length < 1) {
-    //         errorOut.textContent = "Please enter a league name";
-    //         return false;
-    //     } else if (formVals[1].length < 1) {
-    //         errorOut.textContent = "Please select the number of teams";
-    //         return false;
-    //     } else if (formVals[2].length < 1) {
-    //         errorOut.textContent = "Please select a league format";
-    //         return false;
-    //     } else if (formVals[3].length < 1) {
-    //         errorOut.textContent = "Please select the number of golfers per team";
-    //         return false;
-    //     } else if (formVals[4].length < 1) {
-    //         errorOut.textContent = "Please select the team cut";
-    //         validValues = false;
-    //         return false;
-    //     }
-    //     errorOut.textContent = "";
-    //     return(validValues);
-    // }
-
-    // const checkUrl = (urlIn) => {
-    //     return urlIn.match(
-    //         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
-    //       );
-    // }
 
     const backStep = () => {
         let currentStep = step;
@@ -251,7 +98,7 @@ function NewLeagueModal(props) {
         //clear previous errors
         document.getElementById("input-error-name").classList="";
         document.getElementById("input-error-name").innerHTML="League Name Error";
-        //LOGO SUBMISSION TEMPORARILT DISABLED
+        //LOGO SUBMISSION TEMPORARILY DISABLED
         // document.getElementById("input-error-logo").classList="";
         // document.getElementById("input-error-logo").innerHTML="Logo URL Error";
         //validate input values (Name)
@@ -303,9 +150,37 @@ function NewLeagueModal(props) {
 
     }
 
+    const createTeams = (teamQty, rosterSize) => {
+        //create rosters per player qty
+        let rosterArray=[];
+        for (let i=0; i < rosterSize; i++) {
+            rosterArray.push({
+                playerName: `Player ${i+1}`,
+                playerId: i+1,
+            });
+        }
+        //create tems with created roster templates
+        let teamArray = [{
+            teamName: "New Team 1",
+            managerId: props.userId,
+            managerName: props.userData.userName,
+            roster: rosterArray,
+        }];
+        for (let i=1; i < teamQty; i++) {
+            teamArray.push({
+                teamName: `New Team ${i+1}`,
+                managerId: "none",
+                managerName: `Manager ${i+1}`,
+                roster: rosterArray,
+            });
+        }
+        return (teamArray);
+    }
+
+
+
     const logDraft= (e) => {
-        e.stopPropagation()
-        // document.getElementById("input-error-draft-type").classList.remove("invalid");
+        e.stopPropagation();
         document.getElementById("input-error-draft-date").classList.remove("invalid");
         let draftDateIn = new Date(document.getElementById("new-league-draft-date").value);
         let todayDate = new Date();
@@ -318,7 +193,7 @@ function NewLeagueModal(props) {
                     date: draftDateIn,
                     order: "",
                 }
-                setLeagueSettings(tempSettings);
+                createLeague(tempSettings);
             } else {
                 document.getElementById("input-error-draft-type").classList.add("invalid");
                 document.getElementById("input-error-draft-type").innerHTML="Please select a draft type.";
@@ -327,9 +202,69 @@ function NewLeagueModal(props) {
             document.getElementById("input-error-draft-date").classList.add("invalid");
             document.getElementById("input-error-draft-date").innerHTML="Draft date must be at least 24 hours in the future.";
         }
+    };
+
+    const getLeagueType = () => {
+        if (leagueSettings.proLeague === "pga") {
+            return "PGA Tour"
+        } else {
+            return "LIV Golf"
+        }
     }
 
-    console.log(leagueSettings);
+    const createLeague = (leagueSettingsNew) => {
+        //Create league ID
+        let leagueIdNew = `L-${uuidv4()}`;
+        //Initiate league activity
+        let leagueActivityNew = [{
+            item: `Created a new ${leagueSettingsNew.teamCount} team ${getLeagueType()} league, ${leagueSettingsNew.name} `,
+            time: new Date(),
+            user: props.userId,
+        }]
+        //Create teams & rosters
+        let teamsNew = createTeams(leagueSettingsNew.teamCount, leagueSettingsNew.scoring.rosterSize);
+        //Save final league data inputs and submit to firebase
+        let leagueDataNew = {
+            leagueId: leagueIdNew,
+            activity: leagueActivityNew,
+            schedule: [],
+            settings: leagueSettingsNew,
+            teams: teamsNew,
+        }
+        submitLeague(leagueDataNew);
+    }
+
+    async function submitLeague(leagueDataNew) {
+        console.log(leagueDataNew);
+        //create doc & add to league collection
+        const newLeagueDoc = doc(props.db, "leagues",`${leagueDataNew.leagueId}`);
+        await setDoc(newLeagueDoc, leagueDataNew);
+        //add league id to user's doc
+        const userDoc = doc(props.db, "users", `U-${props.userId}`);
+        const userSnap  = await getDoc(userDoc);
+        if (userSnap.exists()) {
+            let userData = userSnap.data();
+            //pull current data 
+            let leaguesAll = userData.leagues;
+            //write new data to doc db
+            leaguesAll.push({
+                id: leagueDataNew.leagueId,
+                logo: leagueDataNew.settings.logoSrc,
+                name: leagueDataNew.settings.name,
+            });
+            await updateDoc(userDoc,{leagues: leaguesAll});
+            //update display with new league
+            props.refreshUserData(props.userId);
+            if (props.setNewLeagueOpen) {
+                props.setNewLeagueOpen(false);
+            }
+        } else {
+            //console.log("No User Doc found, handle error");
+           document.getElementById("input-error-draft-type").classList.add("invalid");
+           document.getElementById("input-error-draft-type").innerHTML="There was an error in creating your league, please start over and try again.";
+        }
+    }
+
     if (step === 1) {
         return(
             <div className="new-league-modal">
@@ -535,7 +470,7 @@ function NewLeagueModal(props) {
                             <div className="league-input-spacer"></div>
                         </div>
 
-                        <div className={`new-league-draft-type snake ${draftBtnSelect[0]}`}  defaultValue={leagueSettings.rosterCut} onClick={selectSnake}>
+                        <div className={`new-league-draft-type snake ${draftBtnSelect[0]}`}  defaultValue={leagueSettings.scoring.rosterCut} onClick={selectSnake}>
                             <div className="draft-type-logo snake" ></div>
                             <div className="draft-type-details" >
                                 <p className="draft-type-title" >Snake Draft</p>
@@ -543,7 +478,7 @@ function NewLeagueModal(props) {
                             </div>
                         </div>
 
-                        <div className={`new-league-draft-type snake ${draftBtnSelect[1]}`}  defaultValue={leagueSettings.rosterCut} onClick={selectLinear}>
+                        <div className={`new-league-draft-type snake ${draftBtnSelect[1]}`}  defaultValue={leagueSettings.scoring.rosterCut} onClick={selectLinear}>
                             <div className="draft-type-logo linear" ></div>
                             <div className="draft-type-details" >
                                 <p className="draft-type-title" >Linear Draft</p>
@@ -562,3 +497,10 @@ function NewLeagueModal(props) {
 }
 
 export default NewLeagueModal;
+
+
+    // const checkUrl = (urlIn) => {
+    //     return urlIn.match(
+    //         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+    //       );
+    // }
