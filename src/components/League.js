@@ -29,7 +29,7 @@ import settingsIcon from "../images/icons/cog-outline-wh.png";
 function League(props) {
     //props.db
     //props.leagues
-    //props.userInfo  
+    //props.userData 
     //props.leaderboardData
     //props.eventInfo
     //props.worldRanksData
@@ -60,18 +60,22 @@ function League(props) {
 
 
     useEffect(() => {
-        console.log(`Pulling League Data,`);
+        console.log(id);
+        // console.log(`Pulling League Data,`);
         pullLeagueData(id);
     }, [id]);
 
 
     async function pullLeagueData(leagueIdToPull) {
         //pulls league data to display
-        // console.log("Pull league data",leagueIdToPull);
-        let leagueDoc = doc(props.db,`leagues/${leagueIdToPull}`);
+        console.log("Pull league data",leagueIdToPull);
+        const leagueDoc = doc(props.db,"leagues",`${leagueIdToPull}`);
+        // const newLeagueDoc = doc(props.db, "leagues",`${leagueDataNew.leagueId}`);
         const leagueSnap  = await getDoc(leagueDoc);
-        setLeagueSelectedData(leagueSnap.data());
-        setLeagueName(leagueSnap.data().settings.name)
+        let leagueDataPulled = leagueSnap.data();
+        console.log(leagueDataPulled);
+        setLeagueSelectedData(leagueDataPulled);
+        setLeagueName(leagueDataPulled.settings.name)
         // return(leagueSnap.data());
         //Update score with pulled data
         console.log(leagueSnap.data());
@@ -162,7 +166,7 @@ function League(props) {
                     </ul>
                     <div className="center-panel-display">
                         <Routes>
-                            {/* <Route exact path="" element={<LeagueTab leagueData={leagueSelectData} userInfo={props.userInfo} openSettingsModal={openSettingsModal} leagueWeekLeaderboardData={leagueWeekLeaderboardData} leaderboardData={props.leaderboardData}/>}/> */}
+                            <Route exact path="" element={<LeagueTab leagueData={leagueSelectData} userData={props.userData} openSettingsModal={openSettingsModal} leagueWeekLeaderboardData={leagueWeekLeaderboardData} leaderboardData={props.leaderboardData}/>}/>
                             {/* <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData} leagueWeekLeaderboardData={leagueWeekLeaderboardData}/>}/> */}
                             <Route exact path="players" element={<Test test={`${LeagueName}, Players`}/>}/>
                             <Route exact path="draft" element={<Test test={`${LeagueName}, Draft`}/>}/>

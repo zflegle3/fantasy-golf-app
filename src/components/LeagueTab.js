@@ -55,7 +55,7 @@ function LeagueTab(props) {
 
 
 
-    if (props.leagueData.settings.admin === props.userInfo.uid) {
+    if (props.leagueData.settings.admin === props.userData.uid) {
         return (
             <div className="center-panel-content-all"> 
                 <div className="season-standings-all">
@@ -99,7 +99,7 @@ function LeagueTab(props) {
                     <div className="league-section-header">
                         <p>Team Standings</p>
                     </div>
-                    <WeekStandings leagueWeekLeaderboardData={props.leagueWeekLeaderboardData}/>
+                    {/* <WeekStandings leagueWeekLeaderboardData={props.leagueWeekLeaderboardData}/> */}
                 </div>
                 <div className="league-activity-all">
                     <div className="league-section-header">

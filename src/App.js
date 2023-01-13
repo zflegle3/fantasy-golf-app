@@ -4,7 +4,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
+  Navigate
 } from "react-router-dom";
 
 //Styles
@@ -169,6 +170,7 @@ if (userData) {
           <Route exact path="/" element={<Login db={db} auth={auth}/>}/>
           <Route exact path="/sign-up" element={<SignUp db={db} auth={auth}/>}/>
           <Route exact path="/forgot" element={<PasswordReset db={db} auth={auth}/>}/>
+          <Route path="*" element={<Navigate to="/create-league" replace />}/>
         </Routes>
       </Router>
     )
