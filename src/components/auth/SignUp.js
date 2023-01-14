@@ -1,21 +1,23 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useState } from 'react';
+// import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useState, useEffect } from 'react';
 import PasswordInput from "./PasswordInput"
-import { 
-    doc, 
-    getDocs,
-    setDoc,
-    collection,
-    query,
-    where,
-    limit,
-} from "firebase/firestore";
-import {
-    // BrowserRouter as Router,
-    Link
-} from "react-router-dom";
+// import { 
+//     doc, 
+//     getDocs,
+//     setDoc,
+//     collection,
+//     query,
+//     where,
+//     limit,
+// } from "firebase/firestore";
+import { Link, useNavigate} from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import {register, reset } from "../../features/auth/authSlice";
 
 import { ReactComponent as CheckSvg } from '../../images/icons/check.svg';
+
+import Spinner from "../LoadingSpinner";
 
 function SignUp(props) {
     //props.db
@@ -24,6 +26,13 @@ function SignUp(props) {
     const [newUserValid, setNewUserValid] = useState("");
     const [newEmailValid, setNewEmailValid] = useState("");
     const [newPassValid, setNewPassValid] = useState("");
+
+     
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
+
+
 
     async function validateSignUp(e) {
         e.preventDefault();
@@ -36,7 +45,15 @@ function SignUp(props) {
             if (await checkNewEmail(emailIn)) {
                 if (checkNewPass(passwordIn)) {
                     //creat new user
-                    createAccount(userNameIn, emailIn, passwordIn);
+                    // createAccount(userNameIn, emailIn, passwordIn); 
+                    const userData = {
+                        username: userNameIn,
+                        email: emailIn,
+                        password: passwordIn,
+                    };
+                    //dispatches register function from authSlice to create new user
+                    dispatch(register(userData));
+
                 } else {
                     document.querySelector(".form-item-container.pass-in").classList.add("invalid");
                     document.getElementById("pass-error").textContent = "Password does not meet criteria";
@@ -69,26 +86,27 @@ function SignUp(props) {
         if (userNameIn.length > 2 && userNameIn.length < 16) {
             //FORMAT (Numbers and letters only 0-XX characters)
             if (validateUserNameFormat(userNameIn)) { 
-                const userByNameQuery = query(
-                    collection(props.db,"users"),
-                    where("userName", "==", userNameIn),
-                    limit(1),
-                );
-                const userByNameSnap = await getDocs(userByNameQuery);
-                let userByNameDocs = []
-                userByNameSnap.forEach((doc) => {
-                    userByNameDocs.push(doc.data());
-                });
+                return true;
+                // const userByNameQuery = query(
+                //     collection(props.db,"users"),
+                //     where("userName", "==", userNameIn),
+                //     limit(1),
+                // );
+                // const userByNameSnap = await getDocs(userByNameQuery);
+                // let userByNameDocs = []
+                // userByNameSnap.forEach((doc) => {
+                //     userByNameDocs.push(doc.data());
+                // });
                 //AVAILABILITY IN DATABASE
-                if (userByNameDocs.length > 0) {
-                    document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
-                    document.getElementById("user-name-error").textContent = `Whoops! ${userNameIn} is already taken`;
-                    return false;
-                } else {
-                    document.getElementById("user-name-error").className = "";
-                    document.getElementById("user-name-error").textContent = "";
-                    return true;
-                };
+                // if (userByNameDocs.length > 0) {
+                //     document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
+                //     document.getElementById("user-name-error").textContent = `Whoops! ${userNameIn} is already taken`;
+                //     return false;
+                // } else {
+                //     document.getElementById("user-name-error").className = "";
+                //     document.getElementById("user-name-error").textContent = "";
+                //     return true;
+                // };
             } else {
                 document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
                 document.getElementById("user-name-error").textContent = `Only letter and numbers, between 3 to 15 characters`;
@@ -111,26 +129,27 @@ function SignUp(props) {
         if (emailIn.length > 0) {
             //FORMAT
             if (validateEmailFormat(emailIn)) {
-                const userByEmailQuery = query(
-                    collection(props.db,"users"),
-                    where("email", "==", emailIn),
-                    limit(1),
-                );
-                const userByEmailSnap = await getDocs(userByEmailQuery);
-                let userByEmailDocs = []
-                userByEmailSnap.forEach((doc) => {
-                    userByEmailDocs.push(doc.data());
-                });
+                return true;
+                // const userByEmailQuery = query(
+                //     collection(props.db,"users"),
+                //     where("email", "==", emailIn),
+                //     limit(1),
+                // );
+                // const userByEmailSnap = await getDocs(userByEmailQuery);
+                // let userByEmailDocs = []
+                // userByEmailSnap.forEach((doc) => {
+                //     userByEmailDocs.push(doc.data());
+                // });
                 //AVAILABILITY IN DATABASE
-                if (userByEmailDocs.length > 0) {
-                    document.querySelector(".form-item-container.email-in").classList.add("invalid");
-                    document.getElementById("email-error").textContent = `Whoops! ${emailIn} is already taken `;
-                    return false;
-                } else {
-                    // document.getElementById("email-error").className = "";
-                    // document.getElementById("email-error").textContent = "";
-                    return true;
-                };
+                // if (userByEmailDocs.length > 0) {
+                //     document.querySelector(".form-item-container.email-in").classList.add("invalid");
+                //     document.getElementById("email-error").textContent = `Whoops! ${emailIn} is already taken `;
+                //     return false;
+                // } else {
+                //     // document.getElementById("email-error").className = "";
+                //     // document.getElementById("email-error").textContent = "";
+                //     return true;
+                // };
             } else {
                 document.querySelector(".form-item-container.email-in").classList.add("invalid");
                 document.getElementById("email-error").textContent = "Oops, that looks like an invalid email";
@@ -191,14 +210,15 @@ function SignUp(props) {
     };
 
 
-    const createAccount = async (userNameIn, userEmail, userPassword) => {
-        createUserWithEmailAndPassword(props.auth, userEmail, userPassword)
-            .then((userCredential) => {
-                //write user doc to db, user data to be pulled in App component
-                setDoc(doc(props.db, "users", `U-${userCredential.user.uid}`), {userName: userNameIn, email: `${userCredential.user.email}`,leagues: []});
-            })
-            .catch(error => console.log("ERROR!", error))
-    }
+    // const createAccount = async (userNameIn, userEmail, userPassword) => {
+    //     createUserWithEmailAndPassword(props.auth, userEmail, userPassword)
+    //         .then((userCredential) => {
+    //             //write user doc to db, user data to be pulled in App component
+    //             setDoc(doc(props.db, "users", `U-${userCredential.user.uid}`), {userName: userNameIn, email: `${userCredential.user.email}`,leagues: []});
+    //         })
+    //         .catch(error => console.log("ERROR!", error))
+    // }
+    //****refactored validate signup to include user creation ****
 
     const addFocus = (e) => {
         e.target.parentElement.parentElement.classList.add("focus");
@@ -206,6 +226,29 @@ function SignUp(props) {
 
     const removeFocus = (e) => {
         e.target.parentElement.parentElement.classList.remove("focus");
+    }
+
+
+    useEffect(() => {
+        if(isError) {
+            toast.error(message);
+        };
+
+        if(isSuccess || user) {
+            navigate("/")
+        };
+
+        dispatch(reset());
+
+        if (isLoading) {
+            
+        }
+
+    }, [user, isError, isSuccess, message, navigate, dispatch])
+
+
+    if (isLoading) {
+        return(<Spinner/>)
     }
 
     

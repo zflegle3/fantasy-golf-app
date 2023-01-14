@@ -24,6 +24,8 @@ function Login(props) {
     const [userValid, setUserValid] = useState("x");
 
     async function userLogin(e) {
+        //handles user email submission for login
+        //checks if ___ by calling checkUser() and resets errors if passed
         e.preventDefault();
         let userEmailOrNameIn = document.getElementById("email-in");
         if (await checkUser(userEmailOrNameIn.value)) {
@@ -58,6 +60,8 @@ function Login(props) {
     }
 
     async function checkUser(userEmailOrNameIn) {
+        //Validates username/email is populated
+        //
         if (userEmailOrNameIn.length > 0) {
             if (await checkUserName(userEmailOrNameIn)) {
                 //username is valid
@@ -77,6 +81,9 @@ function Login(props) {
     }
 
     async function checkUserName (userInput) {
+        //checks db for existing user 
+        //returns true and sets userValid state if found
+        //else returns false
         const userByNameQuery = query(
             collection(props.db,"users"),
             where("userName", "==", userInput),

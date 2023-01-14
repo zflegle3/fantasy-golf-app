@@ -7,6 +7,10 @@ import {
   Link,
   Navigate
 } from "react-router-dom";
+//Other
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 
 //Styles
 import './styles/Reset.css';
@@ -167,18 +171,22 @@ if (userData) {
   );
   } else {
     return (
-      <Router>
-        <Routes>
-          {/* <Route exact path="/" element={<Login db={db} auth={auth}/>}/>
-          <Route exact path="/sign-up" element={<SignUp db={db} auth={auth}/>}/>
-          <Route exact path="/forgot" element={<PasswordReset db={db} auth={auth}/>}/>
-          <Route path="*" element={<Navigate to="/create-league" replace />}/> */}
-          <Route exact path="/" element={<Login />}/>
-          <Route exact path="/sign-up" element={<SignUp/>}/>
-          <Route exact path="/forgot" element={<PasswordReset/>}/>
-          <Route path="*" element={<Navigate to="/create-league" replace />}/>
-        </Routes>
-      </Router>
+      <>
+        <Router>
+          <Routes>
+            {/* <Route exact path="/" element={<Login db={db} auth={auth}/>}/>
+            <Route exact path="/sign-up" element={<SignUp db={db} auth={auth}/>}/>
+            <Route exact path="/forgot" element={<PasswordReset db={db} auth={auth}/>}/>
+            <Route path="*" element={<Navigate to="/create-league" replace />}/> */}
+            <Route exact path="/" element={<Login />}/>
+            <Route exact path="/sign-up" element={<SignUp/>}/>
+            <Route exact path="/forgot" element={<PasswordReset/>}/>
+            <Route path="*" element={<Navigate to="/create-league" replace />}/>
+          </Routes>
+        </Router>
+        <ToastContainer/>
+      </>
+
     )
   }
 }
