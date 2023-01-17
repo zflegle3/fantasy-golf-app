@@ -8,7 +8,7 @@ import {
   useNavigate
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import {logoutUser, reset} from "../features/auth/authSlice";
+import {logout, reset} from "../features/auth/authSlice";
 
 //images
 import addIcon from "../images/icons/plus-circle-outline-wh.png";
@@ -52,7 +52,7 @@ function ControlPanel(props) {
     }
 
     const onLogout = () => {
-      dispatch(logoutUser());
+      dispatch(logout());
       dispatch(reset());
       navigate("/");
     }

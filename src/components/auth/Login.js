@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
     getDocs,
     collection,
@@ -9,12 +9,17 @@ import {
 } from "firebase/firestore";
 import {
     // BrowserRouter as Router,
-    Link
+    Link,
+    useNavigate
 } from "react-router-dom";
-import { 
-    signInWithEmailAndPassword,
-} from "firebase/auth";
-import PasswordInput from "./PasswordInput"
+// import { 
+//     signInWithEmailAndPassword,
+// } from "firebase/auth";
+import PasswordInput from "./PasswordInput";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import {login, reset } from "../../features/auth/authSlice";
+import LoadingSpinner from "../LoadingSpinner";
 
 
 function Login(props) {
@@ -22,6 +27,10 @@ function Login(props) {
     //props.db
     const [passStatus, setPassStatus] = useState("hidden");//true when user is valid
     const [userValid, setUserValid] = useState("x");
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
 
     async function userLogin(e) {
         //handles user email submission for login
@@ -36,7 +45,13 @@ function Login(props) {
             else {
                 let userPasswordIn = document.getElementById("pass-in").value;
                 if (userPasswordIn.length >0) {
-                    logInEmailPassword(userValid.email,userPasswordIn);
+                    // logInEmailPassword(userValid.email,userPasswordIn);
+                    const userIn = {
+                        email: userEmailOrNameIn.value,
+                        password: userPasswordIn
+                    };
+                    console.log(userIn);
+                    dispatch(login(userIn));
                 } else {
                     document.querySelector(".form-item-container.pass-in").classList.add("invalid");
                     document.getElementById("pass-error").textContent = "Cannot be empty";
@@ -63,77 +78,78 @@ function Login(props) {
         //Validates username/email is populated
         //
         if (userEmailOrNameIn.length > 0) {
-            if (await checkUserName(userEmailOrNameIn)) {
-                //username is valid
-                return(true);
-            } else if ( await checkEmail(userEmailOrNameIn)) {
-                //email is valid
-                return(true);
-            } else {
-                //invalid user credentials 
-                document.querySelector(".form-item-container.email-in").classList.add("invalid");
-                document.getElementById("email-error").textContent = `Sorry, we were unable to find anyone using ${userEmailOrNameIn}`;
-            }
+            // if (await checkUserName(userEmailOrNameIn)) {
+            //     //username is valid
+            //     return(true);
+            // } else if ( await checkEmail(userEmailOrNameIn)) {
+            //     //email is valid
+            //     return(true);
+            // } else {
+            //     //invalid user credentials 
+            //     document.querySelector(".form-item-container.email-in").classList.add("invalid");
+            //     document.getElementById("email-error").textContent = `Sorry, we were unable to find anyone using ${userEmailOrNameIn}`;
+            // }
+            return true;
         } else {
             document.querySelector(".form-item-container.email-in").classList.add("invalid");
             document.getElementById("email-error").textContent = "Cannot be empty";
         }
     }
 
-    async function checkUserName (userInput) {
-        //checks db for existing user 
-        //returns true and sets userValid state if found
-        //else returns false
-        const userByNameQuery = query(
-            collection(props.db,"users"),
-            where("userName", "==", userInput),
-            limit(1),
-        );
-        const userByNameSnap = await getDocs(userByNameQuery);
-        let userByNameDocs = []
-        userByNameSnap.forEach((doc) => {
-            userByNameDocs.push(doc.data());
-        });
-        if (userByNameDocs.length > 0) {
-            setUserValid(userByNameDocs[0]);
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // async function checkUserName (userInput) {
+    //     //checks db for existing user 
+    //     //returns true and sets userValid state if found
+    //     //else returns false
+    //     const userByNameQuery = query(
+    //         collection(props.db,"users"),
+    //         where("userName", "==", userInput),
+    //         limit(1),
+    //     );
+    //     const userByNameSnap = await getDocs(userByNameQuery);
+    //     let userByNameDocs = []
+    //     userByNameSnap.forEach((doc) => {
+    //         userByNameDocs.push(doc.data());
+    //     });
+    //     if (userByNameDocs.length > 0) {
+    //         setUserValid(userByNameDocs[0]);
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
-    async function checkEmail (userInput) {
-        const userByNameQuery = query(
-            collection(props.db,"users"),
-            where("email", "==", userInput),
-            limit(1),
-        );
-        const userByNameSnap = await getDocs(userByNameQuery);
-        let userByNameDocs = []
-        userByNameSnap.forEach((doc) => {
-            userByNameDocs.push(doc.data());
-        });
-        if (userByNameDocs.length > 0) {
-            setUserValid(userByNameDocs[0]);
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // async function checkEmail (userInput) {
+    //     const userByNameQuery = query(
+    //         collection(props.db,"users"),
+    //         where("email", "==", userInput),
+    //         limit(1),
+    //     );
+    //     const userByNameSnap = await getDocs(userByNameQuery);
+    //     let userByNameDocs = []
+    //     userByNameSnap.forEach((doc) => {
+    //         userByNameDocs.push(doc.data());
+    //     });
+    //     if (userByNameDocs.length > 0) {
+    //         setUserValid(userByNameDocs[0]);
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
-    const logInEmailPassword = async (emailIn, passwordIn) => {
-        //Pulls User Credentials from Firebase
-        try {
-            const userCredential = await signInWithEmailAndPassword(props.auth, emailIn, passwordIn);
-        }
-        catch(error) {
-            // console.log(error.code);
-            if (error.code ==="auth/wrong-password") {
-                document.querySelector(".form-item-container.pass-in").classList.add("invalid");
-            document.getElementById("pass-error").textContent = "Your password was incorrect.";
-           }
-        }
-    }
+    // const logInEmailPassword = async (emailIn, passwordIn) => {
+    //     //Pulls User Credentials from Firebase
+    //     try {
+    //         const userCredential = await signInWithEmailAndPassword(props.auth, emailIn, passwordIn);
+    //     }
+    //     catch(error) {
+    //         // console.log(error.code);
+    //         if (error.code ==="auth/wrong-password") {
+    //             document.querySelector(".form-item-container.pass-in").classList.add("invalid");
+    //         document.getElementById("pass-error").textContent = "Your password was incorrect.";
+    //        }
+    //     }
+    // }
 
     const addFocus = (e) => {
         e.target.parentElement.parentElement.classList.add("focus");
@@ -143,6 +159,27 @@ function Login(props) {
         e.target.parentElement.parentElement.classList.remove("focus");
     }
 
+    useEffect(() => {
+        if(isError) {
+            toast.error(message);
+        };
+
+        if(isSuccess || user) {
+            navigate("/")
+        };
+
+        dispatch(reset());
+
+        if (isLoading) {
+            
+        }
+
+    }, [user, isError, isSuccess, message, navigate, dispatch])
+
+    if (isLoading) {
+        return(<LoadingSpinner/>)
+    }
+
     return(
         <div className="auth-container">
             <div className="auth-left-login"></div>
@@ -150,7 +187,7 @@ function Login(props) {
                 <div className="auth-content">
 
                     <div className="auth-header">
-                        <div className="auth-header-main">
+                        <div className="auth-header-main"> 
                             <h1>Login</h1>
                             <Link to="/sign-up" id="signup">Sign Up</Link>
                         </div>
