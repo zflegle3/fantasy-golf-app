@@ -4,8 +4,11 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
+  useNavigate
 } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import {logoutUser, reset} from "../features/auth/authSlice";
 
 //images
 import addIcon from "../images/icons/plus-circle-outline-wh.png";
@@ -22,6 +25,12 @@ function ControlPanel(props) {
     //props.userData
     //props.userLogOut
     //props.setNewLeagueOpen()
+    console.log(props.userData.leagues);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {user} = useSelector((state) => state.auth);
+
+    console.log(user.leagues);
 
     const createNewLeague = (e) => {
         console.log("New League");
@@ -42,9 +51,16 @@ function ControlPanel(props) {
         selected.classList = "nav-link tab-selected";
     }
 
+    const onLogout = () => {
+      dispatch(logoutUser());
+      dispatch(reset());
+      navigate("/");
+    }
+
 
     return(
-        <div className="left-panel-container">
+      <div className="left-panel-container">
+        
         <div className="nav-header">
             <img src={logoIcon}></img>
             <h1 className="header-logo">Site Name</h1>
@@ -72,14 +88,14 @@ function ControlPanel(props) {
             <p>MOCK DRAFTS</p>
           </Link>
 
-          <LeagueLinks leagues={props.userData.leagues} selectTabDisplay={selectTabDisplay}/>
+          <LeagueLinks leagues={user.leagues} selectTabDisplay={selectTabDisplay}/>
         </div>
 
         <div className="nav-footer"> 
           <img src={profileIcon}></img>
           <div className="profile-container">
             <p>{props.userData.userName}</p>
-            <button onClick={props.userLogOut}> Log Out</button>
+            <button onClick={onLogout}> Log Out</button>
           </div>
           <Link to="/account-settings" className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
             <img src={settingsIcon}></img>

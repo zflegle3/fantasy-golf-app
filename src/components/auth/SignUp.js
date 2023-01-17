@@ -17,15 +17,15 @@ import {register, reset } from "../../features/auth/authSlice";
 
 import { ReactComponent as CheckSvg } from '../../images/icons/check.svg';
 
-import Spinner from "../LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 
 function SignUp(props) {
     //props.db
     //props.auth
     const [passStatus, setPassStatus] = useState("");//true when user is valid
-    const [newUserValid, setNewUserValid] = useState("");
-    const [newEmailValid, setNewEmailValid] = useState("");
-    const [newPassValid, setNewPassValid] = useState("");
+    // const [newUserValid, setNewUserValid] = useState("");
+    // const [newEmailValid, setNewEmailValid] = useState("");
+    // const [newPassValid, setNewPassValid] = useState("");
 
      
     const navigate = useNavigate();
@@ -52,7 +52,7 @@ function SignUp(props) {
                         password: passwordIn,
                     };
                     //dispatches register function from authSlice to create new user
-                    dispatch(register(userData));
+                    dispatch(register(userData)); 
 
                 } else {
                     document.querySelector(".form-item-container.pass-in").classList.add("invalid");
@@ -248,7 +248,7 @@ function SignUp(props) {
 
 
     if (isLoading) {
-        return(<Spinner/>)
+        return(<LoadingSpinner/>)
     }
 
     

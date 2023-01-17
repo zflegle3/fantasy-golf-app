@@ -10,6 +10,7 @@ import {
 //Other
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector, useDispatch } from 'react-redux';
 
 
 //Styles
@@ -103,6 +104,8 @@ function App() {
 
   const [newLeagueOpen, setNewLeagueOpen] = useState(false);
 
+  const {user} = useSelector((state) => state.auth);
+
   // const pullUserData = (user) => { 
   //   //pulls user data 
   //   let userId = user.uid;
@@ -153,9 +156,24 @@ function App() {
   //   });
   // }, []);
 
+  useEffect(() => {
+
+    if (localStorage.user) {
+      let userLocal = localStorage.getItem("user");
+      let userLocalOut = JSON.parse(userLocal);
+      console.log(userLocalOut);
+      setUserData(userLocalOut);
+    } else {
+      setUserData("");
+    }
+
+
+  }, [])
+
   console.log(userId);
   console.log(userData);
-if (userData) {
+
+if (user) {
   return (
     <div className="app-layout">
       <div className="app-container">
@@ -171,22 +189,18 @@ if (userData) {
   );
   } else {
     return (
-      <>
-        <Router>
-          <Routes>
-            {/* <Route exact path="/" element={<Login db={db} auth={auth}/>}/>
-            <Route exact path="/sign-up" element={<SignUp db={db} auth={auth}/>}/>
-            <Route exact path="/forgot" element={<PasswordReset db={db} auth={auth}/>}/>
-            <Route path="*" element={<Navigate to="/create-league" replace />}/> */}
-            <Route exact path="/" element={<Login />}/>
-            <Route exact path="/sign-up" element={<SignUp/>}/>
-            <Route exact path="/forgot" element={<PasswordReset/>}/>
-            <Route path="*" element={<Navigate to="/create-league" replace />}/>
-          </Routes>
-        </Router>
-        <ToastContainer/>
-      </>
-
+      <Router>
+        <Routes>
+          {/* <Route exact path="/" element={<Login db={db} auth={auth}/>}/>
+          <Route exact path="/sign-up" element={<SignUp db={db} auth={auth}/>}/>
+          <Route exact path="/forgot" element={<PasswordReset db={db} auth={auth}/>}/>
+          <Route path="*" element={<Navigate to="/create-league" replace />}/> */}
+          <Route exact path="/sign-up" element={<SignUp/>}/>
+          <Route exact path="/forgot" element={<PasswordReset/>}/>
+          <Route exact path="*" element={<Login />}/>
+          {/* <Route path="*" element={<Navigate to="/create-league" replace />}/> */}
+        </Routes>
+      </Router>
     )
   }
 }

@@ -7,6 +7,7 @@ import {
     Link
   } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import ModalContainer from "../components/ModalContainer";
@@ -26,6 +27,7 @@ function ContentPanel(props) {
     //props.newLeagueOpen
     //props.refreshUserData
     console.log(props.userId);
+    const {user} = useSelector((state) => state.auth);
 
 
 
@@ -33,8 +35,8 @@ function ContentPanel(props) {
     //     <Route exact path={`/league/${league.id}`} element={<League userData={props.userData} leagueData={league}/>}/>
     // })
 
-    console.log(props.userData.leagues.length < 1);
-    if (props.userData.leagues.length < 1) {
+    console.log(user.leagues.length < 1);
+    if (user.leagues.length < 1) {
         //return normal routes w/ default redirecting to new league route
         return(
             <div className="center-panel-container">
