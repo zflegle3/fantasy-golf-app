@@ -1,37 +1,22 @@
-// import { createUserWithEmailAndPassword } from "firebase/auth";
+import axios from "axios";
 import { useState, useEffect } from 'react';
-import PasswordInput from "./PasswordInput"
-// import { 
-//     doc, 
-//     getDocs,
-//     setDoc,
-//     collection,
-//     query,
-//     where,
-//     limit,
-// } from "firebase/firestore";
 import { Link, useNavigate} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import {register, reset } from "../../features/auth/authSlice";
-
 import { ReactComponent as CheckSvg } from '../../images/icons/check.svg';
-
+//Components
 import LoadingSpinner from "../LoadingSpinner";
+import PasswordInput from "./PasswordInput"
 
 function SignUp(props) {
-    //props.db
-    //props.auth
     const [passStatus, setPassStatus] = useState("");//true when user is valid
     // const [newUserValid, setNewUserValid] = useState("");
     // const [newEmailValid, setNewEmailValid] = useState("");
     // const [newPassValid, setNewPassValid] = useState("");
-
-     
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
-
 
 
     async function validateSignUp(e) {
@@ -86,27 +71,17 @@ function SignUp(props) {
         if (userNameIn.length > 2 && userNameIn.length < 16) {
             //FORMAT (Numbers and letters only 0-XX characters)
             if (validateUserNameFormat(userNameIn)) { 
-                return true;
-                // const userByNameQuery = query(
-                //     collection(props.db,"users"),
-                //     where("userName", "==", userNameIn),
-                //     limit(1),
-                // );
-                // const userByNameSnap = await getDocs(userByNameQuery);
-                // let userByNameDocs = []
-                // userByNameSnap.forEach((doc) => {
-                //     userByNameDocs.push(doc.data());
-                // });
-                //AVAILABILITY IN DATABASE
-                // if (userByNameDocs.length > 0) {
-                //     document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
-                //     document.getElementById("user-name-error").textContent = `Whoops! ${userNameIn} is already taken`;
-                //     return false;
-                // } else {
-                //     document.getElementById("user-name-error").className = "";
-                //     document.getElementById("user-name-error").textContent = "";
-                //     return true;
-                // };
+                // AVAILABILITY IN DATABASE
+                if ( await checkUserDb(userNameIn)) {
+                //returns true if username already exists
+                    document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
+                    document.getElementById("user-name-error").textContent = `Whoops! ${userNameIn} is already taken`;
+                    return false;
+                } else {
+                    document.getElementById("user-name-error").className = "";
+                    document.getElementById("user-name-error").textContent = "";
+                    return true;
+                };
             } else {
                 document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
                 document.getElementById("user-name-error").textContent = `Only letter and numbers, between 3 to 15 characters`;
@@ -129,27 +104,17 @@ function SignUp(props) {
         if (emailIn.length > 0) {
             //FORMAT
             if (validateEmailFormat(emailIn)) {
-                return true;
-                // const userByEmailQuery = query(
-                //     collection(props.db,"users"),
-                //     where("email", "==", emailIn),
-                //     limit(1),
-                // );
-                // const userByEmailSnap = await getDocs(userByEmailQuery);
-                // let userByEmailDocs = []
-                // userByEmailSnap.forEach((doc) => {
-                //     userByEmailDocs.push(doc.data());
-                // });
                 //AVAILABILITY IN DATABASE
-                // if (userByEmailDocs.length > 0) {
-                //     document.querySelector(".form-item-container.email-in").classList.add("invalid");
-                //     document.getElementById("email-error").textContent = `Whoops! ${emailIn} is already taken `;
-                //     return false;
-                // } else {
-                //     // document.getElementById("email-error").className = "";
-                //     // document.getElementById("email-error").textContent = "";
-                //     return true;
-                // };
+                if (await checkEmailDb(emailIn)) {
+                    //returns true if email already exists
+                    document.querySelector(".form-item-container.email-in").classList.add("invalid");
+                    document.getElementById("email-error").textContent = `Whoops! ${emailIn} is already taken `;
+                    return false;
+                } else {
+                    document.getElementById("email-error").className = "";
+                    document.getElementById("email-error").textContent = "";
+                    return true;
+                };
             } else {
                 document.querySelector(".form-item-container.email-in").classList.add("invalid");
                 document.getElementById("email-error").textContent = "Oops, that looks like an invalid email";
@@ -158,6 +123,24 @@ function SignUp(props) {
             document.querySelector(".form-item-container.email-in").classList.add("invalid");
             document.getElementById("email-error").textContent = "Cannot be empty";
         };
+    }
+
+    async function checkUserDb (usernameIn) {
+        const response = await axios.post("http://localhost:8080/user/read/username", {username: usernameIn});
+        if (response.data.username === usernameIn) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    async function checkEmailDb (userEmail) {
+        const response = await axios.post("http://localhost:8080/user/read/email", {email: userEmail});
+        if (response.data.email === userEmail) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

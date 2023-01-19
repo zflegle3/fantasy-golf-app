@@ -1,56 +1,39 @@
-
+import axios from "axios";
 import { useState, useEffect } from 'react';
-import { 
-    getDocs,
-    collection,
-    query,
-    where,
-    limit,
-} from "firebase/firestore";
 import {
-    // BrowserRouter as Router,
     Link,
     useNavigate
 } from "react-router-dom";
-import axios from "axios";
-// import { 
-//     signInWithEmailAndPassword,
-// } from "firebase/auth";
-import PasswordInput from "./PasswordInput";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import {login, reset, checkUserValid } from "../../features/auth/authSlice";
+import {login, reset} from "../../features/auth/authSlice";
+//Components
+import PasswordInput from "./PasswordInput";
 import LoadingSpinner from "../LoadingSpinner";
 
-
 function Login(props) {
-    //props.auth
-    //props.db
     const [passStatus, setPassStatus] = useState("hidden");//true when user is valid
-    const [userValid, setUserValid] = useState("x");
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
 
     async function userLogin(e) {
         //handles user email submission for login
-        //checks if ___ by calling checkUser() and resets errors if passed
+        //checks if email is valid by calling checkUser() and resets errors if passed
         e.preventDefault();
         let userEmailOrNameIn = document.getElementById("email-in");
         if (await checkUser(userEmailOrNameIn.value)) {
             resetErrors();
-            if (passStatus === "hidden") //used as class toggle pass input
+            if (passStatus === "hidden") 
+            //used as class toggle the visability of the pass input
                 setPassStatus("");
             else {
                 let userPasswordIn = document.getElementById("pass-in").value;
                 if (userPasswordIn.length >0) {
-                    // logInEmailPassword(userValid.email,userPasswordIn);
                     const userIn = {
                         email: userEmailOrNameIn.value,
                         password: userPasswordIn
                     };
-                    console.log(userIn);
                     dispatch(login(userIn));
                 } else {
                     document.querySelector(".form-item-container.pass-in").classList.add("invalid");
@@ -78,13 +61,8 @@ function Login(props) {
         //Validates username/email is populated
         //only handles emails currently
         if (userEmailOrNameIn.length > 0) {
-            // if (await checkUserName(userEmailOrNameIn)) {
-            //     //username is valid
-            //     return(true);
-            // } else 
             if ( await checkEmail(userEmailOrNameIn)) {
                 //email is valid
-                console.log("email is valid");
                 return(true);
             } else {
                 //invalid user credentials 
@@ -97,54 +75,14 @@ function Login(props) {
         }
     }
 
-    // async function checkUserName (userInput) {
-    //     //checks db for existing user 
-    //     //returns true and sets userValid state if found
-    //     //else returns false
-    //     const userByNameQuery = query(
-    //         collection(props.db,"users"),
-    //         where("userName", "==", userInput),
-    //         limit(1),
-    //     );
-    //     const userByNameSnap = await getDocs(userByNameQuery);
-    //     let userByNameDocs = []
-    //     userByNameSnap.forEach((doc) => {
-    //         userByNameDocs.push(doc.data());
-    //     });
-    //     if (userByNameDocs.length > 0) {
-    //         setUserValid(userByNameDocs[0]);
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     async function checkEmail (userEmail) {
-        console.log(userEmail);
-        const response = await axios.post("http://localhost:8080/user/read", {email: userEmail});
-        console.log(response.data.email);
+        const response = await axios.post("http://localhost:8080/user/read/email", {email: userEmail});
         if (response.data.email === userEmail) {
-            console.log("true");
             return true;
         } else {
-            console.log("false");
             return false;
         }
     }
-
-    // const logInEmailPassword = async (emailIn, passwordIn) => {
-    //     //Pulls User Credentials from Firebase
-    //     try {
-    //         const userCredential = await signInWithEmailAndPassword(props.auth, emailIn, passwordIn);
-    //     }
-    //     catch(error) {
-    //         // console.log(error.code);
-    //         if (error.code ==="auth/wrong-password") {
-    //             document.querySelector(".form-item-container.pass-in").classList.add("invalid");
-    //         document.getElementById("pass-error").textContent = "Your password was incorrect.";
-    //        }
-    //     }
-    // }
 
     const addFocus = (e) => {
         e.target.parentElement.parentElement.classList.add("focus");
