@@ -192,17 +192,6 @@ function SignUp(props) {
         return passTest;
     };
 
-
-    // const createAccount = async (userNameIn, userEmail, userPassword) => {
-    //     createUserWithEmailAndPassword(props.auth, userEmail, userPassword)
-    //         .then((userCredential) => {
-    //             //write user doc to db, user data to be pulled in App component
-    //             setDoc(doc(props.db, "users", `U-${userCredential.user.uid}`), {userName: userNameIn, email: `${userCredential.user.email}`,leagues: []});
-    //         })
-    //         .catch(error => console.log("ERROR!", error))
-    // }
-    //****refactored validate signup to include user creation ****
-
     const addFocus = (e) => {
         e.target.parentElement.parentElement.classList.add("focus");
     }
@@ -229,12 +218,10 @@ function SignUp(props) {
 
     }, [user, isError, isSuccess, message, navigate, dispatch])
 
-
     if (isLoading) {
         return(<LoadingSpinner/>)
     }
 
-    
     return (
         <div className="auth-container">
             <div className="auth-left-signup"></div>

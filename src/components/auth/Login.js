@@ -21,8 +21,8 @@ function Login(props) {
         //handles user email submission for login
         //checks if email is valid by calling checkUser() and resets errors if passed
         e.preventDefault();
-        let userEmailOrNameIn = document.getElementById("email-in");
-        if (await checkUser(userEmailOrNameIn.value)) {
+        let userEmailOrNameIn = document.getElementById("email-in").value;
+        if (await validateUser(userEmailOrNameIn)) {
             resetErrors();
             if (passStatus === "hidden") 
             //used as class toggle the visability of the pass input
@@ -31,7 +31,7 @@ function Login(props) {
                 let userPasswordIn = document.getElementById("pass-in").value;
                 if (userPasswordIn.length >0) {
                     const userIn = {
-                        email: userEmailOrNameIn.value,
+                        emailOrUsername: userEmailOrNameIn,
                         password: userPasswordIn
                     };
                     dispatch(login(userIn));
@@ -57,11 +57,11 @@ function Login(props) {
         }
     }
 
-    async function checkUser(userEmailOrNameIn) {
+    async function validateUser(userEmailOrNameIn) {
         //Validates username/email is populated
         //only handles emails currently
         if (userEmailOrNameIn.length > 0) {
-            if ( await checkEmail(userEmailOrNameIn)) {
+            if ( await checkUserDb(userEmailOrNameIn)) {
                 //email is valid
                 return(true);
             } else {
@@ -75,9 +75,12 @@ function Login(props) {
         }
     }
 
-    async function checkEmail (userEmail) {
-        const response = await axios.post("http://localhost:8080/user/read/email", {email: userEmail});
-        if (response.data.email === userEmail) {
+    async function checkUserDb (userIn) {
+        const responseEmail = await axios.post("http://localhost:8080/user/read/email", {email: userIn});
+        const responseUsername = await axios.post("http://localhost:8080/user/read/username", {username: userIn});
+        if (responseEmail.data.email === userIn) {
+            return true;
+        } else if (responseUsername.data.username === userIn) {
             return true;
         } else {
             return false;
@@ -125,7 +128,7 @@ function Login(props) {
                             <Link to="/sign-up" id="signup">Sign Up</Link>
                         </div>
                         <div className="auth-header-sub">
-                            Sign in using email
+                            Sign in using email or username
                         </div>
 
                     </div>
@@ -133,10 +136,10 @@ function Login(props) {
                     <form className="login-form">
 
                         <div className="form-item-container email-in" >
-                            <label htmlFor="email">email</label>
+                            <label htmlFor="email">email or username</label>
 
                             <div className="input-container">
-                                <input type="email" id="email-in" name="email" placeholder="Enter email" onFocus={addFocus} onBlur={removeFocus}></input>
+                                <input type="email" id="email-in" name="email" placeholder="Enter email or usernme" onFocus={addFocus} onBlur={removeFocus}></input>
                             </div>
 
                             <p id="email-error" >Email Error</p>
