@@ -12,13 +12,14 @@ import {
     Link,
     useNavigate
 } from "react-router-dom";
+import axios from "axios";
 // import { 
 //     signInWithEmailAndPassword,
 // } from "firebase/auth";
 import PasswordInput from "./PasswordInput";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import {login, reset } from "../../features/auth/authSlice";
+import {login, reset, checkUserValid } from "../../features/auth/authSlice";
 import LoadingSpinner from "../LoadingSpinner";
 
 
@@ -38,7 +39,6 @@ function Login(props) {
         e.preventDefault();
         let userEmailOrNameIn = document.getElementById("email-in");
         if (await checkUser(userEmailOrNameIn.value)) {
-
             resetErrors();
             if (passStatus === "hidden") //used as class toggle pass input
                 setPassStatus("");
@@ -76,20 +76,21 @@ function Login(props) {
 
     async function checkUser(userEmailOrNameIn) {
         //Validates username/email is populated
-        //
+        //only handles emails currently
         if (userEmailOrNameIn.length > 0) {
             // if (await checkUserName(userEmailOrNameIn)) {
             //     //username is valid
             //     return(true);
-            // } else if ( await checkEmail(userEmailOrNameIn)) {
-            //     //email is valid
-            //     return(true);
-            // } else {
-            //     //invalid user credentials 
-            //     document.querySelector(".form-item-container.email-in").classList.add("invalid");
-            //     document.getElementById("email-error").textContent = `Sorry, we were unable to find anyone using ${userEmailOrNameIn}`;
-            // }
-            return true;
+            // } else 
+            if ( await checkEmail(userEmailOrNameIn)) {
+                //email is valid
+                console.log("email is valid");
+                return(true);
+            } else {
+                //invalid user credentials 
+                document.querySelector(".form-item-container.email-in").classList.add("invalid");
+                document.getElementById("email-error").textContent = `Sorry, we were unable to find anyone using ${userEmailOrNameIn}`;
+            }
         } else {
             document.querySelector(".form-item-container.email-in").classList.add("invalid");
             document.getElementById("email-error").textContent = "Cannot be empty";
@@ -118,24 +119,18 @@ function Login(props) {
     //     }
     // }
 
-    // async function checkEmail (userInput) {
-    //     const userByNameQuery = query(
-    //         collection(props.db,"users"),
-    //         where("email", "==", userInput),
-    //         limit(1),
-    //     );
-    //     const userByNameSnap = await getDocs(userByNameQuery);
-    //     let userByNameDocs = []
-    //     userByNameSnap.forEach((doc) => {
-    //         userByNameDocs.push(doc.data());
-    //     });
-    //     if (userByNameDocs.length > 0) {
-    //         setUserValid(userByNameDocs[0]);
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
+    async function checkEmail (userEmail) {
+        console.log(userEmail);
+        const response = await axios.post("http://localhost:8080/user/read", {email: userEmail});
+        console.log(response.data.email);
+        if (response.data.email === userEmail) {
+            console.log("true");
+            return true;
+        } else {
+            console.log("false");
+            return false;
+        }
+    }
 
     // const logInEmailPassword = async (emailIn, passwordIn) => {
     //     //Pulls User Credentials from Firebase
@@ -188,11 +183,11 @@ function Login(props) {
 
                     <div className="auth-header">
                         <div className="auth-header-main"> 
-                            <h1>Login</h1>
+                              <h1>Login</h1>
                             <Link to="/sign-up" id="signup">Sign Up</Link>
                         </div>
                         <div className="auth-header-sub">
-                            Sign in using email or username
+                            Sign in using email
                         </div>
 
                     </div>
@@ -200,7 +195,7 @@ function Login(props) {
                     <form className="login-form">
 
                         <div className="form-item-container email-in" >
-                            <label htmlFor="email">email or username</label>
+                            <label htmlFor="email">email</label>
 
                             <div className="input-container">
                                 <input type="email" id="email-in" name="email" placeholder="Enter email" onFocus={addFocus} onBlur={removeFocus}></input>

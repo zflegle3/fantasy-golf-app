@@ -25,6 +25,17 @@ const login = async(userData) => {
     return response.data;
 };
 
+//Check credentials of existing user
+const checkUser = async(userData) => {
+    const response = await axios.get("http://localhost:8080/user/read", userData);
+
+    if (response.data) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
 //Logout user
 const logout = async() => { 
     localStorage.removeItem("user");

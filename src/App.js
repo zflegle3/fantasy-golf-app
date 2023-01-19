@@ -7,11 +7,10 @@ import {
   Link,
   Navigate
 } from "react-router-dom";
-//Other
+//Others
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from 'react-redux';
-
 
 //Styles
 import './styles/Reset.css';
@@ -37,73 +36,24 @@ import Login from "./components/auth/Login";
 import PasswordReset from "./components/auth/PasswordReset";
 import ControlPanel from "./components/ControlPanel";
 import ContentPanel from "./components/ContentPanel";
-
 import Home from "./components/Home";
 import League from "./components/League";
 
 
-//Firebase - REPLACED WITH MONGO DB
-// import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-// import { 
-//   getFirestore, 
-//   doc, 
-//   getDoc,
-//   getDocs,
-//   addDoc,
-//   setDoc,
-//   collection,
-//   Timestamp,
-//   FirebaseAuth,
-// } from "firebase/firestore";
-// import { 
-//   getAuth,
-//   connectAuthEmulator,
-//   onAuthStateChanged, 
-//   signOut,
-//  } from "firebase/auth";
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAI0DXYQ5rRJFxL5oIqEcPf3h5dkRiW_fw",
-//   authDomain: "fantasy-golf-e2dc1.firebaseapp.com",
-//   projectId: "fantasy-golf-e2dc1",
-//   storageBucket: "fantasy-golf-e2dc1.appspot.com",
-//   messagingSenderId: "98644773374",
-//   appId: "1:98644773374:web:79405b5ea7830b34ba58af",
-//   measurementId: "G-MRB45784YQ"
-// };
-
-//Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-
-//Authentication
-// const auth = getAuth(app);
-// connectAuthEmulator(auth, "http://localhost:9099");
-//firebase emulators:start --only auth
-
-//Firestore Storage
-// const db = getFirestore(app);
-// const testDoc = doc(db, "users/user-id-01");
-// const testCollection = collection(db, "users");
-
-
-
 function App() {
-  const [pageSelect, setPageSelect] = useState("login");
-  const [userAuth, setUserAuth] = useState(false);
-  const [userActive, setUserActive] = useState();
+  // const [pageSelect, setPageSelect] = useState("login");
+  // const [userAuth, setUserAuth] = useState(false);
+  // const [userActive, setUserActive] = useState();
   //Data passed to components 
-  const [userData, setUserData] = useState("");
-  const [userId, setUserId] = useState("");
-  const [leagues, setLeagues] = useState([]); 
-  const [scheduleDataAll, setScheduleDataAll] = useState();
-  const [leaderboardData, setLeaderboardData] = useState();
-  const [eventInfo, setLeaderboardInfo] = useState();
-  const [worldRanksData, setWorldRanksData] = useState();
-  const [fedexRanksData, setFedexRanksData] = useState();
-
-  const [newLeagueOpen, setNewLeagueOpen] = useState(false);
-
+  // const [userData, setUserData] = useState("");
+  // const [userId, setUserId] = useState("");
+  // const [leagues, setLeagues] = useState([]); 
+  // const [scheduleDataAll, setScheduleDataAll] = useState();
+  // const [leaderboardData, setLeaderboardData] = useState();
+  // const [eventInfo, setLeaderboardInfo] = useState();
+  // const [worldRanksData, setWorldRanksData] = useState();
+  // const [fedexRanksData, setFedexRanksData] = useState();
+  // const [newLeagueOpen, setNewLeagueOpen] = useState(false);
   const {user} = useSelector((state) => state.auth);
 
   // const pullUserData = (user) => { 
@@ -156,23 +106,7 @@ function App() {
   //   });
   // }, []);
 
-  useEffect(() => {
-
-    if (localStorage.user) {
-      let userLocal = localStorage.getItem("user");
-      let userLocalOut = JSON.parse(userLocal);
-      console.log(userLocalOut);
-      setUserData(userLocalOut);
-    } else {
-      setUserData("");
-    }
-
-
-  }, [])
-
-  console.log(userId);
-  console.log(userData);
-
+console.log(user);
 if (user) {
   return (
     <div className="app-layout">
@@ -180,8 +114,8 @@ if (user) {
         <Router>
           {/* <ControlPanel userData={userData} userId={userId} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
           <ContentPanel userData={userData} userId={userId} db={db} refreshUserData={refreshUserData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/> */}
-          <ControlPanel userData={userData}/>
-          <ContentPanel userData={userData}/>
+          <ControlPanel userData={user}/>
+          <ContentPanel userData={user}/>
         </Router>
       </div>
       <div id="modal-portal"></div>
