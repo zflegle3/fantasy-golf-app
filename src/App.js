@@ -38,7 +38,7 @@ import ControlPanel from "./components/ControlPanel";
 import ContentPanel from "./components/ContentPanel";
 import Home from "./components/Home";
 import League from "./components/League";
-
+import Reset from "./components/auth/Reset";
 
 function App() {
   // const [pageSelect, setPageSelect] = useState("login");
@@ -131,6 +131,7 @@ if (user) {
           <Route path="*" element={<Navigate to="/create-league" replace />}/> */}
           <Route exact path="/sign-up" element={<SignUp/>}/>
           <Route exact path="/forgot" element={<PasswordReset/>}/>
+          <Route exact path="/reset/:email/:id/:token" element={<Reset/>}/>
           <Route exact path="*" element={<Login />}/>
           {/* <Route path="*" element={<Navigate to="/create-league" replace />}/> */}
         </Routes>

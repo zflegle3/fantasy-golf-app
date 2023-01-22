@@ -1,4 +1,3 @@
-import { sendPasswordResetEmail } from "firebase/auth";
 import {
     Link
 } from "react-router-dom";
@@ -6,8 +5,6 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 
 function PasswordReset(props) {
-    //props.auth
-    //props.db
     const [userEmail, setUserEmail] = useState("");
 
 
@@ -22,20 +19,15 @@ function PasswordReset(props) {
                 //validate email in db {
                     if (await checkUserDb(resetEmail)) {
                         //send email and await confirmation 
-                        console.log("send reset email to", resetEmail);
-                        //update userEmail state to conditionally render confirmation
-                        setUserEmail(resetEmail);
-
-
-                        // sendPasswordResetEmail(props.auth, resetEmail)
-                        // .then(() => {
-                        //     document.querySelector(".form-item-container.email-in").classList.add("valid");
-                        //     document.getElementById("email-error").textContent = `A password reset link has been sent to ${resetEmail}. Check your spam folder before trying again.`;
-                        // })
-                        // .catch((error) => {
-                        //     const errorCode = error.code;
-                        //     const errorMessage = error.message;
-                        // });
+                        const responseSend = await axios.post("http://localhost:8080/user/forgetpass", {email: resetEmail});
+                        if (responseSend.data.sendStatus) {
+                            //update userEmail state to conditionally render confirmation
+                            console.log("send reset email to", resetEmail);
+                            setUserEmail(resetEmail);
+                        } else {
+                            document.querySelector(".form-item-container.pass-in").classList.add("invalid");
+                            document.getElementById("pass-error").textContent = "There was an error sending your reset link. Please try again.";
+                        }
                     } else {
                         document.querySelector(".form-item-container.email-in").classList.add("invalid");
                         document.getElementById("email-error").textContent = `Whoops, we couldn't find anyone with that email.`;
