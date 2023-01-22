@@ -26,7 +26,6 @@ function ContentPanel(props) {
     //props.setNewLeagueOpen()
     //props.newLeagueOpen
     //props.refreshUserData
-    console.log(props.userId);
     const {user} = useSelector((state) => state.auth);
 
 

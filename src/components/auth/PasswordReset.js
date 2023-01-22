@@ -22,7 +22,6 @@ function PasswordReset(props) {
                         const responseSend = await axios.post("http://localhost:8080/user/forgetpass", {email: resetEmail});
                         if (responseSend.data.sendStatus) {
                             //update userEmail state to conditionally render confirmation
-                            console.log("send reset email to", resetEmail);
                             setUserEmail(resetEmail);
                         } else {
                             document.querySelector(".form-item-container.pass-in").classList.add("invalid");
@@ -50,9 +49,8 @@ function PasswordReset(props) {
     };
 
     async function checkUserDb (userIn) {
-        console.log(userIn);
+        //checks for user in db and returns true if found, false if not found
         const responseEmail = await axios.post("http://localhost:8080/user/read/email", {email: userIn});
-        console.log(responseEmail);
         if (responseEmail.data.email === userIn) {
             return true;
         } else {

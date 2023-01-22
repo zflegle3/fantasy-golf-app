@@ -291,8 +291,8 @@ function NewLeagueModal(props) {
                         <p> Draft and manage a team of players from the PGA tour.</p>
                         <p>TEAMS: 4 to 12</p>
                     </div>
-
-                    <div id="liv" className="league-option-btn" onClick={logLiv}>
+                    {/* TEMPORARILY DISABLING LIV LEAGUE FOR SIMPLICITY DURING DEV */}
+                    {/* <div id="liv" className="league-option-btn" onClick={logLiv}>
                         <div id="liv" className="liv-img">
                             <LivSvg />
                             <p>LIV GOLF</p>
@@ -300,7 +300,8 @@ function NewLeagueModal(props) {
                         </div>
                         <p> Draft and manage a team of players from LIV Golf.</p>
                         <p>TEAMS: 4 to 10</p>
-                    </div>
+                    </div> */}
+
                 </div>
 
             </div> 

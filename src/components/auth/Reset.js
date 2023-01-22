@@ -8,30 +8,23 @@ import axios from "axios";
 import PasswordInput from "./PasswordInput"
 import { ReactComponent as CheckSvg } from '../../images/icons/check.svg';
 
-function PasswordReset(props) {
-    //props.auth
-    //props.db
+function Reset(props) {
     const [passStatus, setPassStatus] = useState("");//true when user is valid
     const [submitStatus, setSubmitStatus] = useState(false);
     let { email } = useParams();
     let { id } = useParams();
     let { token } = useParams();
 
-    console.log(id);
-    console.log(token);
-
-
     async function resetPassword(e) {
         e.preventDefault();
         //validate passwords have correct format
         let passwordIn = document.getElementById("pass-in").value;
         resetErrors();
-
+        //validate password meets criteria
         if (checkNewPass(passwordIn)) {
+            //validate password is different from previous
             if (await checkPassDb(id, passwordIn)) {
-                //creat new user
-                // createAccount(userNameIn, emailIn, passwordIn); 
-                console.log(passwordIn);
+                //update user data with new password in db
                 let payload = {
                     id: id,
                     token: token,
@@ -39,6 +32,7 @@ function PasswordReset(props) {
                 }
                 let responseUpdate = await axios.post("http://localhost:8080/user/resetpass", payload);
                 if (responseUpdate.data.updateStatus) {
+                    //submit status conditionally renders confirmation once complete
                     setSubmitStatus(true);
                 } else {
                     document.querySelector(".form-item-container.pass-in").classList.add("invalid");
@@ -52,19 +46,14 @@ function PasswordReset(props) {
             document.querySelector(".form-item-container.pass-in").classList.add("invalid");
             document.getElementById("pass-error").textContent = "Password does not meet criteria";
         }
-        //validate passwords match
-        //submit to database
-
     }
 
     const checkNewPass = (passwordIn) => {
-        console.log(passwordIn.length);
         let passTest = true;
         let passErrorLen = document.getElementById("pass-error-signin-length");
         let passErrorUp = document.getElementById("pass-error-signin-upper");
         let passErrorNum = document.getElementById("pass-error-signin-number");
         let passErrorSp = document.getElementById("pass-error-signin-special");
-
         //8 characters
         if(passwordIn.length < 8) {
             passTest = false;
@@ -207,4 +196,4 @@ function PasswordReset(props) {
     ) 
 } 
 
-export default PasswordReset;
+export default Reset;

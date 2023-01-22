@@ -53,7 +53,7 @@ function App() {
   // const [eventInfo, setLeaderboardInfo] = useState();
   // const [worldRanksData, setWorldRanksData] = useState();
   // const [fedexRanksData, setFedexRanksData] = useState();
-  // const [newLeagueOpen, setNewLeagueOpen] = useState(false);
+  const [newLeagueOpen, setNewLeagueOpen] = useState(false);
   const {user} = useSelector((state) => state.auth);
 
   // const pullUserData = (user) => { 
@@ -114,7 +114,7 @@ if (user) {
         <Router>
           {/* <ControlPanel userData={userData} userId={userId} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
           <ContentPanel userData={userData} userId={userId} db={db} refreshUserData={refreshUserData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/> */}
-          <ControlPanel userData={user}/>
+          <ControlPanel userData={user} setNewLeagueOpen={setNewLeagueOpen}/>
           <ContentPanel userData={user}/>
         </Router>
       </div>

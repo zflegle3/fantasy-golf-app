@@ -25,7 +25,6 @@ function ControlPanel(props) {
     //props.userData
     //props.userLogOut
     //props.setNewLeagueOpen()
-    console.log(props.userData.leagues);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {user} = useSelector((state) => state.auth);
@@ -52,6 +51,7 @@ function ControlPanel(props) {
     }
 
     const onLogout = () => {
+      //logs out user using redux state
       dispatch(logout());
       dispatch(reset());
       navigate("/");
