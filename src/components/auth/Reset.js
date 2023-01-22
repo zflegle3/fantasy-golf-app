@@ -122,7 +122,7 @@ function PasswordReset(props) {
     if (!submitStatus) {
         return(
             <div className="auth-container">
-            <div className="auth-left-forgot"></div>
+            <div className="auth-left-reset"></div>
             <div className="auth-right">
                 <div className="auth-content">
 
@@ -181,7 +181,7 @@ function PasswordReset(props) {
     }
     return(
         <div className="auth-container">
-        <div className="auth-left-forgot"></div>
+        <div className="auth-left-reset"></div>
         <div className="auth-right">
             <div className="auth-content">
 
