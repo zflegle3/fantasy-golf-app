@@ -250,8 +250,17 @@ function NewLeagueModal(props) {
             draft: draft,
         }
         console.log(payload);
-        // const response = await axios.post("http://localhost:8080/league/create", payload);
-        //confirm response and close modal
+        let config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
+        const response = await axios.post("http://localhost:8080/league/create", payload, config);
+        console.log(response);
+        if (response.data.createStatus) {
+            //confirm response and close modal
+            props.setNewLeagueOpen(false);
+        }
     }
 
     // async function submitLeague(leagueDataNew) {
