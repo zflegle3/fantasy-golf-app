@@ -5,11 +5,15 @@ import {
   Routes,
   Route,
   Link,
-  Navigate
+  Navigate,
+  useNavigate
 } from "react-router-dom";
 //Others
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+
+//functions
+import { getLeaguesAll, reset } from './features/leagues/leagueSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 //Styles
@@ -39,6 +43,7 @@ import ContentPanel from "./components/ContentPanel";
 import Home from "./components/Home";
 import League from "./components/League";
 import Reset from "./components/auth/Reset";
+import LoadingSpinner from "./components/LoadingSpinner"
 
 function App() {
   // const [pageSelect, setPageSelect] = useState("login");
@@ -53,8 +58,12 @@ function App() {
   // const [eventInfo, setLeaderboardInfo] = useState();
   // const [worldRanksData, setWorldRanksData] = useState();
   // const [fedexRanksData, setFedexRanksData] = useState();
+  const dispatch = useDispatch();
   const [newLeagueOpen, setNewLeagueOpen] = useState(false);
   const {user} = useSelector((state) => state.auth);
+  const {leaguesAll, isLoading, isError, message} = useSelector((state) => state.leagues)
+
+
 
   // const pullUserData = (user) => { 
   //   //pulls user data 
@@ -106,38 +115,47 @@ function App() {
   //   });
   // }, []);
 
-console.log(user);
-if (user) {
-  return (
-    <div className="app-layout">
-      <div className="app-container">
-        <Router>
-          {/* <ControlPanel userData={userData} userId={userId} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
-          <ContentPanel userData={userData} userId={userId} db={db} refreshUserData={refreshUserData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/> */}
-          <ControlPanel userData={user} setNewLeagueOpen={setNewLeagueOpen}/>
-          <ContentPanel userData={user} newLeagueOpen={newLeagueOpen} setNewLeagueOpen={setNewLeagueOpen}/>
-        </Router>
-      </div>
-      <div id="modal-portal"></div>
-    </div>
-  );
-  } else {
+  useEffect(() => {
+    console.log("refreshing data");
+
+    if (isError) {
+      console.log(message);
+    }
+
+    dispatch(getLeaguesAll);
+
+    //clears leagues on unmount
+    // return () => {
+    //   dispatch(reset());
+    // }
+  }, [user, isError, message, dispatch])
+
+  if (user) {
     return (
-      <Router>
-        <Routes>
-          {/* <Route exact path="/" element={<Login db={db} auth={auth}/>}/>
-          <Route exact path="/sign-up" element={<SignUp db={db} auth={auth}/>}/>
-          <Route exact path="/forgot" element={<PasswordReset db={db} auth={auth}/>}/>
-          <Route path="*" element={<Navigate to="/create-league" replace />}/> */}
-          <Route exact path="/sign-up" element={<SignUp/>}/>
-          <Route exact path="/forgot" element={<PasswordReset/>}/>
-          <Route exact path="/reset/:email/:id/:token" element={<Reset/>}/>
-          <Route exact path="*" element={<Login />}/>
-          {/* <Route path="*" element={<Navigate to="/create-league" replace />}/> */}
-        </Routes>
-      </Router>
-    )
+      <div className="app-layout">
+        <div className="app-container">
+          <Router>
+            {/* <ControlPanel userData={userData} userId={userId} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
+            <ContentPanel userData={userData} userId={userId} db={db} refreshUserData={refreshUserData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/> */}
+            <ControlPanel userData={user} setNewLeagueOpen={setNewLeagueOpen}/>
+            <ContentPanel userData={user} newLeagueOpen={newLeagueOpen} setNewLeagueOpen={setNewLeagueOpen}/>
+          </Router>
+        </div>
+        <div id="modal-portal"></div>
+      </div>
+    );
+    } else {
+      return (
+        <Router>
+          <Routes>
+            <Route exact path="/sign-up" element={<SignUp/>}/>
+            <Route exact path="/forgot" element={<PasswordReset/>}/>
+            <Route exact path="/reset/:email/:id/:token" element={<Reset/>}/>
+            <Route exact path="*" element={<Login />}/>
+          </Routes>
+        </Router>
+      )
+    }
   }
-}
 
 export default App;

@@ -27,6 +27,7 @@ function ContentPanel(props) {
     //props.newLeagueOpen
     //props.refreshUserData
     const {user} = useSelector((state) => state.auth);
+    const {leaguesAll, isLoading, isError, message} = useSelector((state) => state.leagues)
 
 
 
@@ -34,8 +35,8 @@ function ContentPanel(props) {
     //     <Route exact path={`/league/${league.id}`} element={<League userData={props.userData} leagueData={league}/>}/>
     // })
 
-    console.log(user.leagues.length < 1);
-    if (user.leagues.length < 1) {
+    console.log(leaguesAll.length < 1);
+    if (leaguesAll.length < 1) {
         //return normal routes w/ default redirecting to new league route
         return(
             <div className="center-panel-container">
@@ -56,7 +57,8 @@ function ContentPanel(props) {
             <div className="center-panel-container">
                     <Routes>
                         {/* <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/> */}
-                        <Route exact path="/league/:id/*" element={<League db={props.db} userData={props.userData}/>}/>
+                        {/* <Route exact path="/league/:id/*" element={<League db={props.db} userData={props.userData}/>}/> */}
+                        <Route exact path="/league/:id/*" element={<div>League Data Here</div>}/>
                         <Route exact path="/messages" element={<DirectMessages />}/>
                         <Route exact path="/inbox" element={<Inbox />}/>
                         <Route exact path="/draftboards" element={<MockDraft />}/>

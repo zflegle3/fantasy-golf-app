@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import {login, reset} from "../../features/auth/authSlice";
+import {login, resetUser} from "../../features/auth/authSlice";
 //Components
 import PasswordInput from "./PasswordInput";
 import LoadingSpinner from "../LoadingSpinner";
@@ -104,7 +104,7 @@ function Login(props) {
             navigate("/")
         };
 
-        dispatch(reset());
+        dispatch(resetUser());
 
         if (isLoading) {
             

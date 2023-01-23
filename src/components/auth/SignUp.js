@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import {register, reset } from "../../features/auth/authSlice";
+import {register, resetUser } from "../../features/auth/authSlice";
 import { ReactComponent as CheckSvg } from '../../images/icons/check.svg';
 //Components
 import LoadingSpinner from "../LoadingSpinner";
@@ -210,7 +210,7 @@ function SignUp(props) {
             navigate("/")
         };
 
-        dispatch(reset());
+        dispatch(resetUser());
 
         if (isLoading) {
             

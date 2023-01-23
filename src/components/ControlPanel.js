@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import { } from "react-icons/fa"
 import {
   BrowserRouter as Router,
@@ -8,7 +8,8 @@ import {
   useNavigate
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import {logout, reset} from "../features/auth/authSlice";
+import {logout, resetUser} from "../features/auth/authSlice";
+import { getLeaguesAll, reset } from '../features/leagues/leagueSlice';
 
 //images
 import addIcon from "../images/icons/plus-circle-outline-wh.png";
@@ -28,6 +29,7 @@ function ControlPanel(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {user} = useSelector((state) => state.auth);
+    const {leaguesAll, isLoading, isError, message} = useSelector((state) => state.leagues)
 
     console.log(user.leagues);
 
@@ -53,9 +55,24 @@ function ControlPanel(props) {
     const onLogout = () => {
       //logs out user using redux state
       dispatch(logout());
-      dispatch(reset());
+      dispatch(resetUser());
       navigate("/");
     }
+
+    useEffect(() => {
+      console.log("refreshing data");
+  
+      if (isError) {
+        console.log(message);
+      }
+  
+      dispatch(getLeaguesAll());
+  
+      // clears leagues on unmount
+      // return () => {
+      //   dispatch(reset());
+      // };
+    }, [user, navigate, isError, message, dispatch])
 
 
     return(
