@@ -3,6 +3,7 @@ import axios from "axios";
 import ReactDom from "react-dom";
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
+import { createLeague } from "../features/leagues/leagueSlice";
 
 //SVGs & Images
 import { ReactComponent as PgaSvg } from '../images/icons/golf-pga.svg';
@@ -37,25 +38,10 @@ function NewLeagueModal(props) {
     //select status of snake/linear draft types, determines class & styling
     const [draftBtnSelect, setDraftBtnSelect] = useState(["",""]) 
 
-    const [leagueSettings, setLeagueSettings] = useState({
-        admin: props.userId,
-        name: "League Name",
-        proLeague: "",
-        logoSrc: "",
-        teamCount: 8,
-        scoring: {
-            format: "",
-            missCutScore: "",
-            rosterCut: 2,
-            rosterSize: 6,
-        },
-        draft: {
-            type: "",
-            date: "",
-            order: "",
-        },
-    })
+    const dispatch = useDispatch();
 
+
+ 
     const backStep = () => {
         let currentStep = step;
         --currentStep;
@@ -177,34 +163,6 @@ function NewLeagueModal(props) {
 
     }
 
-    // const createTeams = (teamQty, rosterSize) => {
-    //     //create rosters per player qty
-    //     let rosterArray=[];
-    //     for (let i=0; i < rosterSize; i++) {
-    //         rosterArray.push({
-    //             playerName: `Player ${i+1}`,
-    //             playerId: i+1,
-    //         });
-    //     }
-    //     //create tems with created roster templates
-    //     let teamArray = [{
-    //         teamName: "New Team 1",
-    //         managerId: props.userId,
-    //         managerName: props.userData.userName,
-    //         roster: rosterArray,
-    //     }];
-    //     for (let i=1; i < teamQty; i++) {
-    //         teamArray.push({
-    //             teamName: `New Team ${i+1}`,
-    //             managerId: "none",
-    //             managerName: `Manager ${i+1}`,
-    //             roster: rosterArray,
-    //         });
-    //     }
-    //     return (teamArray);
-    // }
-
-
 
     const logStepFour= (e) => {
         e.stopPropagation();
@@ -223,7 +181,7 @@ function NewLeagueModal(props) {
                     type: draftType,
                     date: draftDateIn,
                 };
-                createLeague(draft);
+                submitLeague(draft);
             } else {
                 document.getElementById("input-error-draft-type").classList.add("invalid");
                 document.getElementById("input-error-draft-type").innerHTML="Please select a draft type.";
@@ -234,7 +192,7 @@ function NewLeagueModal(props) {
         }
     };
 
-    const createLeague = async (draft) => {
+    const submitLeague = async (draft) => {
         //Initiate league activity
         let leagueActivityNew = [{
             item: `Created ${name}, a new ${settings.teamCount} team Masters Tournament league.`,
@@ -250,17 +208,19 @@ function NewLeagueModal(props) {
             draft: draft,
         }
         console.log(payload);
-        let config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`
-            }
-        }
-        const response = await axios.post("http://localhost:8080/league/create", payload, config);
-        console.log(response);
-        if (response.data.createStatus) {
-            //confirm response and close modal
-            props.setNewLeagueOpen(false);
-        }
+        // let config = {
+        //     headers: {
+        //         Authorization: `Bearer ${user.token}`
+        //     }
+        // }
+        dispatch(createLeague(payload));
+        props.setNewLeagueOpen(false);
+        // const response = await axios.post("http://localhost:8080/league/create", payload, config);
+        // console.log(response);
+        // if (response.data.createStatus) {
+        //     //confirm response and close modal
+        //     props.setNewLeagueOpen(false);
+        // }
     }
 
     // async function submitLeague(leagueDataNew) {
