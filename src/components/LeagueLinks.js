@@ -5,6 +5,7 @@ import {
 function LeagueLinks(props) {
     //props.leagues
     // props.selectTabDisplay
+    console.log(props.leagues);
 
     const linksAll = props.leagues.map((leagueInfo) =>
         <Link key={leagueInfo.id} to={`/league/${leagueInfo.id}`} className="nav-link" id="nav-tab" onClick={props.selectTabDisplay}>

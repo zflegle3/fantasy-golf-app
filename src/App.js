@@ -115,7 +115,7 @@ if (user) {
           {/* <ControlPanel userData={userData} userId={userId} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
           <ContentPanel userData={userData} userId={userId} db={db} refreshUserData={refreshUserData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/> */}
           <ControlPanel userData={user} setNewLeagueOpen={setNewLeagueOpen}/>
-          <ContentPanel userData={user}/>
+          <ContentPanel userData={user} newLeagueOpen={newLeagueOpen} setNewLeagueOpen={setNewLeagueOpen}/>
         </Router>
       </div>
       <div id="modal-portal"></div>
