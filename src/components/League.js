@@ -14,6 +14,8 @@ import {
     collection,
   } from "firebase/firestore";
 import { useHistory, useParams } from 'react-router-dom'
+import { getLeagueOne, resetSelected } from '../features/leagues/leagueSelectedSlice';
+import { useSelector, useDispatch } from 'react-redux';
 //Components
 import Test from "./Test";
 import LeagueTab from "./LeagueTab";
@@ -38,31 +40,32 @@ function League(props) {
     const [LeagueName, setLeagueName]= useState("League Name Temp");
     const [leagueSelectData, setLeagueSelectedData] = useState();
     const [leagueWeekLeaderboardData, setLeagueWeekLeaderboardData] = useState();
+    const dispatch = useDispatch();
+    const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
 
     // console.log(props.worldRanksData);
     // console.log(props.fedexRanksData);
-    console.log(props.leaderboardData);
-    console.log(props.eventInfo);
+    console.log(id);
 
 
     const openSettingsModal = () => {
         console.log("Open Edit Settings");
-        let EditModal = document.getElementById("edit-settings-modal-container");
-        EditModal.classList = "edit-settings-modal-container visable";
+        // let EditModal = document.getElementById("edit-settings-modal-container");
+        // EditModal.classList = "edit-settings-modal-container visable";
     }
 
     const closeSettingsModal = (e) => {
         console.log("Close Edit Settings");
-        console.log(e.target);
-        let EditModal = document.getElementById("edit-settings-modal-container");
-        EditModal.classList = "edit-settings-modal-container";
+        // console.log(e.target);
+        // let EditModal = document.getElementById("edit-settings-modal-container");
+        // EditModal.classList = "edit-settings-modal-container";
     }
 
 
     useEffect(() => {
         console.log(id);
         // console.log(`Pulling League Data,`);
-        pullLeagueData(id);
+        dispatch(getLeagueOne(id));
     }, [id]);
 
 
@@ -145,13 +148,16 @@ function League(props) {
 
 
 
-    if (leagueSelectData) {
+    if (league) {
         return (
+            // <div>
+            //     {league.name}
+            // </div>
             <div className="center-panel-content">
                 <div className="center-panel-header">
                     <img src={leagueIcon}></img>
-                    <h1>{leagueSelectData.settings.name}</h1>
-                    <p>{`${leagueSelectData.settings.teamCount}-Team ${leagueSelectData.settings.scoring.format}`}</p>
+                    <h1>{league.name}</h1>
+                    <p>{`${league.settings.teamCount}-Team Masters Tournament League`}</p>
                     <div>
                         <img src={settingsIcon} onClick={openSettingsModal}></img>
                     </div>
@@ -166,7 +172,7 @@ function League(props) {
                     </ul>
                     <div className="center-panel-display">
                         <Routes>
-                            <Route exact path="" element={<LeagueTab leagueData={leagueSelectData} userData={props.userData} openSettingsModal={openSettingsModal} leagueWeekLeaderboardData={leagueWeekLeaderboardData} leaderboardData={props.leaderboardData}/>}/>
+                            <Route exact path="" element={<LeagueTab openSettingsModal={openSettingsModal} leagueWeekLeaderboardData={leagueWeekLeaderboardData} leaderboardData={props.leaderboardData}/>}/>
                             {/* <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData} leagueWeekLeaderboardData={leagueWeekLeaderboardData}/>}/> */}
                             <Route exact path="players" element={<Test test={`${LeagueName}, Players`}/>}/>
                             <Route exact path="draft" element={<Test test={`${LeagueName}, Draft`}/>}/>
@@ -174,11 +180,11 @@ function League(props) {
                     </div>
                     </div>
                     <div className="right-panel">
-                        <ChatConsole db={props.db}/>
+                        <ChatConsole/>
                     </div>
                 </div>
                 <div className="edit-settings-modal-container" id="edit-settings-modal-container">
-                    <EditSettingsModal db={props.db} leagueSettings={leagueSelectData} userInfo={props.userInfo} closeSettingsModal={closeSettingsModal} pullLeagueData={pullLeagueData}/>
+                    <EditSettingsModal db={props.db} leagueSettings={league.settings} userInfo={props.userInfo} closeSettingsModal={closeSettingsModal} pullLeagueData={pullLeagueData}/>
                 </div>
             </div>
         );

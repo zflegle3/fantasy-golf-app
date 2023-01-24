@@ -3,7 +3,6 @@ import leagueService from "./leagueService";
 
 const initialState = {
     leaguesAll: [], //to hold id and name for each league user is a member of
-    leagueSelected: null, //to hold all league data for the current selected league
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -50,7 +49,6 @@ export const leagueSlice = createSlice({
             .addCase(createLeague.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.leagueSelected = action.payload;
                 state.leaguesAll.push({
                     id: action.payload._id,
                     name: action.payload.name

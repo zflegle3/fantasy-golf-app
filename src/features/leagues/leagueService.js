@@ -1,12 +1,10 @@
 import axios from "axios";
 
-
-
 //Create new League
 const createLeague = async (leagueData, token) => {
     let config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            authorization: `Bearer ${token}`
         }
     }//required for protected routes
     const response = await axios.post("http://localhost:8080/league/create", leagueData, config);
@@ -16,7 +14,7 @@ const createLeague = async (leagueData, token) => {
 const getLeaguesAll = async (token) => {
     let config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            authorization: `Bearer ${token}`
         }
     }//required for protected routes
     const response = await axios.get("http://localhost:8080/league/getAll", config);
@@ -26,7 +24,7 @@ const getLeaguesAll = async (token) => {
 
 const leagueService = {
     createLeague,
-    getLeaguesAll
+    getLeaguesAll,
 }
 
 export default leagueService

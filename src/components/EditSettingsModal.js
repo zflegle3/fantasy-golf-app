@@ -10,6 +10,7 @@ import {
     collection,
   } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 
@@ -22,6 +23,8 @@ function EditSettingsModal(props) {
 
     // console.log(props.leagueSettings);
     // console.log(props.userInfo);
+    const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
+    const {user} = useSelector((state) => state.auth)
 
 
     const handleEdits = (e) => {
@@ -30,7 +33,7 @@ function EditSettingsModal(props) {
         // console.log("Submit Edits");
         let leagueNameIn = document.getElementById("edit-league-name").value;
         if (!leagueNameIn) { //in case of no league name updates, all other values populated as select inputs
-            leagueNameIn = props.leagueSettings.settings.name;
+            leagueNameIn = league.name;
         }
         let leagueTeamsIn = document.getElementById("edit-league-teams").value;
         let leagueFormatIn = document.getElementById("edit-league-format").value;
@@ -75,8 +78,8 @@ function EditSettingsModal(props) {
     
     async function submitEdits(leagueVarsAll) {
         // console.log(leagueVarsAll,props.leagueSettings.leagueId);
-        let leagueDoc = doc(props.db,`leagues/${props.leagueSettings.leagueId}`);
-        let teamsAll = props.leagueSettings.teams;
+        let leagueDoc = doc(props.db,`leagues/${league._id}`);
+        let teamsAll = league.teams;
         let currentTeams = teamsAll.length;
 
         let rosterArray=[];
@@ -89,7 +92,7 @@ function EditSettingsModal(props) {
         //create teams per team qty
         let teamArray = [{
             teamName: "New Team 1",
-            managerId: props.userInfo.uid,
+            managerId: user._id,
             managerName: "Admin Name Temp",
             roster: rosterArray,
         }];
@@ -107,7 +110,7 @@ function EditSettingsModal(props) {
         let dataNew = {
             settings: {
                 name: leagueVarsAll[0],
-                admin: props.userInfo.uid,
+                admin: user._id,
                 teamCount: leagueVarsAll[1],
                 scoring: {
                     format: leagueVarsAll[2],
@@ -119,7 +122,7 @@ function EditSettingsModal(props) {
             teams: teamArray,
         }
         await updateDoc(leagueDoc, dataNew);
-        props.pullLeagueData(props.leagueSettings.leagueId);
+        props.pullLeagueData(league._id);
     }
 
 
@@ -142,14 +145,14 @@ function EditSettingsModal(props) {
             <div className="edit-settings-input">
                 <label htmlFor="name">League Name</label>
                 <div className="input-container-edit">
-                    <input type="text" id="edit-league-name" name="name" placeholder={props.leagueSettings.settings.name}></input>
+                    <input type="text" id="edit-league-name" name="name" placeholder={league.name}></input>
                 </div>
             </div>
 
             <div className="edit-settings-input">
                 <label htmlFor="teams">Number of Teams</label>
                 <div className="input-container-edit">
-                    <select id="edit-league-teams" name="teams" defaultValue={props.leagueSettings.settings.teamCount}>
+                    <select id="edit-league-teams" name="teams" defaultValue={league.settings.teamCount}>
                         <option value={4}>4</option>
                         <option value={5}>5</option>
                         <option value={6}>6</option>
@@ -167,7 +170,7 @@ function EditSettingsModal(props) {
                 <p>Scoring</p>
             </div>
 
-            <div className="edit-settings-input">
+            {/* <div className="edit-settings-input">
                 <label htmlFor="format">Game Format</label>
                 <p>Tournament - teams play against the entire league each week</p>
                 <p>Head to Head - teams play against one team each week </p>
@@ -177,13 +180,13 @@ function EditSettingsModal(props) {
                         <option value="h2h-play">Head to Head</option>
                     </select>
                 </div>
-            </div>
+            </div> */}
 
             <div className="edit-settings-input">
                 <label htmlFor="roster-players">Golfers Per Roster</label>
                 <p>number of players allowed on a team's roster</p>
                 <div className="input-container-edit">
-                    <select id="edit-league-roster-players" name="roster-players" defaultValue={props.leagueSettings.settings.scoring.rosterSize}>
+                    <select id="edit-league-roster-players" name="roster-players" defaultValue={league.settings.rosterSize}>
                         <option value={4}>4</option>
                         <option value={5}>5</option>
                         <option value={6}>6</option>
@@ -199,7 +202,7 @@ function EditSettingsModal(props) {
                 <label htmlFor="roster-cut">Team Cut</label>
                 <p>the number of players who's scores will not count to team score</p>
                 <div className="input-container-edit">
-                    <select id="edit-league-roster-cut" name="roster-cut" defaultValue={props.leagueSettings.settings.scoring.rosterCut}>
+                    <select id="edit-league-roster-cut" name="roster-cut" defaultValue={league.settings.rosterCut}>
                         <option value={0}>0</option>
                         <option value={1}>1</option>
                         <option value={2}>2</option>

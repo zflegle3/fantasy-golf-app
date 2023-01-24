@@ -1,23 +1,15 @@
 import { useState, useEffect } from 'react';
-import axios from "axios";
-import ReactDom from "react-dom";
-import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { createLeague } from "../features/leagues/leagueSlice";
 
 //SVGs & Images
 import { ReactComponent as PgaSvg } from '../images/icons/golf-pga.svg';
-import { ReactComponent as LivSvg } from '../images/icons/golf-liv.svg';
+// import { ReactComponent as LivSvg } from '../images/icons/golf-liv.svg';
 import { ReactComponent as BackArrSvg} from "../images/icons/arrow-left.svg";
-import SnakeImg from "../images/icons/snake.png"
-import LinearImg from "../images/icons/top-right.png"
 
 function NewLeagueModal(props) {
-    //props.userData
-    //props.userId
-    //props.db
-    //props.refreshUserData
-    const {user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
+    //props.setNewLeagueOpen()
+    const {user} = useSelector((state) => state.auth);
     const [step, setStep] = useState(1)
     const [name, setName] = useState("League Name");
     const [settings, setSettings] = useState({
@@ -28,21 +20,15 @@ function NewLeagueModal(props) {
         rosterSize: 6,
         proLeague: "pga",
     });
-    // const [draft, setDraft] = useState({
-    //     type: "",
-    //     date: "",
-    //     order: "",
-    // },);
-    //State holds draft type per button selection
+    //State holds draft type per user button selection
     const [draftType, setDraftType] = useState(""); 
-    //select status of snake/linear draft types, determines class & styling
+    //State holds selected status of snake/linear draft types & determines class & styling
+    //0 index is snake, 1 index is linear
     const [draftBtnSelect, setDraftBtnSelect] = useState(["",""]) 
-
     const dispatch = useDispatch();
 
-
- 
     const backStep = () => {
+        //decrements step to conditionally render input form 
         let currentStep = step;
         --currentStep;
         setStep(currentStep);
@@ -64,6 +50,8 @@ function NewLeagueModal(props) {
 
 
     const logStepOne = () => {
+        //logs data from step 1 and increments step
+
         // Temporarily disables functionality during dev 
         // //add league to league settings state
         // let tempSettings = {...leagueSettings};
@@ -89,6 +77,7 @@ function NewLeagueModal(props) {
     // }
 
     const logStepTwo= (e) => {
+        //logs data from step 2 and increments step
         e.stopPropagation()
         //pull input values (name and league size)
         let leagueNameIn = document.getElementById("new-league-name").value;
@@ -97,29 +86,26 @@ function NewLeagueModal(props) {
         //clear previous errors
         document.getElementById("input-error-name").classList="";
         document.getElementById("input-error-name").innerHTML="League Name Error";
-
         //validate input values (Name)
         if (leagueNameIn.length > 0) {
-            // if (checkUrl(leagueLogoIn)) {
-                setName(leagueNameIn);
-                //save inputs
-                let tempSettings = {...settings};
-                tempSettings.teamCount = leagueTeamsIn;
-                setSettings(tempSettings);
-                //increment step
-                let currentStep = step;
-                ++currentStep;
-                setStep(currentStep);
-            // } else {
+            setName(leagueNameIn);
+            //save inputs
+            let tempSettings = {...settings};
+            tempSettings.teamCount = leagueTeamsIn;
+            setSettings(tempSettings);
+            //increment step
+            let currentStep = step;
+            ++currentStep;
+            setStep(currentStep);
         } else {
             //add error messages
             document.getElementById("input-error-name").classList.add("invalid");
             document.getElementById("input-error-name").innerHTML="Please enter a league name";
         }
-
     }
 
     const logStepThree= (e) => {
+        //logs data from step 3 and increments step
         e.stopPropagation();
         //pull input values and sanatize to numbers if required
         let rosterSizeIn = Number(document.getElementById("new-league-team-size").value);
@@ -128,14 +114,11 @@ function NewLeagueModal(props) {
         if (missCutIn !== "avg") {
             missCutIn = Number(missCutIn);
         }
-        console.log(rosterSizeIn,rosterCutIn, missCutIn);
-        console.log(rosterCutIn < rosterSizeIn);
         //clear previous errors
         document.getElementById("input-error-team-size").classList="";
         document.getElementById("input-error-team-size").innerHTML="Roster Size Error";
         document.getElementById("input-error-team-cut").classList="";
         document.getElementById("input-error-team-cut").innerHTML="Team Cut Error";
-
         //validate inputs (cut < roster size)
         if (rosterCutIn < rosterSizeIn) {
             //validate enough players to fill roster spots (~90 players)
@@ -150,7 +133,6 @@ function NewLeagueModal(props) {
                 let currentStep = step;
                 ++currentStep;
                 setStep(currentStep);
-
             } else {
                 document.getElementById("input-error-team-size").classList.add("invalid");
                 document.getElementById("input-error-team-size").innerHTML="Please reduce roster size or number of teams to ensure there are enough players to fill each team.";
@@ -165,6 +147,7 @@ function NewLeagueModal(props) {
 
 
     const logStepFour= (e) => {
+        //logs data from step 4, submits data to db, closes 
         e.stopPropagation();
         //clear errors
         document.getElementById("input-error-draft-date").classList = "";
@@ -193,13 +176,13 @@ function NewLeagueModal(props) {
     };
 
     const submitLeague = async (draft) => {
-        //Initiate league activity
+        //Initiate league activity data
         let leagueActivityNew = [{
             item: `Created ${name}, a new ${settings.teamCount} team Masters Tournament league.`,
             time: new Date(),
             user: user.email,
         }]
-        //Create payload for backend call
+        //Create payload to submit to backend
         let payload = {
             name: name,
             settings: settings,
@@ -207,52 +190,9 @@ function NewLeagueModal(props) {
             year: 2023,
             draft: draft,
         }
-        console.log(payload);
-        // let config = {
-        //     headers: {
-        //         Authorization: `Bearer ${user.token}`
-        //     }
-        // }
         dispatch(createLeague(payload));
         props.setNewLeagueOpen(false);
-        // const response = await axios.post("http://localhost:8080/league/create", payload, config);
-        // console.log(response);
-        // if (response.data.createStatus) {
-        //     //confirm response and close modal
-        //     props.setNewLeagueOpen(false);
-        // }
     }
-
-    // async function submitLeague(leagueDataNew) {
-    //     console.log(leagueDataNew);
-    //     //create doc & add to league collection
-    //     const newLeagueDoc = doc(props.db, "leagues",`${leagueDataNew.leagueId}`);
-    //     await setDoc(newLeagueDoc, leagueDataNew);
-    //     //add league id to user's doc
-    //     const userDoc = doc(props.db, "users", `U-${props.userId}`);
-    //     const userSnap  = await getDoc(userDoc);
-    //     if (userSnap.exists()) {
-    //         let userData = userSnap.data();
-    //         //pull current data 
-    //         let leaguesAll = userData.leagues;
-    //         //write new data to doc db
-    //         leaguesAll.push({
-    //             id: leagueDataNew.leagueId,
-    //             logo: leagueDataNew.settings.logoSrc,
-    //             name: leagueDataNew.settings.name,
-    //         });
-    //         await updateDoc(userDoc,{leagues: leaguesAll});
-    //         //update display with new league
-    //         props.refreshUserData(props.userId);
-    //         if (props.setNewLeagueOpen) {
-    //             props.setNewLeagueOpen(false);
-    //         }
-    //     } else {
-    //         //console.log("No User Doc found, handle error");
-    //        document.getElementById("input-error-draft-type").classList.add("invalid");
-    //        document.getElementById("input-error-draft-type").innerHTML="There was an error in creating your league, please start over and try again.";
-    //     }
-    // }
 
     if (step === 1) {
         return(

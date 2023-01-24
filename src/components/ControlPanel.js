@@ -31,7 +31,6 @@ function ControlPanel(props) {
     const {user} = useSelector((state) => state.auth);
     const {leaguesAll, isLoading, isError, message} = useSelector((state) => state.leagues)
 
-    console.log(user.leagues);
 
     const createNewLeague = (e) => {
         console.log("New League");
@@ -62,9 +61,9 @@ function ControlPanel(props) {
     useEffect(() => {
       console.log("refreshing data");
   
-      if (isError) {
-        console.log(message);
-      }
+      // if (isError) {
+      //   console.log(message);
+      // }
   
       dispatch(getLeaguesAll());
   
@@ -72,7 +71,7 @@ function ControlPanel(props) {
       // return () => {
       //   dispatch(reset());
       // };
-    }, [user, navigate, isError, message, dispatch])
+    }, [])
 
 
     return(

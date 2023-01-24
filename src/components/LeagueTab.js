@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import settingsIcon from "../images/icons/cog-outline-wh.png";
+import { useSelector, useDispatch } from 'react-redux';
 //Components
 import LeagueActivityList from "./LeagueActivityList";
 import WeekStandings from "./WeekStandings";
@@ -15,6 +16,8 @@ function LeagueTab(props) {
     //props.userInfo
     //props.openSettingsModal() 
     console.log(props.leagueWeekLeaderboardData);
+    const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
+    const {user} = useSelector((state) => state.auth)
 
     //temp variable to work on styling while also working on scoring system
     //will be replaced by props.leagueSeasonLeaderboardData
@@ -55,14 +58,14 @@ function LeagueTab(props) {
 
 
 
-    if (props.leagueData.settings.admin === props.userData.uid) {
+    if (league.admin === user._id) {
         return (
             <div className="center-panel-content-all"> 
                 <div className="season-standings-all">
                     <div className="league-section-header">
                         <p>Season Standings</p>
                     </div>
-                    <SeasonStandings dataArray={seasonStandings}/>
+                    {/* <SeasonStandings dataArray={seasonStandings}/> */}
                 </div>  
                 <div className="week-standings-all">
                     <div className="league-section-header">
@@ -75,14 +78,14 @@ function LeagueTab(props) {
                     <div className="league-section-header">
                         <p>League Activity</p>
                     </div>
-                    <LeagueActivityList dataArray={props.leagueData.activity}/>
+                    <LeagueActivityList dataArray={league.activity}/>
                 </div>
                 <div className="league-settings-all">
                     <div className="league-section-header">
                         <p>League Settings</p>
                         <img src={settingsIcon} alt="settings icon" onClick={props.openSettingsModal} />
                     </div>
-                    <LeagueSettingsList settingsData={props.leagueData.settings}/>
+                    <LeagueSettingsList settingsData={league.settings}/>
                 </div>
             </div>
         );
@@ -93,7 +96,7 @@ function LeagueTab(props) {
                     <div className="league-section-header">
                         <p>Season Standings</p>
                     </div>
-                    <SeasonStandings dataArray={seasonStandings} leaderboardData={props.leaderboardData}/>
+                    {/* <SeasonStandings dataArray={seasonStandings} leaderboardData={props.leaderboardData}/> */}
                 </div>           
                 <div className="week-standings-all">
                     <div className="league-section-header">
@@ -105,13 +108,13 @@ function LeagueTab(props) {
                     <div className="league-section-header">
                         <p>League Activity</p>
                     </div>
-                    <LeagueActivityList dataArray={props.leagueData.activity} />
+                    <LeagueActivityList dataArray={league.activity} />
                 </div>
                 <div className="league-settings-all">
                     <div className="league-section-header">
                         <p>League Settings</p>
                     </div>
-                    <LeagueSettingsList settingsData={props.leagueData.settings}/>
+                    <LeagueSettingsList settingsData={league.settings}/>
                 </div>
             </div>
         );

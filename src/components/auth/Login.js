@@ -97,6 +97,7 @@ function Login(props) {
 
     useEffect(() => {
         if(isError) {
+            //catches & displays errors fron failed credential logins
             document.querySelector(".form-item-container.pass-in").classList.add("invalid");
             document.getElementById("pass-error").textContent = message;
             console.log(message);
