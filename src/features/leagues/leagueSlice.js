@@ -38,7 +38,7 @@ export const leagueSlice = createSlice({
     name: "leagueData",
     initialState,
     reducers: {
-        reset: (state) => initialState
+        resetLeagues: (state) => initialState
     }, 
     extraReducers: (builder) => {
         builder
@@ -77,5 +77,5 @@ export const leagueSlice = createSlice({
 })
 
 
-export const { reset } = leagueSlice.actions
+export const { resetLeagues } = leagueSlice.actions
 export default leagueSlice.reducer
