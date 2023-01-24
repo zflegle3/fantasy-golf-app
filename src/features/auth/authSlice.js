@@ -79,7 +79,7 @@ export const authSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = false;
                 state.isError = true;
-                state.message = action.payload;  
+                state.message = "We were unable to verify login credentials you entered";  
                 state.user = null;
             })
             .addCase(logout.fulfilled, (state) => {

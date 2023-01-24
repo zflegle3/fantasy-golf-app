@@ -97,7 +97,9 @@ function Login(props) {
 
     useEffect(() => {
         if(isError) {
-            toast.error(message);
+            document.querySelector(".form-item-container.pass-in").classList.add("invalid");
+            document.getElementById("pass-error").textContent = message;
+            console.log(message);
         };
 
         if(isSuccess || user) {
@@ -112,9 +114,6 @@ function Login(props) {
 
     }, [user, isError, isSuccess, message, navigate, dispatch])
 
-    if (isLoading) {
-        return(<LoadingSpinner/>)
-    }
 
     return(
         <div className="auth-container">
