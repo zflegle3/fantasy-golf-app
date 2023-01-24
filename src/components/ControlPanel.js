@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-// import { } from "react-icons/fa"
+// import { } from "react-icons/fa" 
+//use react icons if possible
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,21 +11,16 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import {logout, resetUser} from "../features/auth/authSlice";
 import { getLeaguesAll, reset } from '../features/leagues/leagueSlice';
-
 //images
 import addIcon from "../images/icons/plus-circle-outline-wh.png";
 import logoIcon from "../images/icons/golf-tee-wh.png";
-import leagueIcon from "../images/icons/golf-flag-wh.png";
 import profileIcon from "../images/icons/golf-cart-wh.png";
 import settingsIcon from "../images/icons/cog-outline-wh.png";
-
 //Components
 import LeagueLinks from "./LeagueLinks";
 
 
 function ControlPanel(props) {
-    //props.userData
-    //props.userLogOut
     //props.setNewLeagueOpen()
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -52,25 +48,15 @@ function ControlPanel(props) {
     }
 
     const onLogout = () => {
-      //logs out user using redux state
+      //logs out user using redux state and navigates to login page
       dispatch(logout());
       dispatch(resetUser());
       navigate("/");
     }
 
     useEffect(() => {
-      console.log("refreshing data");
-  
-      // if (isError) {
-      //   console.log(message);
-      // }
-  
+      //update leagues onmount
       dispatch(getLeaguesAll());
-  
-      // clears leagues on unmount
-      // return () => {
-      //   dispatch(reset());
-      // };
     }, [])
 
 

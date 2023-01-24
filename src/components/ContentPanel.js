@@ -18,6 +18,7 @@ import AccountSettings from "./AccountSettings";
 import MockDraft from "./MockDraft";
 import Inbox from "./Inbox";
 import DirectMessages from "./DirectMessages";
+import LoadingSpinner from './LoadingSpinner';
 
 function ContentPanel(props) {
     //props.db
@@ -29,15 +30,13 @@ function ContentPanel(props) {
     const {user} = useSelector((state) => state.auth);
     const {leaguesAll, isLoading, isError, message} = useSelector((state) => state.leagues)
 
+    if (isLoading) {
+        //renders loading screen while loading array of user leagues
+        return <LoadingSpinner/>
+    }
 
-
-    // let leagueRoutes = props.userData.leagues.map((league) => {
-    //     <Route exact path={`/league/${league.id}`} element={<League userData={props.userData} leagueData={league}/>}/>
-    // })
-
-    console.log(leaguesAll.length < 1);
     if (leaguesAll.length < 1) {
-        //return normal routes w/ default redirecting to new league route
+        //return routes w/ default redirecting to new league component
         return(
             <div className="center-panel-container">
                 <Routes>
@@ -52,18 +51,16 @@ function ContentPanel(props) {
             </div>
         )
     } else {
-        //return normal routes w/ default redirecting to first league 
+        //return routes w/ default redirecting to first league in route page
         return(
             <div className="center-panel-container">
                     <Routes>
-                        {/* <Route exact path="/league/:id/*" element={<League db={db}  leagues={leagues} userInfo={userActive} leaderboardData={leaderboardData} eventInfo={eventInfo} worldRanksData={worldRanksData} fedexRanksData={fedexRanksData} />}/> */}
-                        <Route exact path="/league/:id/*" element={<League db={props.db} userData={props.userData}/>}/>
-                        {/* <Route exact path="/league/:id/*" element={<div>League Data Here</div>}/> */}
+                        <Route exact path="/league/:id/*" element={<League/>}/>
                         <Route exact path="/messages" element={<DirectMessages />}/>
                         <Route exact path="/inbox" element={<Inbox />}/>
                         <Route exact path="/draftboards" element={<MockDraft />}/>
                         <Route exact path="/account-settings" element={<AccountSettings />}/>
-                        <Route path="*" element={<Navigate to={`/league/${props.userData.leagues[0].id}`} replace />}/>
+                        <Route path="*" element={<Navigate to={`/league/${leaguesAll[0].id}`} replace />}/>
                     </Routes>
                 <ModalContainer userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/>
             </div>
