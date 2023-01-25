@@ -11,10 +11,8 @@ const initialState = {
 
 //Get all user leagues
 export const getLeagueOne = createAsyncThunk("league/getOne", async (leagueId, thunkAPI)=> {
-    console.log("leagueID is", leagueId);
     try {
         const token = thunkAPI.getState().auth.user.token; //token required b/c protected route
-        console.log("token is", token);
         return await leagueSelectedService.getLeagueOne(leagueId, token);
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

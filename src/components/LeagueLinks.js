@@ -4,10 +4,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 
 function LeagueLinks(props) {
-    //props.leagues
-    // props.selectTabDisplay
-    console.log(props.leagues);
-    
     const {leaguesAll, isLoading, isError, message} = useSelector((state) => state.leagues)
 
     const linksAll = leaguesAll.map((leagueInfo) =>

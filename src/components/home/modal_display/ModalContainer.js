@@ -15,7 +15,6 @@ function ModalContainer() {
         dispatch(closeModal());
     }
 
-    console.log(status, status === "new-league")
     if (status === "new-league") {
         return ReactDom.createPortal(
             <>  

@@ -4,7 +4,7 @@ import settingsIcon from "../../../../images/icons/cog-outline-wh.png";
 import { useSelector, useDispatch } from 'react-redux';
 import { openEditSettings } from '../../../../features/modals/modalSlice';
 //Components
-import LeagueActivityList from "../../../LeagueActivityList";
+import LeagueActivityList from "../sections/LeagueActivityList";
 import WeekStandings from "../../../WeekStandings";
 import SeasonStandings from "../../../SeasonStandings";
 import LeagueSettingsList from "../sections/LeagueSettingsList";
@@ -16,7 +16,6 @@ function LeagueTab(props) {
     //props.leaderboardData
     //props.userInfo
     //props.openSettingsModal() 
-    console.log(props.leagueWeekLeaderboardData);
     const dispatch = useDispatch();
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)

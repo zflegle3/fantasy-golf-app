@@ -9,9 +9,7 @@ const getLeagueOne = async (leagueId, token) => {
     let payload = {
         _id: leagueId,
     }
-    console.log(leagueId, token, config);
     const response = await axios.post("http://localhost:8080/league/getOne", payload, config,);
-    // console.log(response);
     return response.data;
 }
 

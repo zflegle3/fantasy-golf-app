@@ -98,7 +98,7 @@ function ControlPanel(props) {
             <p>MOCK DRAFTS</p>
           </Link>
 
-          <LeagueLinks leagues={user.leagues} selectTabDisplay={selectTabDisplay}/>
+          <LeagueLinks />
         </div>
 
         <div className="nav-footer"> 

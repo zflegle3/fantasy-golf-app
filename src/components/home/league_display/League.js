@@ -44,92 +44,77 @@ function League(props) {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     // console.log(props.worldRanksData);
     // console.log(props.fedexRanksData);
-    console.log(id);
 
 
     useEffect(() => {
-        console.log(id);
-        // console.log(`Pulling League Data,`);
+        //get league info on id change
         dispatch(getLeagueOne(id));
     }, [id]);
 
 
-    async function pullLeagueData(leagueIdToPull) {
-        //pulls league data to display
-        console.log("Pull league data",leagueIdToPull);
-        const leagueDoc = doc(props.db,"leagues",`${leagueIdToPull}`);
-        // const newLeagueDoc = doc(props.db, "leagues",`${leagueDataNew.leagueId}`);
-        const leagueSnap  = await getDoc(leagueDoc);
-        let leagueDataPulled = leagueSnap.data();
-        console.log(leagueDataPulled);
-        setLeagueSelectedData(leagueDataPulled);
-        setLeagueName(leagueDataPulled.settings.name)
-        // return(leagueSnap.data());
-        //Update score with pulled data
-        console.log(leagueSnap.data());
-        updateScores(leagueSnap.data())
-    }
+    // async function pullLeagueData(leagueIdToPull) {
+    //     //pulls league data to display
+    //     const leagueDoc = doc(props.db,"leagues",`${leagueIdToPull}`);
+    //     // const newLeagueDoc = doc(props.db, "leagues",`${leagueDataNew.leagueId}`);
+    //     const leagueSnap  = await getDoc(leagueDoc);
+    //     let leagueDataPulled = leagueSnap.data();
+    //     setLeagueSelectedData(leagueDataPulled);
+    //     setLeagueName(leagueDataPulled.settings.name)
+    //     // return(leagueSnap.data());
+    //     //Update score with pulled data
+    //     updateScores(leagueSnap.data())
+    // }
 
-    const updateScores = (leagueData) => {
-        //determine next event on league's schedule
-        let upcomingEvents = leagueData.schedule.filter((tournament) => {
-            return tournament.completeStatus === false;
-        });
-        let nextLeagueEvent = upcomingEvents[0];
-        console.log(nextLeagueEvent);
-        //next event on pga schedule is passed in as props
-        console.log(props.leaderboardData);
-        //if id's match between pga and league events
-        if (nextLeagueEvent.tournId === props.leaderboardData.tournId) {
-            console.log("Current Event is on league schedule", props.leaderboardData.roundStatus);
-            //Create Weekly Scorecard Object
-            let weeklyScoreData = createWeekScoringData(leagueData);
-            console.log(weeklyScoreData);
-            //Set State with Object to display
-            setLeagueWeekLeaderboardData(weeklyScoreData);
+    // const updateScores = (leagueData) => {
+    //     //determine next event on league's schedule
+    //     let upcomingEvents = leagueData.schedule.filter((tournament) => {
+    //         return tournament.completeStatus === false;
+    //     });
+    //     let nextLeagueEvent = upcomingEvents[0];
+    //     //next event on pga schedule is passed in as props
+    //     //if id's match between pga and league events
+    //     if (nextLeagueEvent.tournId === props.leaderboardData.tournId) {
+    //         //Create Weekly Scorecard Object
+    //         let weeklyScoreData = createWeekScoringData(leagueData);
+    //         //Set State with Object to display
+    //         setLeagueWeekLeaderboardData(weeklyScoreData);
 
-            // if (props.leaderboardData.roundStatus === "Official") {
-            //     console.log("Tournament complete, finalize scores");
-            //     // let seasonScoreData = seasonScoringData(leagueData);
-            //     //Create Weekly Scorecard Object
-            //     //Create Season Scorecard Object
-            //     //Write data objects to League doc in firebase
-            // }
-        }
+    //         // if (props.leaderboardData.roundStatus === "Official") {
+    //         //     // let seasonScoreData = seasonScoringData(leagueData);
+    //         //     //Create Weekly Scorecard Object
+    //         //     //Create Season Scorecard Object
+    //         //     //Write data objects to League doc in firebase
+    //         // }
+    //     }
 
-    }
+    // }
 
-    const createWeekScoringData = (leagueDataIn) => {
-        //leagueDataIn.leagueId
-        //props.leaderboardData
-        console.log("Create weekly scoring data");
-        // console.log(leagueDataIn);
-        let tempScoreCard = [];
-        for (let i=0; i< leagueDataIn.teams.length; i++) { //for every team
-            let tempTeam= leagueDataIn.teams[i];
-            // console.log(tempTeam);
-            let rosterRef = leagueDataIn.teams[i].roster;
-            let newRosterScores = [];
-            let teamTotalScore = 0;
-            for (let j=0; j< rosterRef.length; j++) { //for every player on that team's roster
-                let playerScoreData = props.leaderboardData.leaderboardRows.filter((playerSelected) => {
-                    return Number(playerSelected.playerId) === rosterRef[j].playerId;
-                })
-                // console.log(playerScoreData[0]);
-                newRosterScores.push(playerScoreData[0]);
-                teamTotalScore += Number(playerScoreData[0].total); //UPDATE TEAM TOTAL TO INCLUDE LEAGUE SCORING SETTINGS (CUT, CUT SCORE, ETC.)
-            }
-            tempTeam.roster = newRosterScores;
-            tempTeam.teamTotal = teamTotalScore
-            tempScoreCard.push(tempTeam);
-        }
-        // console.log(tempScoreCard);
-        return {
-            tournId: props.leaderboardData.tournId,
-            leagueId: leagueDataIn.leagueId,
-            leagueTeamScores: tempScoreCard,
-        }
-    }
+    // const createWeekScoringData = (leagueDataIn) => {
+    //     //leagueDataIn.leagueId
+    //     //props.leaderboardData
+    //     let tempScoreCard = [];
+    //     for (let i=0; i< leagueDataIn.teams.length; i++) { //for every team
+    //         let tempTeam= leagueDataIn.teams[i];
+    //         let rosterRef = leagueDataIn.teams[i].roster;
+    //         let newRosterScores = [];
+    //         let teamTotalScore = 0;
+    //         for (let j=0; j< rosterRef.length; j++) { //for every player on that team's roster
+    //             let playerScoreData = props.leaderboardData.leaderboardRows.filter((playerSelected) => {
+    //                 return Number(playerSelected.playerId) === rosterRef[j].playerId;
+    //             })
+    //             newRosterScores.push(playerScoreData[0]);
+    //             teamTotalScore += Number(playerScoreData[0].total); //UPDATE TEAM TOTAL TO INCLUDE LEAGUE SCORING SETTINGS (CUT, CUT SCORE, ETC.)
+    //         }
+    //         tempTeam.roster = newRosterScores;
+    //         tempTeam.teamTotal = teamTotalScore
+    //         tempScoreCard.push(tempTeam);
+    //     }
+    //     return {
+    //         tournId: props.leaderboardData.tournId,
+    //         leagueId: leagueDataIn.leagueId,
+    //         leagueTeamScores: tempScoreCard,
+    //     }
+    // }
 
     const openSettings = () => {
         dispatch(openEditSettings());
