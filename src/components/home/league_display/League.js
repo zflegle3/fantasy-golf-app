@@ -14,17 +14,17 @@ import {
     collection,
   } from "firebase/firestore";
 import { useHistory, useParams } from 'react-router-dom'
-import { getLeagueOne, resetSelected } from '../features/leagues/leagueSelectedSlice';
+import { getLeagueOne, resetSelected } from '../../../features/leagues/leagueSelectedSlice';
 import { useSelector, useDispatch } from 'react-redux';
 //Components
-import Test from "./Test";
-import LeagueTab from "./LeagueTab";
-import ChatConsole from "./ChatConsole";
-import EditSettingsModal from "./EditSettingsModal";
-import TeamTab from "./TeamTab";
+import Test from "../../Test";
+import LeagueTab from "./tabs/LeagueTab";
+import ChatConsole from "../../ChatConsole";
+import EditSettingsModal from "../../EditSettingsModal";
+import TeamTab from "../../TeamTab";
 //img
-import leagueIcon from "../images/icons/golf-flag-wh.png";
-import settingsIcon from "../images/icons/cog-outline-wh.png";
+import leagueIcon from "../../../images/icons/golf-flag-wh.png";
+import settingsIcon from "../../../images/icons/cog-outline-wh.png";
 
 
 
@@ -50,15 +50,15 @@ function League(props) {
 
     const openSettingsModal = () => {
         console.log("Open Edit Settings");
-        // let EditModal = document.getElementById("edit-settings-modal-container");
-        // EditModal.classList = "edit-settings-modal-container visable";
+        let EditModal = document.getElementById("edit-settings-modal-container");
+        EditModal.classList = "edit-settings-modal-container visable";
     }
 
     const closeSettingsModal = (e) => {
         console.log("Close Edit Settings");
-        // console.log(e.target);
-        // let EditModal = document.getElementById("edit-settings-modal-container");
-        // EditModal.classList = "edit-settings-modal-container";
+        console.log(e.target);
+        let EditModal = document.getElementById("edit-settings-modal-container");
+        EditModal.classList = "edit-settings-modal-container";
     }
 
 
@@ -150,9 +150,6 @@ function League(props) {
 
     if (league) {
         return (
-            // <div>
-            //     {league.name}
-            // </div>
             <div className="center-panel-content">
                 <div className="center-panel-header">
                     <img src={leagueIcon}></img>

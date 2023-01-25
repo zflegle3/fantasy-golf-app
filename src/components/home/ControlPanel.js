@@ -9,16 +9,16 @@ import {
   useNavigate
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import {logout, resetUser} from "../features/auth/authSlice";
-import { getLeaguesAll, resetLeagues } from '../features/leagues/leagueSlice';
-import { resetSelected } from '../features/leagues/leagueSelectedSlice';
+import {logout, resetUser} from "../../features/auth/authSlice";
+import { getLeaguesAll, resetLeagues } from '../../features/leagues/leagueSlice';
+import { resetSelected } from '../../features/leagues/leagueSelectedSlice';
 //images
-import addIcon from "../images/icons/plus-circle-outline-wh.png";
-import logoIcon from "../images/icons/golf-tee-wh.png";
-import profileIcon from "../images/icons/golf-cart-wh.png";
-import settingsIcon from "../images/icons/cog-outline-wh.png";
+import addIcon from "../../images/icons/plus-circle-outline-wh.png";
+import logoIcon from "../../images/icons/golf-tee-wh.png";
+import profileIcon from "../../images/icons/golf-cart-wh.png";
+import settingsIcon from "../../images/icons/cog-outline-wh.png";
 //Components
-import LeagueLinks from "./LeagueLinks";
+import LeagueLinks from "../LeagueLinks";
 
 
 function ControlPanel(props) {

@@ -13,7 +13,8 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 //functions
-import { getLeaguesAll, reset } from './features/leagues/leagueSlice';
+import { getLeaguesAll, resetLeagues } from './features/leagues/leagueSlice';
+import { resetSelected } from './features/leagues/leagueSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 //Styles
@@ -38,10 +39,10 @@ import settingsIcon from "./images/icons/cog-outline-wh.png";
 import SignUp from "./components/auth/SignUp";
 import Login from "./components/auth/Login";
 import PasswordReset from "./components/auth/PasswordReset";
-import ControlPanel from "./components/ControlPanel";
-import ContentPanel from "./components/ContentPanel";
+import ControlPanel from "./components/home/ControlPanel";
+import ContentPanel from "./components/home/ContentPanel";
 import Home from "./components/Home";
-import League from "./components/League";
+import League from "./components/home/league_display/League";
 import Reset from "./components/auth/Reset";
 import LoadingSpinner from "./components/LoadingSpinner"
 

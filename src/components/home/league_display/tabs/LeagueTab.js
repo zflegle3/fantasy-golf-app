@@ -1,12 +1,12 @@
 
 import { useState, useEffect } from 'react';
-import settingsIcon from "../images/icons/cog-outline-wh.png";
+import settingsIcon from "../../../../images/icons/cog-outline-wh.png";
 import { useSelector, useDispatch } from 'react-redux';
 //Components
-import LeagueActivityList from "./LeagueActivityList";
-import WeekStandings from "./WeekStandings";
-import SeasonStandings from "./SeasonStandings";
-import LeagueSettingsList from "./LeagueSettingsList";
+import LeagueActivityList from "../../../LeagueActivityList";
+import WeekStandings from "../../../WeekStandings";
+import SeasonStandings from "../../../SeasonStandings";
+import LeagueSettingsList from "../sections/LeagueSettingsList";
 
 
 function LeagueTab(props) {
@@ -18,44 +18,6 @@ function LeagueTab(props) {
     console.log(props.leagueWeekLeaderboardData);
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
-
-    //temp variable to work on styling while also working on scoring system
-    //will be replaced by props.leagueSeasonLeaderboardData
-    const seasonStandings =[
-        {   pos: 1,
-            teamName: "Everybody Hates Reed",
-            teamManager: "P. Lapresto",
-            points: 420,
-            teamWins: 5,            
-            playerWins: 2,            
-            pointsBack: 0,
-        },
-        {   pos: 2,
-            teamName: "Gilmore's Guys",
-            teamManager: "Z. Flegle",
-            points: 400,
-            teamWins: 4,            
-            playerWins: 1,            
-            pointsBack: 20,
-        },
-        {   pos: 3,
-            teamName: "D(ustin johnso)N",
-            teamManager: "B. Jackish",
-            points: 350,
-            teamWins: 2,            
-            playerWins: 0,            
-            pointsBack: 70,
-        },
-        {   pos: 4,
-            teamName: "BOFA Boys",
-            teamManager: "L. Tobergte",
-            points: 300,
-            teamWins: 1,            
-            playerWins: 1,            
-            pointsBack: 120,
-        },
-    ];
-
 
 
     if (league.admin === user._id) {
