@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import settingsIcon from "../../../../images/icons/cog-outline-wh.png";
 import { useSelector, useDispatch } from 'react-redux';
+import { openEditSettings } from '../../../../features/modals/modalSlice';
 //Components
 import LeagueActivityList from "../../../LeagueActivityList";
 import WeekStandings from "../../../WeekStandings";
@@ -16,8 +17,14 @@ function LeagueTab(props) {
     //props.userInfo
     //props.openSettingsModal() 
     console.log(props.leagueWeekLeaderboardData);
+    const dispatch = useDispatch();
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
+
+
+    const openSettings = () => {
+        dispatch(openEditSettings());
+    };
 
 
     if (league.admin === user._id) {
@@ -45,7 +52,7 @@ function LeagueTab(props) {
                 <div className="league-settings-all">
                     <div className="league-section-header">
                         <p>League Settings</p>
-                        <img src={settingsIcon} alt="settings icon" onClick={props.openSettingsModal} />
+                        <img src={settingsIcon} alt="settings icon" onClick={openSettings} />
                     </div>
                     <LeagueSettingsList settingsData={league.settings}/>
                 </div>

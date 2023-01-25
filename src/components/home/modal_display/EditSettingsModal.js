@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { 
     getFirestore, 
     doc, 
@@ -10,7 +11,7 @@ import {
     collection,
   } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
-import { useSelector, useDispatch } from 'react-redux';
+import {closeModal} from "../../../features/modals/modalSlice"
 
 
 
@@ -23,6 +24,7 @@ function EditSettingsModal(props) {
 
     // console.log(props.leagueSettings);
     // console.log(props.userInfo);
+    const dispatch = useDispatch();
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
 
@@ -125,6 +127,10 @@ function EditSettingsModal(props) {
         props.pullLeagueData(league._id);
     }
 
+    const close = () => {
+        dispatch(closeModal())
+    }
+
 
 
 
@@ -139,7 +145,7 @@ function EditSettingsModal(props) {
         <form id="edit-settings-form" className="edit-settings-form">
             <div className="edit-settings-form-header">
                 <p>League Settings</p>
-                <p onClick={props.closeSettingsModal}>X</p>
+                <p onClick={close}>X</p>
             </div>
 
             <div className="edit-settings-input">

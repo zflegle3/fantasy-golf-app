@@ -15,12 +15,12 @@ import {
   } from "firebase/firestore";
 import { useHistory, useParams } from 'react-router-dom'
 import { getLeagueOne, resetSelected } from '../../../features/leagues/leagueSelectedSlice';
+import { openEditSettings } from '../../../features/modals/modalSlice';
 import { useSelector, useDispatch } from 'react-redux';
 //Components
 import Test from "../../Test";
 import LeagueTab from "./tabs/LeagueTab";
 import ChatConsole from "../../ChatConsole";
-import EditSettingsModal from "../../EditSettingsModal";
 import TeamTab from "../../TeamTab";
 //img
 import leagueIcon from "../../../images/icons/golf-flag-wh.png";
@@ -42,24 +42,9 @@ function League(props) {
     const [leagueWeekLeaderboardData, setLeagueWeekLeaderboardData] = useState();
     const dispatch = useDispatch();
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
-
     // console.log(props.worldRanksData);
     // console.log(props.fedexRanksData);
     console.log(id);
-
-
-    const openSettingsModal = () => {
-        console.log("Open Edit Settings");
-        let EditModal = document.getElementById("edit-settings-modal-container");
-        EditModal.classList = "edit-settings-modal-container visable";
-    }
-
-    const closeSettingsModal = (e) => {
-        console.log("Close Edit Settings");
-        console.log(e.target);
-        let EditModal = document.getElementById("edit-settings-modal-container");
-        EditModal.classList = "edit-settings-modal-container";
-    }
 
 
     useEffect(() => {
@@ -146,7 +131,9 @@ function League(props) {
         }
     }
 
-
+    const openSettings = () => {
+        dispatch(openEditSettings());
+    };
 
     if (league) {
         return (
@@ -156,7 +143,7 @@ function League(props) {
                     <h1>{league.name}</h1>
                     <p>{`${league.settings.teamCount}-Team Masters Tournament League`}</p>
                     <div>
-                        <img src={settingsIcon} onClick={openSettingsModal}></img>
+                        <img src={settingsIcon} onClick={openSettings}></img>
                     </div>
                 </div>
                 <div className="dual-content-panel">
@@ -169,8 +156,8 @@ function League(props) {
                     </ul>
                     <div className="center-panel-display">
                         <Routes>
-                            <Route exact path="" element={<LeagueTab openSettingsModal={openSettingsModal} leagueWeekLeaderboardData={leagueWeekLeaderboardData} leaderboardData={props.leaderboardData}/>}/>
-                            {/* <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} openSettingsModal={openSettingsModal} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData} leagueWeekLeaderboardData={leagueWeekLeaderboardData}/>}/> */}
+                            <Route exact path="" element={<LeagueTab leagueWeekLeaderboardData={leagueWeekLeaderboardData} leaderboardData={props.leaderboardData}/>}/>
+                            {/* <Route exact path="roster" element={<TeamTab test={`${LeagueName}, Team/Roster`} userInfo={props.userInfo} leagueData={leagueSelectData} worldRanksData={props.worldRanksData} fedexRanksData={props.fedexRanksData} leagueWeekLeaderboardData={leagueWeekLeaderboardData}/>}/> */}
                             <Route exact path="players" element={<Test test={`${LeagueName}, Players`}/>}/>
                             <Route exact path="draft" element={<Test test={`${LeagueName}, Draft`}/>}/>
                         </Routes>
@@ -179,9 +166,6 @@ function League(props) {
                     <div className="right-panel">
                         <ChatConsole/>
                     </div>
-                </div>
-                <div className="edit-settings-modal-container" id="edit-settings-modal-container">
-                    <EditSettingsModal db={props.db} leagueSettings={league.settings} userInfo={props.userInfo} closeSettingsModal={closeSettingsModal} pullLeagueData={pullLeagueData}/>
                 </div>
             </div>
         );

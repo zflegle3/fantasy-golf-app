@@ -9,7 +9,7 @@ export const store = configureStore({
         auth: authReducer,
         leagues: leagueReducer,
         leagueSelected: leagueSelectedReducer,
-        modalState: modalReducer,
+        modal: modalReducer,
 
     },
 }); 

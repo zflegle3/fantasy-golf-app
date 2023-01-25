@@ -11,6 +11,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import {logout, resetUser} from "../../features/auth/authSlice";
 import { getLeaguesAll, resetLeagues } from '../../features/leagues/leagueSlice';
+import { openNewLeague } from '../../features/modals/modalSlice';
 import { resetSelected } from '../../features/leagues/leagueSelectedSlice';
 //images
 import addIcon from "../../images/icons/plus-circle-outline-wh.png";
@@ -62,6 +63,10 @@ function ControlPanel(props) {
       dispatch(getLeaguesAll());
     }, [])
 
+    const openModal = () => {
+      dispatch(openNewLeague());
+    }
+
 
     return(
       <div className="left-panel-container">
@@ -83,7 +88,7 @@ function ControlPanel(props) {
             <p>Inbox</p>
           </Link>
 
-          <div className="nav-link " id="new-league" onClick={() => props.setNewLeagueOpen(true)}>
+          <div className="nav-link " id="new-league" onClick={openModal}>
             <p>LEAGUES</p>
             <img src={addIcon}></img>
           </div>

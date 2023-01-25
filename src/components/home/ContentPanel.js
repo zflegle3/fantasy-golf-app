@@ -10,10 +10,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 
 //Components
-import ModalContainer from "../ModalContainer";
+import ModalContainer from "./modal_display/ModalContainer";
 import League from "./league_display/League"
 import userEvent from '@testing-library/user-event';
-import CreateLeague from "../CreateLeague";
+import CreateLeague from "./league_display/CreateLeague";
 import AccountSettings from "../AccountSettings";
 import MockDraft from "../MockDraft";
 import Inbox from "../Inbox";

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createLeague } from "../features/leagues/leagueSlice";
+import { createLeague } from "../../../features/leagues/leagueSlice";
 
 //SVGs & Images
-import { ReactComponent as PgaSvg } from '../images/icons/golf-pga.svg';
+import { ReactComponent as PgaSvg } from '../../../images/icons/golf-pga.svg';
 // import { ReactComponent as LivSvg } from '../images/icons/golf-liv.svg';
-import { ReactComponent as BackArrSvg} from "../images/icons/arrow-left.svg";
+import { ReactComponent as BackArrSvg} from "../../../images/icons/arrow-left.svg";
 
 function NewLeagueModal(props) {
     //props.setNewLeagueOpen()

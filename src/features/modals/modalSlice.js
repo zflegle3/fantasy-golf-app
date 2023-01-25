@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const modalSlice = createSlice({
     name: 'modal',
     initialState: {
-      status: false
+      status: false,
     },
     reducers: {
       openNewLeague: state => {
-        state.status = "new-legaue";
+        state.status = "new-league";
       },
       openEditSettings: state => {
-        state.status = "new-legaue";
+        state.status = "edit-settings";
       },
       closeModal: state => {
         state.status = false
