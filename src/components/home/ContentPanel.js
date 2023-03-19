@@ -11,9 +11,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import ModalContainer from "./modal_display/ModalContainer";
-import League from "./league_display/League"
+import League from "./league_display/League";
 import userEvent from '@testing-library/user-event';
-import CreateLeague from "./league_display/CreateLeague";
+import CreateLeague from "./league_display/sections/CreateLeague";
 import AccountSettings from "../AccountSettings";
 import MockDraft from "../MockDraft";
 import Inbox from "../Inbox";

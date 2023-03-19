@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
+  HashRouter,
   Routes,
   Route,
   Link,
@@ -63,30 +64,33 @@ function App() {
   const [newLeagueOpen, setNewLeagueOpen] = useState(false);
   const {user} = useSelector((state) => state.auth);
 
+  console.log(process.env);
+
   if (user) {
     return (
       <div className="app-layout">
         <div className="app-container">
-          <Router>
+          <HashRouter>
             {/* <ControlPanel userData={userData} userId={userId} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
             <ContentPanel userData={userData} userId={userId} db={db} refreshUserData={refreshUserData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/> */}
             <ControlPanel userData={user} setNewLeagueOpen={setNewLeagueOpen}/>
             <ContentPanel userData={user} newLeagueOpen={newLeagueOpen} setNewLeagueOpen={setNewLeagueOpen}/>
-          </Router>
+          </HashRouter>
         </div>
         <div id="modal-portal"></div>
       </div>
     );
     } else {
       return (
-        <Router>
+        <HashRouter>
           <Routes>
-            <Route exact path="/sign-up" element={<SignUp/>}/>
+            <Route exact path="/login" element={<Login />}/>
+            <Route exact path="/signup" element={<SignUp/>}/>
             <Route exact path="/forgot" element={<PasswordReset/>}/>
             <Route exact path="/reset/:email/:id/:token" element={<Reset/>}/>
-            <Route exact path="*" element={<Login />}/>
+            <Route path="*" element={<Navigate to="/login" replace={true} />}/>
           </Routes>
-        </Router>
+        </HashRouter>
       )
     }
   }

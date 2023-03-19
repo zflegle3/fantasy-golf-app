@@ -1,21 +1,20 @@
-import axios from "axios";
 import { useState, useEffect } from 'react';
 import { Link, useNavigate} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import {register, resetUser } from "../../features/auth/authSlice";
-import { ReactComponent as CheckSvg } from '../../images/icons/check.svg';
+import {register, reset } from "../../features/auth/authSlice";
+import { FaRegCheckCircle, FaCheck, FaRegTimesCircle } from 'react-icons/fa';
+import {checkNewUserName, checkNewEmail, checkNewPass } from "../../features/auth/validation";
+import { addFocus, removeFocus} from '../../features/style';
+
 //Components
 import LoadingSpinner from "../LoadingSpinner";
 import PasswordInput from "./PasswordInput"
+// import Logo from '../Logo';
 
-function SignUp(props) {
-    const [passStatus, setPassStatus] = useState("");//true when user is valid
-    // const [newUserValid, setNewUserValid] = useState("");
-    // const [newEmailValid, setNewEmailValid] = useState("");
-    // const [newPassValid, setNewPassValid] = useState("");
+function SignUp() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [passStatus, setPassStatus] = useState("");//true when user is valid
     const {user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
 
 
@@ -38,10 +37,6 @@ function SignUp(props) {
                     };
                     //dispatches register function from authSlice to create new user
                     dispatch(register(userData)); 
-
-                } else {
-                    document.querySelector(".form-item-container.pass-in").classList.add("invalid");
-                    document.getElementById("pass-error").textContent = "Password does not meet criteria";
                 }
             }
         } 
@@ -65,172 +60,34 @@ function SignUp(props) {
         }
     }
 
-    //USERNAME VALIDATION
-    async function checkNewUserName(userNameIn) {
-        //LENGTH
-        if (userNameIn.length > 2 && userNameIn.length < 16) {
-            //FORMAT (Numbers and letters only 0-XX characters)
-            if (validateUserNameFormat(userNameIn)) { 
-                // AVAILABILITY IN DATABASE
-                if ( await checkUserDb(userNameIn)) {
-                //returns true if username already exists
-                    document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
-                    document.getElementById("user-name-error").textContent = `Whoops! ${userNameIn} is already taken`;
-                    return false;
-                } else {
-                    document.getElementById("user-name-error").className = "";
-                    document.getElementById("user-name-error").textContent = "";
-                    return true;
-                };
-            } else {
-                document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
-                document.getElementById("user-name-error").textContent = `Only letter and numbers, between 3 to 15 characters`;
-            }
-        } else {
-            if (userNameIn.length < 1) {
-                document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
-                document.getElementById("user-name-error").textContent = "Cannot be empty";
-            } else {
-                document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
-                document.getElementById("user-name-error").textContent = `Only letter and numbers, between 3 to 15 characters`;
-            }
-        };
-    }
-
-
-    //EMAIL VALIDATION
-    async function checkNewEmail(emailIn) {
-        //LENGTH
-        if (emailIn.length > 0) {
-            //FORMAT
-            if (validateEmailFormat(emailIn)) {
-                //AVAILABILITY IN DATABASE
-                if (await checkEmailDb(emailIn)) {
-                    //returns true if email already exists
-                    document.querySelector(".form-item-container.email-in").classList.add("invalid");
-                    document.getElementById("email-error").textContent = `Whoops! ${emailIn} is already taken `;
-                    return false;
-                } else {
-                    document.getElementById("email-error").className = "";
-                    document.getElementById("email-error").textContent = "";
-                    return true;
-                };
-            } else {
-                document.querySelector(".form-item-container.email-in").classList.add("invalid");
-                document.getElementById("email-error").textContent = "Oops, that looks like an invalid email";
-            }
-        } else {
-            document.querySelector(".form-item-container.email-in").classList.add("invalid");
-            document.getElementById("email-error").textContent = "Cannot be empty";
-        };
-    }
-
-    async function checkUserDb (usernameIn) {
-        const response = await axios.post("http://localhost:8080/user/read/username", {username: usernameIn});
-        if (response.data.username === usernameIn) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    async function checkEmailDb (userEmail) {
-        const response = await axios.post("http://localhost:8080/user/read/email", {email: userEmail});
-        if (response.data.email === userEmail) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    const validateEmailFormat = (email) => {
-        return email.match(
-          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
-    };
-
-    const validateUserNameFormat = (userName) => {
-        return userName.match(/^[a-zA-Z0-9]+$/);
-    };
-
-    const checkNewPass = (passwordIn) => {
-        let passTest = true;
-        let passErrorLen = document.getElementById("pass-error-signin-length");
-        let passErrorUp = document.getElementById("pass-error-signin-upper");
-        let passErrorNum = document.getElementById("pass-error-signin-number");
-        let passErrorSp = document.getElementById("pass-error-signin-special");
-
-        //8 characters
-        if(passwordIn.length < 8) {
-            passTest = false;
-            passErrorLen.classList = "";
-        } else {
-            passErrorLen.classList = "valid";
-        }
-        //uppercase
-        if(!passwordIn.match(/[A-Z]/g)) {
-            passTest = false;
-            passErrorUp.classList = "";
-        } else {
-            passErrorUp.classList = "valid";
-        }
-        //number
-        if(!passwordIn.match(/[0-9]/g)) {
-            passTest = false;
-            passErrorNum.classList = "";
-        } else {
-            passErrorNum.classList = "valid";
-        }
-        // special character
-        if(!passwordIn.match(/[!@#\$%\^&\*]/g)) {
-            passTest = false;
-            passErrorSp.classList = "";
-        } else {
-            passErrorSp.classList = "valid";
-        }
-        return passTest;
-    };
-
-    const addFocus = (e) => {
-        e.target.parentElement.parentElement.classList.add("focus");
-    }
-
-    const removeFocus = (e) => {
-        e.target.parentElement.parentElement.classList.remove("focus");
-    }
-
-
     useEffect(() => {
+        //catches & displays errors fron failed credential logins
         if(isError) {
-            toast.error(message);
+            alert(message);
         };
-
-        if(isSuccess || user) {
-            navigate("/")
-        };
-
-        dispatch(resetUser());
-
-        if (isLoading) {
-            
-        }
-
+        //Navigation and state reset handled in app.js
+        //Alternate nav and reset reference in login.js
     }, [user, isError, isSuccess, message, navigate, dispatch])
 
     if (isLoading) {
         return(<LoadingSpinner/>)
     }
 
+
+    let sideHero = null;
+    if (window.innerWidth > 950) {
+        sideHero = <div className="auth-left-signup"></div>;
+    } 
     return (
         <div className="auth-container">
-            <div className="auth-left-signup"></div>
+            {sideHero}
             <div className="auth-right">
+                {/* <Logo size="large"/> */}
                 <div className="auth-content">
                     <div className="auth-header">
                         <div className="auth-header-main">
                             <h1>Sign Up</h1>
-                            <Link to="/" id="signup">Login</Link>
+                            <Link to="/login" id="signup">Login</Link>
                         </div>
                         <div className="auth-header-sub">
                             Let's get started by creating an account
@@ -264,25 +121,25 @@ function SignUp(props) {
                         <div className="pass-error-container">
                             <div id="pass-error-signin-length">
                                 <div>
-                                    <CheckSvg />
+                                    <FaRegCheckCircle />
                                 </div>
                                 <p>have at least 8 characters</p>
                             </div>
                             <div id="pass-error-signin-upper">
                                 <div>
-                                    <CheckSvg />
+                                    <FaRegCheckCircle />
                                 </div>
                                 <p >have at least 1 Upper characters</p>
                             </div>
                             <div id="pass-error-signin-number">
                                 <div>
-                                    <CheckSvg />
+                                    <FaRegCheckCircle />
                                 </div>
                                 <p >have at least 1 number</p>
                             </div>
                             <div id="pass-error-signin-special">
                                 <div>
-                                    <CheckSvg />
+                                    <FaRegCheckCircle />
                                 </div>
                                 <p >have at least 1 special character (i.e. ! @ # $ % ^ & *)</p>
                             </div>

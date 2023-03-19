@@ -3,10 +3,12 @@ import {
 } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import { addFocus, removeFocus} from '../../features/style';
+import { checkEmailDb, validateEmailFormat } from "../../features/auth/validation";
+// import Logo from "../Logo";
 
-function PasswordReset(props) {
+function PasswordReset() {
     const [userEmail, setUserEmail] = useState("");
-
 
     async function resetPassword(e) {
         e.preventDefault();
@@ -17,9 +19,9 @@ function PasswordReset(props) {
             //validate email format
             if (validateEmailFormat(resetEmail)) {
                 //validate email in db {
-                    if (await checkUserDb(resetEmail)) {
+                    if (await checkEmailDb(resetEmail)) {
                         //send email and await confirmation 
-                        const responseSend = await axios.post("http://localhost:8080/user/forgetpass", {email: resetEmail});
+                        const responseSend = await axios.post(process.env.REACT_APP_API_URL+"/user/forgetpass", {email: resetEmail});
                         if (responseSend.data.sendStatus) {
                             //update userEmail state to conditionally render confirmation
                             setUserEmail(resetEmail);
@@ -42,30 +44,6 @@ function PasswordReset(props) {
 
     }
 
-    const validateEmailFormat = (email) => {
-        return email.match(
-          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
-    };
-
-    async function checkUserDb (userIn) {
-        //checks for user in db and returns true if found, false if not found
-        const responseEmail = await axios.post("http://localhost:8080/user/read/email", {email: userIn});
-        if (responseEmail.data.email === userIn) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    const addFocus = (e) => {
-        e.target.parentElement.parentElement.classList.add("focus");
-    }
-
-    const removeFocus = (e) => {
-        e.target.parentElement.parentElement.classList.remove("focus");
-    }
-
     const resetErrors = () => {
     //resets user input error codes
         let emailItem = document.querySelector(".form-item-container.email-in");
@@ -75,40 +53,47 @@ function PasswordReset(props) {
         }
     }
 
+    let sideHero = null;
+    if (window.innerWidth > 950) {
+        sideHero = <div className="auth-left-forgot"></div>;
+    } 
+
     if (userEmail) {
         return(
             <div className="auth-container">
-            <div className="auth-left-forgot"></div>
-            <div className="auth-right">
-                <div className="auth-content">
+                {sideHero}
+                <div className="auth-right">
+                    {/* <Logo size="large"/> */}
+                    <div className="auth-content">
 
-                    <div className="auth-header">
-                        <div className="auth-header-main">
-                            <h1>Forgot Password?</h1>
+                        <div className="auth-header">
+                            <div className="auth-header-main">
+                                <h1>Forgot Password?</h1>
+                            </div>
+                            <div className="auth-header-sub">A reset link was sent to {userEmail}. Please follow the email instructions to reset your password.</div>
                         </div>
-                        <div className="auth-header-sub">A reset link was sent to {userEmail}. Please follow the email instructions to reset your password.</div>
+
+                        <form className="login-form">
+
+                            <div className="form-submit-container">
+
+                                <Link to="/login" id="pass-reset">
+                                    Back to Login
+                                </Link>
+                            </div>
+
+                        </form>
                     </div>
-
-                    <form className="login-form">
-
-                        <div className="form-submit-container">
-
-                            <Link to="/" id="pass-reset">
-                                Back to Login
-                            </Link>
-                        </div>
-
-                    </form>
                 </div>
             </div>
-        </div>
         )
 
     }
     return(
         <div className="auth-container">
-            <div className="auth-left-forgot"></div>
+            {sideHero}
             <div className="auth-right">
+                {/* <Logo size="large"/> */}
                 <div className="auth-content">
 
                     <div className="auth-header">
@@ -138,7 +123,7 @@ function PasswordReset(props) {
                                 <button onClick={resetPassword}>SEND</button>
                             </div>
 
-                            <Link to="/" id="pass-reset">
+                            <Link to="/login" id="pass-reset">
                                 Back to Login
                             </Link>
                         </div>
