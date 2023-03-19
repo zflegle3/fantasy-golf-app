@@ -4,15 +4,6 @@ import {
     Route,
     Link,
 } from "react-router-dom";
-import { 
-    getFirestore, 
-    doc, 
-    getDoc,
-    getDocs,
-    addDoc,
-    setDoc,
-    collection,
-  } from "firebase/firestore";
 import { useHistory, useParams } from 'react-router-dom'
 import { getLeagueOne, resetSelected } from '../../../features/leagues/leagueSelectedSlice';
 import { openEditSettings } from '../../../features/modals/modalSlice';

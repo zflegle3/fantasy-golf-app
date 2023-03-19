@@ -1,15 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { 
-    getFirestore, 
-    doc, 
-    getDoc,
-    getDocs,
-    addDoc,
-    updateDoc,
-    setDoc,
-    collection,
-  } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 import {closeModal} from "../../../features/modals/modalSlice"
 import LeagueEditForm from './LeagueEditForm';
@@ -84,7 +74,7 @@ function EditSettingsModal(props) {
     
     async function submitEdits(leagueVarsAll) {
         // console.log(leagueVarsAll,props.leagueSettings.leagueId);
-        let leagueDoc = doc(props.db,`leagues/${league._id}`);
+        // let leagueDoc = doc(props.db,`leagues/${league._id}`);
         let teamsAll = league.teams;
         let currentTeams = teamsAll.length;
 
@@ -127,7 +117,7 @@ function EditSettingsModal(props) {
             },
             teams: teamArray,
         }
-        await updateDoc(leagueDoc, dataNew);
+        // await updateDoc(leagueDoc, dataNew);
         props.pullLeagueData(league._id);
     }
 
