@@ -21,6 +21,9 @@ import settingsIcon from "../../images/icons/cog-outline-wh.png";
 //Components
 import LeagueLinks from "../LeagueLinks";
 
+import { ButtonGroup, Button, Breadcrumbs } from '@mui/material';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+
 
 function ControlPanel(props) {
     //props.setNewLeagueOpen()
@@ -68,6 +71,11 @@ function ControlPanel(props) {
     }
 
 
+    const handleClick = (e) => {
+      e.preventDetault();
+    }
+
+
     return(
       <div className="left-panel-container">
         
@@ -76,7 +84,21 @@ function ControlPanel(props) {
             <h1 className="header-logo">Site Name</h1>
         </div>
 
-        <div className="nav-body">
+        <Button size="medium" variant="text" startIcon={<ControlPointIcon />}>
+          New League
+        </Button>
+
+        <ButtonGroup 
+          color="primary"
+          exclusive
+          orientation='vertical'
+          >
+          <Button variant="text" onClick={handleClick} href="/messages">Messages</Button>
+          <Button variant="text" onClick={handleClick} href="/inbox">Inbox</Button>
+        </ButtonGroup>
+
+
+        {/* <div className="nav-body">
 
           <Link to="/messages" className="nav-link" id="nav-tab" onClick={selectTabDisplay}>
             <img src={logoIcon}></img>
@@ -99,7 +121,7 @@ function ControlPanel(props) {
           </Link>
 
           <LeagueLinks />
-        </div>
+        </div> */}
 
         <div className="nav-footer"> 
           <img src={profileIcon}></img>

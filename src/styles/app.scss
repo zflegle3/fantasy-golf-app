@@ -12,24 +12,18 @@ Main Document Styles
   --bkgnd-panel: rgba(58,70,91,0.5);
   --bkgnd-panel-sub: rgba(58,70,91,0.25);
   --bkgnd-alt-dark: #18202f;
-
   --bkgnd-drk-odd: #212635;
   /* --bkgnd-lt: #377771; */
   /* --bkgnd-drk: #1b403f; */
-
   --tab-bkgnd: rgba(0,206,184,0.1);
   --tab-select-bkgnd: #00ceb8;
-
   --border-main: #3a465b;
 
   /* --shadow-main: #18202f; */
-
-
   --text-main: #FFF;
   --text-sub:  #b9c4d4;
   --text-sub-a:  #7988a1;
   --text-sub-b:  #a3bbd3;
-
   --text-sub-dark: #677897;
   --text-select-dark: #022047; 
   /* --text-hlght:  #E6E49F; */
@@ -46,25 +40,18 @@ Main Document Styles
   /* --misc: #69995D; */
 
   
-
-
-
   /* Style A */
   /* --bkgnd-main: #0D1F22; */
   /* --bkgnd-sub: #132d2c; */
   --bkgnd-lt: #377771;
   --bkgnd-drk: #1b403f;
-
   --shadow-main: #18202f;
-
-
   /* --text-main: #FFF; */
   /* --text-sub:  #87BAAB; */
   --text-hlght:  #E6E49F;
   --text-drk:  #0D1F22;
   --text-drk-alt:  #0b5556;
   --text-grey: #8BAAAD;
-
   --button-norm: #0A8754;
   --button-hov: #1b403f;
   --button-tgt: red;
@@ -72,35 +59,22 @@ Main Document Styles
   --select-highlight: #fff;
   --bkgnd-plain: #0D1F22;
   --error-red: #820933;
-
   --misc: #69995D;
-
-
-
-  
-
   /* --bkgnd-plain: rgb(207, 207, 207);
   --button-norm: rgb(151, 232, 51);
   --button-hov: #BEE5BF;
-
   --tab-highlight: #277357;
   box-sizing: border-box; */
-
   /* Fonts */
   font-family: 'Mukta', sans-serif;
   box-sizing: border-box;
 }
-
-
-
-
 
 /* App Container Styles
 ~~~~~~~~~~~~~~~~~~~~ */
 .app-landing {
   min-height: 100vh;
 }
-
 
 .app-layout {
   height: 100vh;
@@ -115,4 +89,18 @@ Main Document Styles
   display: flex;
 }
 
+.center-panel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
 
+#page-all {
+    height: 100%;
+    width: 100%;
+}
+
+#drawer > div {
+    background-color: #1f2431;
+    border-right: 1px solid #3a465b
+}

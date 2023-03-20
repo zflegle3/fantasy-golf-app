@@ -9,9 +9,6 @@ import {
   Navigate,
   useNavigate
 } from "react-router-dom";
-//Others
-import { ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
 
 //functions
 import { getLeaguesAll, resetLeagues } from './features/leagues/leagueSlice';
@@ -20,14 +17,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 //Styles
 import './styles/Reset.css';
-import './styles/App.css';
+import './styles/app.scss';
 // import "./styles/Auth.css";
 import "./styles/auth.scss";
-import "./styles/Home.css";
-import "./styles/NewLeague.scss";
-import './styles/Tabs.css';
-import "./styles/ChatConsole.css"
-import "./styles/EditSettings.css"
+// import "./styles/Home.css";
+// import "./styles/NewLeague.scss";
+// import './styles/Tabs.css';
+// import "./styles/ChatConsole.css"
+// import "./styles/EditSettings.css"
 
 //images
 import addIcon from "./images/icons/plus-circle-outline-wh.png";
@@ -46,6 +43,8 @@ import Home from "./components/Home";
 import League from "./components/home/league_display/League";
 import Reset from "./components/auth/Reset";
 import LoadingSpinner from "./components/LoadingSpinner"
+import Layout from "./components/home/Layout"
+import PageRouter from './components/home/PageRouter';
 
 function App() {
   // const [pageSelect, setPageSelect] = useState("login");
@@ -73,8 +72,10 @@ function App() {
           <HashRouter>
             {/* <ControlPanel userData={userData} userId={userId} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
             <ContentPanel userData={userData} userId={userId} db={db} refreshUserData={refreshUserData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/> */}
-            <ControlPanel userData={user} setNewLeagueOpen={setNewLeagueOpen}/>
-            <ContentPanel userData={user} newLeagueOpen={newLeagueOpen} setNewLeagueOpen={setNewLeagueOpen}/>
+            {/* <ControlPanel userData={user} setNewLeagueOpen={setNewLeagueOpen}/>
+            <ContentPanel userData={user} newLeagueOpen={newLeagueOpen} setNewLeagueOpen={setNewLeagueOpen}/> */}
+            <Layout />
+            <PageRouter />
           </HashRouter>
         </div>
         <div id="modal-portal"></div>
