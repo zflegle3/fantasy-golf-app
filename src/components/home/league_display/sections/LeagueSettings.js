@@ -15,8 +15,6 @@ export default function LeagueSettings() {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
  
-
-    console.log(league.settings);
     return (
         <Box id="leaderboard-container" sx={{  minHeight: "300px", display:"flex", flexDirection: "column", padding: "1.5rem", flexGrow: 1, borderRadius: "1.6rem", backgroundColor: "rgba(163,187,211,0.05)", border: '1px solid rgba(58,70,91)'}}>
 
