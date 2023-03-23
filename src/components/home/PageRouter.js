@@ -19,6 +19,7 @@ import ModalContainer from "./modal_display/ModalContainer";
 // import DirectMessages from "../DirectMessages";
 import LoadingSpinner from '../LoadingSpinner';
 import BlankPage from "./BlankPage";
+import LeaguePage from './league_display/LeaguePage';
 
 function PageRouter(props) {
     //props.db
@@ -35,7 +36,8 @@ function PageRouter(props) {
         return <LoadingSpinner/>
     }
 
-    if (leaguesAll.length < 1) { //User doesn't have any leagues created User has leagues
+    console.log(user.leagues)
+    if (user.leagues.length < 1) { //User doesn't have any leagues created User has leagues
         //return routes w/ default redirecting to new league component
         return(
             <div className="center-panel-container">
@@ -55,12 +57,13 @@ function PageRouter(props) {
         return(
             <div className="center-panel-container">
                     <Routes>
-                        <Route exact path="/league/:id/*" element={<BlankPage title="League Name"/>}/>
+                        <Route exact path="/home" element={<BlankPage title="Golf Home Dashboard"/>}/>
+                        <Route exact path="/league/:id/*" element={<LeaguePage title="League Name"/>}/>
                         <Route exact path="/create-league" element={<BlankPage title="Create a new league"/>}/>
                         <Route exact path="/mock-draft" element={<BlankPage title="Mock Draft"/>}/>
                         <Route exact path="/inbox" element={<BlankPage title="Inbox "/>}/>
                         <Route exact path="/account-settings" element={<BlankPage title="Account Settings"/>}/>
-                        <Route path="*" element={<Navigate to={`/league/${leaguesAll[0].id}`} replace />}/>
+                        <Route path="*" element={<Navigate to={`/league/${user.leagues[0].id}`} replace />}/>
                     </Routes>
                 <ModalContainer userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/>
             </div>

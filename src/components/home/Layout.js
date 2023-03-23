@@ -29,6 +29,11 @@ import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 import { fontSize } from '@mui/system';
 import PageRouter from './PageRouter';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import MuiToggleButton from '@mui/material/ToggleButton';
+import { useState, useEffect } from 'react';
 
 const drawerWidth = 300;
 
@@ -97,216 +102,232 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const ToggleButton = styled(MuiToggleButton)({
+    "&.Mui-selected > svg, &.Mui-selected:hover": {
+
+        fill: '#00ceb8',
+    }
+});
+
 export default function Layout() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  console.log(theme);
+    const theme = useTheme();
+    const [open, setOpen] = React.useState(false);
+    const {user} = useSelector((state) => state.auth);
+    const [selectedTab, setSelectedTab] = useState("/home");
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
-  const options = [
-    {
-        id: 1, 
-        title: "Home",
-        href: "/home",
-        icon: HomeIcon,
-    },
-    {
-        id: 2, 
-        title: "Inbox",
-        href: "/inbox",
-        icon: MailIcon,
-    },
-    {
-        id: 3, 
-        title: "Mock Draft",
-        href: "/mock-draft",
-        icon: DvrIcon,
-    },
-    {
-        id: 4, 
-        title: "New League",
-        href: "/create-league",
-        icon: AddBoxIcon,
-    },
-  ]
+    const options = [
+        {
+            id: 1, 
+            title: "Home",
+            href: "/home",
+            icon: HomeIcon,
+        },
+        {
+            id: 2, 
+            title: "Inbox",
+            href: "/inbox",
+            icon: MailIcon,
+        },
+        {
+            id: 3, 
+            title: "Mock Draft",
+            href: "/mock-draft",
+            icon: DvrIcon,
+        },
+        {
+            id: 4, 
+            title: "New League",
+            href: "/create-league",
+            icon: AddBoxIcon,
+        },
+    ]
 
-  const leaguesTest = [
-    {
-        id: 1, 
-        title: "Fantasy Lizard Creatures",
-        icon: "F",
-    },
-    {
-        id: 2, 
-        title: "Test League Too",
-        icon: "T",
-    },
-    {
-        id: 3, 
-        title: "Deez League",
-        icon: "D",
-    },
-  ]
+    const leaguesTest = [
+        {
+            id: 1, 
+            title: "Fantasy Lizard Creatures",
+            icon: "F",
+        },
+        {
+            id: 2, 
+            title: "Test League Too",
+            icon: "T",
+        },
+        {
+            id: 3, 
+            title: "Deez League",
+            icon: "D",
+        },
+    ]
 
-  const handleEnter = (e) => {
-    console.log("hover")
-    setOpen(true);
-  }
+    const handleEnter = (e) => {
+        setOpen(true);
+    }
 
-  const handleLeave = (e) => {
-    console.log("leave")
-    setOpen(false);
-  }
+    const handleLeave = (e) => {
+        setOpen(false);
+    }
+
+    const handleSelect = (e, newSelection) => {
+        setSelectedTab(newSelection);
+    };
+
+    const unselectPage = () => {
+        selectedTab(null);
+    }
 
 
+    console.log(selectedTab);
+    return (
+        <Box id="layout" sx={{ display: 'flex' }}>
 
+            <Drawer 
+                variant="permanent" 
+                open={open} onMouseEnter={handleEnter} 
+                onMouseLeave={handleLeave}
+                sx={{backgroundColor: "#1f2431"}}
+                id="drawer"
+            >
 
-  return (
-    <Box id="layout" sx={{ display: 'flex' }}>
-
-        <Drawer 
-            variant="permanent" 
-            open={open} onMouseEnter={handleEnter} 
-            onMouseLeave={handleLeave}
-            sx={{backgroundColor: "#1f2431"}}
-            id="drawer"
-        >
-
-            <DrawerHeader>
-                
-                <ListItem disablePadding sx={{ 
-                    display: 'flex',
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                    }}
-                >
-
-                    <ListItemIcon
-                        sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : 'auto',
-                        justifyContent: 'center',
+                <DrawerHeader>
+                    
+                    <ListItem disablePadding sx={{ 
+                        display: 'flex',
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
                         }}
                     >
-                        <GolfCourseIcon sx={{ fill:"#ffffff" }}/>
-                    </ListItemIcon>
 
-                    <Typography sx={{ opacity: open ? 1 : 0, color:"#ffffff" }} variant="h6" noWrap component="div">Masters Golf App</Typography>
-                    {/* <ListItemText primary="Masters Golf App" sx={{ opacity: open ? 1 : 0, color:"#ffffff", variant:"h3" }} /> */}
-
-                </ListItem>
-
-            </DrawerHeader>
-
-            <Divider sx={{bgcolor:"#677897"}} />
-
-            <List>
-
-            {options.map((item) => (
-                <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
-
-                <ListItem
-                    component={Link}
-                    to={item.href}
-                    sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                    }}
-                >
-                    <ListItemIcon
-                    sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : 'auto',
-                        justifyContent: 'center',
-                    }}
-                    >
-                    <item.icon sx={{ fill:"#677897" }} />
-                    </ListItemIcon>
-
-                    <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0, color:"#677897"}} />
-
-                </ListItem>
-                </ListItem>
-            ))}
-            </List>
-
-            <Divider sx={{bgcolor:"#677897"}} />
-
-            <List>
-            {leaguesTest.map((league) => (
-                <ListItem key={league.id} disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                    sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                    }}
-                >
-                    <ListItemAvatar
-                        sx={{
+                        <ListItemIcon
+                            sx={{
                             minWidth: 0,
                             mr: open ? 3 : 'auto',
                             justifyContent: 'center',
-                        }}
-                    >
-                    <Avatar >{league.icon}</Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={league.title} sx={{ opacity: open ? 1 : 0, color:"#677897"  }} />
-                </ListItemButton>
-                </ListItem>
-            ))}
-            </List>
-
-        </Drawer>
-
-        {/* <Box component="main" sx={{ display:"flex", flexDirection: "column", flexGrow: 1, p: 3, gap: 3, backgroundColor: '#181c28'}}>
-
-            <Box id="section-header" >
-                <Typography variant='h3' sx={{color:"#ffffff"}}>Section Header</Typography>
-            </Box>
-
-            <Box id="section-container" sx={{ display:"flex", flexDirection: "row", flexGrow: 1, p: 3, gap: 3, padding:"0"}}>
-                    <Box 
-                        component="main" 
-                        sx={{ 
-                            flexGrow: 2, 
-                            p: 3, 
-                            color: '#bbb',
-                            backgroundColor: "rgba(58,70,91,0.5)",
-                            border: "1px solid #3a465b",
-                            borderRadius: "16px",
-                        }}
-                    >
-                    </Box>
-
-                    <Box 
-                        component="main" 
-                        sx={{ 
-                            flexGrow: 1, 
-                            p: 3, 
-                            color: '#bbb',
-                            backgroundColor: "rgba(58,70,91,0.5)",
-                            border: "1px solid #3a465b",
-                            borderRadius: "16px",
-                        }}
-                    >
-                    </Box>
-
-            </Box>
+                            }}
+                        >
+                            <GolfCourseIcon sx={{ fill:"#ffffff" }}/>
+                        </ListItemIcon>
                         
-        </Box> */}
+                        <Typography sx={{ opacity: open ? 1 : 0, color:"#ffffff" }} variant="h6" noWrap component="div">Masters Golf App</Typography>
+                        {/* <ListItemText primary="Masters Golf App" sx={{ opacity: open ? 1 : 0, color:"#ffffff", variant:"h3" }} /> */}
+
+                    </ListItem>
+
+                </DrawerHeader>
+
+                <ToggleButtonGroup 
+                    color="primary"
+                    value={selectedTab}
+                    exclusive
+                    onChange={handleSelect}
+                    aria-label="page-tab"
+                    sx={{display: "flex", flexDirection: "column", flexGrow: 1}}
+                >
+
+                    {options.map((item) => (
+                        <ToggleButton
+                            key={item.id}
+                            component={Link}
+                            to={item.href}
+                            value={item.href}
+                            sx={{
+                            minHeight: 48,
+                            justifyContent: open ? 'initial' : 'center',
+                            px: 2.5,
+                            }}
+                        >
+                            <ListItemIcon
+                            sx={{
+                                minWidth: 0,
+                                mr: open ? 3 : 'auto',
+                                justifyContent: 'center',
+                            }}
+                            >
+                            <item.icon sx={{ fill:"#677897" }} />
+                            </ListItemIcon>
+
+                            <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0, color:"#677897"}} />
+
+                        </ToggleButton>
+                    ))}
 
 
-    </Box>
-    
-  );
+                    <Divider sx={{bgcolor:"#677897"}} />
+
+                    {/* <div id="league-btns"> */}
+                        {user.leagues.map((league) => (
+                            <ToggleButton
+                                id={league.id} 
+                                key={league.id}
+                                value={league.id}
+                                component={Link}
+                                to={`/league/${league.id}`}
+                                sx={{
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                                }}
+                            >
+                                <ListItemAvatar
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                <Avatar >{league.name.charAt(0).toUpperCase()}</Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={league.name} sx={{ opacity: open ? 1 : 0, color:"#677897"  }} />
+                            </ToggleButton>
+                        ))}
+                    {/* </div> */}
+
+                </ToggleButtonGroup>
+
+                <List>
+                    <ListItem 
+                        component={Link}
+                        to={`/account-settings`}
+                        onClick={unselectPage}
+                        disablePadding 
+                        sx={{ 
+                            display: 'flex',
+                            minHeight: 48,
+                            justifyContent: open ? 'initial' : 'center',
+                            px: 2.5,
+                        }}
+                    >
+
+                        <ListItemAvatar
+                            sx={{
+                                minWidth: 0,
+                                mr: open ? 3 : 'auto',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <Avatar >{user.username.charAt(0).toUpperCase()}</Avatar>
+                        </ListItemAvatar>
+
+                        <Typography sx={{ opacity: open ? 1 : 0, color:"#ffffff", flexGrow: 1 }} variant="body1" noWrap component="div">{user.username}</Typography>
+
+                        {open ? <SettingsIcon sx={{ opacity: open ? 1 : 0, color:"#ffffff" }}/> : null}
+                        
+
+                    </ListItem>
+
+                </List>
+
+            </Drawer>
+        </Box>
+        
+    );
 }

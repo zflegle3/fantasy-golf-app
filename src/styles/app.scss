@@ -72,6 +72,17 @@ Main Document Styles
 
 /* App Container Styles
 ~~~~~~~~~~~~~~~~~~~~ */
+
+// html {
+//   overflow: hidden;
+//   height: 100%;
+// }
+
+// body {
+//   height: 100%;
+//   overflow: auto;
+// }
+
 .app-landing {
   min-height: 100vh;
 }
@@ -98,9 +109,79 @@ Main Document Styles
 #page-all {
     height: 100%;
     width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    background-color: #181c28;
+}
+
+#section-container{
+  display: flex;
+  flex-direction: row;
+  // height: 100%;
+  flex-grow: 1;
+  // flex: 1;
+  gap: 1.5rem;
+  overflow: hidden;
+}
+
+#main-section {
+  flex-grow: 2;
+  color: #bbb;
+  background-color: rgba(58,70,91,0.5);
+  border: 1px solid #3a465b;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%,
+}
+
+#toggle-btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.test-container {
+  // height: 100%;
+  overflow-y: scroll;
+  flex-grow: 1;
+  // border: 1px solid greenyellow;
+}
+
+#league-home-container {
+  // height: 100%;
+  // flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  padding: 0 1.5rem 0 1.5rem;
+  // overflow-y: scroll;
+  // overflow: hidden;
+  gap: 1rem;
+  // border: 1px solid red;
+}
+
+.test-div {
+  height: 300px;
+  width: 100%;
+  // border: 1px solid orange;
+}
+
+#league-btns {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 #drawer > div {
     background-color: #1f2431;
     border-right: 1px solid #3a465b
+}
+
+#text-pair {
+  justify-content: flex-start;
+  align-items: center;
 }
