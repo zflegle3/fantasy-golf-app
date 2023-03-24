@@ -21,6 +21,7 @@ import LoadingSpinner from '../LoadingSpinner';
 import BlankPage from "./BlankPage";
 import LeaguePage from './league_display/LeaguePage';
 import SettingsPage from './settings_display/SettingsPage';
+import HomePage from './home_display/HomePage';
 
 function PageRouter(props) {
     //props.db
@@ -43,7 +44,7 @@ function PageRouter(props) {
         return(
             <div className="center-panel-container">
                 <Routes>
-                    <Route exact path="/home" element={<BlankPage title="Golf Home Dashboard"/>}/>
+                    <Route exact path="/home/*" element={<HomePage title="Golf Home Dashboard"/>}/>
                     <Route exact path="/create-league" element={<CreateLeague/>}/>
                     <Route exact path="/mock-draft" element={<BlankPage title="Mock Draft"/>}/>
                     <Route exact path="/inbox" element={<BlankPage title="Inbox "/>}/>
@@ -58,7 +59,7 @@ function PageRouter(props) {
         return(
             <div className="center-panel-container">
                     <Routes>
-                        <Route exact path="/home" element={<BlankPage title="Golf Home Dashboard"/>}/>
+                        <Route exact path="/home/*" element={<HomePage title="Golf Home Dashboard"/>}/>
                         <Route exact path="/league/:id/*" element={<LeaguePage title="League Name"/>}/>
                         <Route exact path="/create-league" element={<CreateLeague/>}/>
                         <Route exact path="/mock-draft" element={<BlankPage title="Mock Draft"/>}/>

@@ -13,10 +13,10 @@ import LeagueHome from "./LeagueHome"
 import TeamHome from './TeamHome';
 import PlayersPage from './PlayersPage';
 //Icons
-import LocalPoliceIcon from '@mui/icons-material/LocalPolice'; //League
-import GroupsIcon from '@mui/icons-material/Groups'; //Team
-import GroupAddIcon from '@mui/icons-material/GroupAdd'; //Players
-import DvrIcon from '@mui/icons-material/Dvr'; //Draft
+import LocalPoliceTwoToneIcon from '@mui/icons-material/LocalPoliceTwoTone';
+import GroupsTwoToneIcon from '@mui/icons-material/GroupsTwoTone';
+import GroupAddTwoToneIcon from '@mui/icons-material/GroupAddTwoTone';
+import DvrTwoToneIcon from '@mui/icons-material/DvrTwoTone';
 import {
     BrowserRouter as Router,
     Routes,
@@ -101,19 +101,19 @@ export default function LeaguePage({title}) {
                                     }}
                                     >
                                     <ToggleButton component={Link} to={`/league/${id}`} value="league" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)", borderRadius: "1rem"}}>
-                                        <LocalPoliceIcon sx={{ marginRight:"0.5rem"}}/>
+                                        <LocalPoliceTwoToneIcon sx={{ marginRight:"0.5rem"}}/>
                                         LEAGUE
                                     </ToggleButton>
                                     <ToggleButton component={Link} to={`/league/${id}/team`} value="team" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
-                                        <GroupsIcon sx={{ marginRight:"0.5rem"}}/>
+                                        <GroupsTwoToneIcon sx={{ marginRight:"0.5rem"}}/>
                                         TEAM
                                     </ToggleButton>
                                     <ToggleButton component={Link} to={`/league/${id}/players`} value="players" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
-                                        <GroupAddIcon sx={{ marginRight:"0.5rem"}}/>
+                                        <GroupAddTwoToneIcon sx={{ marginRight:"0.5rem"}}/>
                                         PLAYERS
                                     </ToggleButton>
                                     <ToggleButton component={Link} to={`/league/${id}/draft`} value="draft" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
-                                        <DvrIcon sx={{ marginRight:"0.5rem"}}/>
+                                        <DvrTwoToneIcon sx={{ marginRight:"0.5rem"}}/>
                                         DRAFT
                                     </ToggleButton>
                                 </StyledToggleButtonGroup>
