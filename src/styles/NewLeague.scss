@@ -20,6 +20,12 @@ $masters-c: #E5D743;
 $liv-a: #CBFB7E;
 $liv-b: #6AE8EC;
 
+$font-xl: 1.5rem;
+$font-l: 1rem;
+$font-m: 1rem;
+$font-s: 0.8rem;
+$font-xs: 0.8rem;
+
 
 /* Display Settings
 ~~~~~~~~~~~~~~~~~~~~ */
@@ -43,7 +49,7 @@ $liv-b: #6AE8EC;
     min-width: 500px;
     background-color: $form-bg-main;
     border-radius: 2.4rem;
-    padding: 2.5rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,8 +59,8 @@ $liv-b: #6AE8EC;
         height: 3.5rem;
         width: 3.5rem;
         position: absolute;
-        left: 2rem;
-        top: 2rem;
+        left: $font-l;
+        top: $font-l;
         padding: 0.5rem;
         border-radius: 10rem;
         transition: 0.2s;
@@ -90,7 +96,7 @@ $liv-b: #6AE8EC;
         margin-bottom: 3rem;
 
         h1 {
-            font-size: 2.5rem;
+            font-size: $font-xl;
             padding-bottom: 1rem;
             font-family: poppins, sans-serif;
             font-weight: 700;
@@ -99,7 +105,7 @@ $liv-b: #6AE8EC;
         }
         
         p {
-            font-size: 1.5rem;
+            font-size: $font-l;
             color: $form-text-sub-b;
             padding-bottom: 0.5rem;
         }
@@ -121,6 +127,10 @@ $liv-b: #6AE8EC;
         }
     }
 
+    .new-league-header:nth-child(3) {
+        margin-bottom: 0rem;
+    }
+
     .league-options-row {
         display: flex;
         justify-content: space-around;
@@ -130,7 +140,7 @@ $liv-b: #6AE8EC;
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
-            padding: 2rem;
+            padding: $font-l;
             width: 240px;
             cursor: pointer;
             
@@ -138,7 +148,7 @@ $liv-b: #6AE8EC;
                 width: 200px;
                 height: 200px;
                 background-color: red;
-                border-radius: 1.5rem;
+                border-radius: $font-m;
                 padding: 0.5rem;
 
                 display: flex;
@@ -149,7 +159,7 @@ $liv-b: #6AE8EC;
 
 
                 p{
-                    font-size: 2rem;
+                    font-size: $font-l;
                     font-family: poppins, sans-serif;
                     font-weight: 700;
                     font-style: italic;
@@ -178,7 +188,7 @@ $liv-b: #6AE8EC;
             }
 
             p {
-                font-size: 1.2rem;
+                font-size: $font-s;
                 line-height: 1.2;
                 color: $form-text-sub-a;
                 font-family: 'poppins', sans-serif;
@@ -190,13 +200,13 @@ $liv-b: #6AE8EC;
 
     .league-inputs-container {
         width: 400px;
-        margin: 0rem 2rem 2rem 2rem;
+        margin: 0rem $font-l $font-l $font-l;
 
         .league-input-item {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            margin-top: 3rem;
+            margin-top: 2rem;
 
             .league-input-header {
                 width: 100%;
@@ -207,7 +217,7 @@ $liv-b: #6AE8EC;
                 margin-bottom: 0.5rem;
 
                 label {
-                    font-size: 1.2rem;
+                    font-size: $font-m;
                     padding-right: 1rem;
                     color: $form-text-main;
                 }
@@ -222,7 +232,7 @@ $liv-b: #6AE8EC;
 
             p.input-notes {
                 padding-bottom: 0.5rem;
-                font-size: 1rem;
+                font-size: $font-xs;
                 color: $form-text-sub-b;
                 font-family: 'poppins', sans-serif;
                 font-weight: 600;
@@ -236,8 +246,8 @@ $liv-b: #6AE8EC;
                 background-color: transparent;
                 font-family: poppins, sans-serif;
                 font-weight: 700;
-                font-size: 1.5rem;
-                padding: 0.5rem 1.5rem;
+                font-size: $font-m;
+                padding: 0.5rem $font-m;
                 color: $form-text-main;
                 margin-bottom: 0.5rem;
                 cursor: pointer;
@@ -254,7 +264,7 @@ $liv-b: #6AE8EC;
             }
             
             p[id*="input-error"] {
-                font-size: 1.2rem;
+                font-size: $font-s;
                 color: $error-red;
                 visibility: hidden;
             }
@@ -269,7 +279,7 @@ $liv-b: #6AE8EC;
                 justify-content: flex-start;
                 align-items: center;
                 padding: 0.5rem;
-                border-radius: 2rem;
+                border-radius: $font-l;
                 cursor: pointer;
                 border: 2px solid transparent;
 
@@ -304,7 +314,7 @@ $liv-b: #6AE8EC;
                     align-items: flex-start;
 
                     p.draft-type-title {
-                        font-size: 1.4rem;
+                        font-size: $font-m;
                         font-family: poppins, sans-serif;
                         font-weight: 700;
                         color: $form-text-main;
@@ -312,7 +322,7 @@ $liv-b: #6AE8EC;
                     }
 
                     p.draft-type-info {
-                        font-size: 1.2rem;
+                        font-size: $font-s;
                         font-family: poppins, sans-serif;
                         font-weight: 400;
                         color: $form-text-sub-a;
@@ -333,11 +343,11 @@ $liv-b: #6AE8EC;
 
     .new-league-btn {
         width: 420px;
-        font-size: 1.5rem;
+        font-size: $font-m;
         // background-color: $form-text-hl;
         background: linear-gradient(315deg,#00b7b3,#4ce2a7);
         border-radius: 10rem;
-        padding: 1.5rem;
+        padding: $font-m;
         display: flex;
         justify-content: center;
         align-items: center;

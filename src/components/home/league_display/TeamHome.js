@@ -22,6 +22,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 
 
+
 export default function TeamHome({managerId}) {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
@@ -30,6 +31,10 @@ export default function TeamHome({managerId}) {
     let team = league.teams.filter((team) => team.manager === managerId)[0];
 
     console.log(team);
+
+    const options = [
+        'The Masters, Augusta National',
+    ];
 
     return (
         <div id="league-home-container">
@@ -40,7 +45,7 @@ export default function TeamHome({managerId}) {
                     <Typography variant="body1" sx={{ color: "#fff"}}>{team.manager}</Typography>
                 </Box>
                 {managerId === user._id ?  
-                    <Fab variant="extended" size="small">
+                    <Fab variant="extended" size="small" aria-label="settings">
                         <SettingsIcon />
                     </Fab> 
                     : null
@@ -50,8 +55,8 @@ export default function TeamHome({managerId}) {
             </Box>
             <Box id="leaderboard-container" sx={{ display:"flex", flexDirection: "column", padding: "1.5rem", flexGrow: 1, borderRadius: "1.6rem", backgroundColor: "rgba(163,187,211,0.05)", border: '1px solid rgba(58,70,91)'}}>
                 <Box sx={{ display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
-                    <LongMenu />
-                    <Fab color="primary" size="small" aria-label="edit">
+                    <LongMenu options={options} title={"Wk. 1"}/>
+                    <Fab variant="extended" size="small" aria-label="edit">
                         <EditIcon />
                     </Fab>
                 </Box>

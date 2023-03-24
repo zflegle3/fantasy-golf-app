@@ -11,7 +11,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const ITEM_HEIGHT = 48;
 
-export default function LongMenu() {
+export default function LongMenu({options, title}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -20,10 +20,6 @@ export default function LongMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const options = [
-    'The Masters, Augusta National',
-  ];
 
   return (
     <div>
@@ -36,7 +32,7 @@ export default function LongMenu() {
         onClick={handleClick}
         sx={{backgroundColor: "#2d3649", borderRadius: "0.5rem"}}
       >
-        {<Typography variant="body1" sx={{ color: "#fff"}}>Wk 1: {options[0]}</Typography>}
+        {<Typography variant="body1" sx={{ color: "#fff"}}>{title}: {options[0]}</Typography>}
         <ArrowDropDownIcon sx={{ fill: "#fff"}}/>
       </IconButton>
       <Menu

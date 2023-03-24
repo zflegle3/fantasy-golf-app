@@ -21,7 +21,7 @@ import './styles/app.scss';
 // import "./styles/Auth.css";
 import "./styles/auth.scss";
 // import "./styles/Home.css";
-// import "./styles/NewLeague.scss";
+import "./styles/NewLeague.scss";
 // import './styles/Tabs.css';
 // import "./styles/ChatConsole.css"
 // import "./styles/EditSettings.css"

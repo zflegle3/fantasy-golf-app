@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
+import { v4 as uuidv4 } from 'uuid';
 import Box from '@mui/material/Box';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -28,7 +29,7 @@ export default function LeagueActivity() {
 
             <List variant="text" aria-label="outlined button group" sx={{display: "flex", alignItems: "flex-start", flexDirection: "column", justifyContext: "flex-start", padding: "1rem 0rem"}}>
                 {league.activity.map((item, index) => (
-                    <ListItem id="text-pair" sx={{display: "flex", width: "100%", alignItems: "flex-start", flexDirection: "row", justifyContext: "flex-start", padding: "1rem 0rem"}}>
+                    <ListItem key={uuidv4()} id="text-pair" sx={{display: "flex", width: "100%", alignItems: "flex-start", flexDirection: "row", justifyContext: "flex-start", padding: "1rem 0rem"}}>
                         <Avatar >
                             <LocalPoliceIcon />
                         </Avatar>

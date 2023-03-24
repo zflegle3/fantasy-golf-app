@@ -8,6 +8,7 @@ import { Avatar } from '@mui/material';
 import { padding } from '@mui/system';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function Leaderboard() {
@@ -96,7 +97,7 @@ export default function Leaderboard() {
 
             <ButtonGroup variant="text" aria-label="outlined button group" sx={{display: "flex", alignItems: "flex-start", flexDirection: "column", justifyContext: "flex-start", padding: "1rem 0rem"}}>
                 {players.map((item, index) => (
-                    <Button id="text-pair" sx={{display: "flex", width: "100%", alignItems: "flex-start", flexDirection: "row", justifyContext: "flex-start", padding: "1rem 0rem"}}>
+                    <Button key={uuidv4()} id="text-pair" sx={{display: "flex", width: "100%", alignItems: "flex-start", flexDirection: "row", justifyContext: "flex-start", padding: "1rem 0rem"}}>
                         <Typography variant="h5" sx={{margin: "0 1rem 0 0", color: "#fff"}}>{item.pos}</Typography>
                         <Avatar >{item.first_name.charAt(0).toUpperCase()}</Avatar>
                         <Box sx={{display:"flex", flexDirection: "column", alignItems: "flex-start"}}>

@@ -181,7 +181,7 @@ export default function Layout() {
     };
 
     const unselectPage = () => {
-        selectedTab(null);
+        setSelectedTab(null);
     }
 
 

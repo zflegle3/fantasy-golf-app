@@ -27,6 +27,7 @@ import { Avatar } from '@mui/material';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 import { fontSize } from '@mui/system';
+import { TwitterTimelineEmbed } from 'react-twitter-embed';
 
 
 export default function BlankPage({title}) {
@@ -63,8 +64,15 @@ export default function BlankPage({title}) {
                             backgroundColor: "rgba(58,70,91,0.5)",
                             border: "1px solid #3a465b",
                             borderRadius: "16px",
+                            maxWidth: "600px",
+                            overflowY: "scroll",
                         }}
                     >
+                        <TwitterTimelineEmbed 
+                            sourceType="profile" 
+                            screenName="TheMasters"
+                            // options={} 
+                        />
                     </Box>
 
             </Box>

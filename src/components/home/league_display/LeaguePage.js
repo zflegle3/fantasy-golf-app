@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getLeagueOne, resetSelected } from '../../../features/leagues/leagueSelectedSlice';
 import LeagueHome from "./LeagueHome"
 import TeamHome from './TeamHome';
+import PlayersPage from './PlayersPage';
 //Icons
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice'; //League
 import GroupsIcon from '@mui/icons-material/Groups'; //Team
@@ -122,7 +123,7 @@ export default function LeaguePage({title}) {
                                 <Routes>
                                     <Route exact path="" element={<LeagueHome />}/>
                                     <Route exact path="team" element={<TeamHome managerId={user._id}/>}/>
-                                    <Route exact path="players" element={<Box>players</Box>}/>
+                                    <Route exact path="players" element={<PlayersPage />}/>
                                     <Route exact path="draft" element={<Box>draft</Box>}/>
                                 </Routes>
                             </div>
