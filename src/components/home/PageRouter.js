@@ -47,7 +47,7 @@ function PageRouter(props) {
                     <Route exact path="/create-league" element={<CreateLeague/>}/>
                     <Route exact path="/mock-draft" element={<BlankPage title="Mock Draft"/>}/>
                     <Route exact path="/inbox" element={<BlankPage title="Inbox "/>}/>
-                    <Route exact path="/account-settings/*" element={<BlankPage title="Account Settings"/>}/>
+                    <Route exact path="/account-settings/*" element={<SettingsPage title="Account Settings"/>}/>
                     <Route path="*" element={<Navigate to="/create-league" replace />}/>
                 </Routes>
                 <ModalContainer userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/>

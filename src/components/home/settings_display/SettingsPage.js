@@ -15,6 +15,10 @@ import PlayersPage from '../league_display/PlayersPage';
 import Button from '@mui/material/Button';
 import { logout, resetUser } from "../../../features/auth/authSlice"
 import { resetLeagues } from "../../../features/leagues/leagueSlice"
+import AccountDetails from "./AccountDetails"
+import AccountPassword from './AccountPassword';
+import AccountProfile from './AccountProfile';
+import AccountPreferences from './AccountPreferences';
 //Icons
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice'; //League
 import GroupsIcon from '@mui/icons-material/Groups'; //Team
@@ -81,31 +85,18 @@ export default function SettingsPage({title}) {
         return (
 
             <div id="page-all">
-    
                 <div id="section-container">
-                        
                         <div id="main-section">
 
-                            <Box sx={{width: "100%", height: "100%", padding: "3rem"}}>
-                                <Box id="section-header" >
-                                    <Typography variant='h5' sx={{color:"#ffffff", fontWeight: "600"}}>Account Settings</Typography>
-                                </Box>
-
-
-                            </Box>
-
-                            {/* <div className='test-container'>
-                                
-
-
-
+                            <div className='test-container'>
                                 <Routes>
-                                    <Route exact path="/details" element={<LeagueHome />}/>
-                                    <Route exact path="/password" element={<TeamHome managerId={user._id}/>}/>
-                                    <Route exact path="profile" element={<PlayersPage />}/>
-                                    <Route exact path="preferences" element={<Box>draft</Box>}/>
+                                    <Route exact path="/details" element={<AccountDetails />}/>
+                                    <Route exact path="/password" element={<AccountPassword />}/>
+                                    <Route exact path="profile" element={<AccountProfile />}/>
+                                    <Route exact path="preferences" element={<AccountPreferences/>}/>
+                                    <Route path="*" element={<Navigate to={`/account-settings/details`} replace />}/>
                                 </Routes>
-                            </div> */}
+                            </div>
 
                         </div>
     
@@ -142,7 +133,7 @@ export default function SettingsPage({title}) {
                                     <ToggleButton component={Link} to={`/account-settings/password`} value="password" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
                                         PASSWORD
                                     </ToggleButton>
-                                    <Typography variant='body1'>PERSONAL</Typography>
+                                    <Typography variant='body2' sx={{color: "fff"}}>PERSONAL</Typography>
                                     <ToggleButton component={Link} to={`/account-settings/profile`} value="profile" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
                                         PROFILE
                                     </ToggleButton>

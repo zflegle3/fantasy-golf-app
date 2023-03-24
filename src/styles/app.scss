@@ -58,7 +58,7 @@ Main Document Styles
   --tab-highlight: #1b403f;
   --select-highlight: #fff;
   --bkgnd-plain: #0D1F22;
-  --error-red: #820933;
+  --error-red: #ff2b6d;
   --misc: #69995D;
   /* --bkgnd-plain: rgb(207, 207, 207);
   --button-norm: rgb(151, 232, 51);
@@ -73,15 +73,15 @@ Main Document Styles
 /* App Container Styles
 ~~~~~~~~~~~~~~~~~~~~ */
 
-// html {
-//   overflow: hidden;
-//   height: 100%;
-// }
+html {
+  overflow: hidden;
+  height: 100%;
+}
 
-// body {
-//   height: 100%;
-//   overflow: auto;
-// }
+body {
+  height: 100%;
+  overflow: auto;
+}
 
 .app-landing {
   min-height: 100vh;

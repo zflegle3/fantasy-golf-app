@@ -14,6 +14,14 @@ $error-red: #ff2b6d;
 $input-shdw-a: rgba(0,0,0,0.1);
 $input-shdw-b: rgba(2,32,71,0.1);
 
+
+$font-xl: 3rem;
+$font-l: 1.8rem;
+$font-m: 1.2rem;
+$font-s: 1.2rem;
+$font-xs: 1rem;
+
+
 #root {
     width: 100vw;
     height: 100vh;
@@ -125,7 +133,7 @@ $input-shdw-b: rgba(2,32,71,0.1);
     
                 h1 {
                     flex-grow: 1;
-                    font-size: 4.5rem;
+                    font-size: $font-xl;
                     color: var(--txt-auth-main);
                     font-family: 'muli', sans-serif;
                     font-weight: 900;
@@ -136,13 +144,13 @@ $input-shdw-b: rgba(2,32,71,0.1);
             .auth-header-sub {
                 font-family: 'Lato', sans-serif;
                 font-weight: bold;
-                font-size: 1.6rem;
+                font-size: $font-m;
                 color: var(--txt-auth-sub);
             }
         }
 
         a {
-            font-size: 1.7rem;
+            font-size: $font-l;
             font-weight: bold;
             cursor: pointer;
             color: var(--txt-auth-hl);
@@ -164,33 +172,59 @@ $input-shdw-b: rgba(2,32,71,0.1);
             align-items: center;
             flex-direction: row;
 
-            .form-btn-container {
-                flex-grow: 1;
+            // .form-btn-container {
+            //     flex-grow: 1;
 
-                button {
-                    font-family: 'muli', sans-serif;
-                    font-weight: 900;
-                    padding: 1.5rem 4rem 1.5rem 4rem;
-                    border: none;
-                    border-radius: 10rem;
-                    font-size: 1.4rem;
-                    cursor: pointer;
-                    transition: 0.5s;
-                    background: var(--btn-gradient);
-                    color: #fff;
-                    transition: all 0.2s;
-                }
+            //     button {
+            //         font-family: 'muli', sans-serif;
+            //         font-weight: 900;
+            //         padding: 1rem 2rem 1rem 2rem;
+            //         border: none;
+            //         border-radius: 10rem;
+            //         font-size: $font-m;
+            //         cursor: pointer;
+            //         transition: 0.5s;
+            //         background: var(--btn-gradient);
+            //         color: #fff;
+            //         transition: all 0.2s;
+            //     }
 
-                button:hover {
-                    box-shadow: 5px 5px 10px 0 var(--input-shdw-b);
-                    transform: scale(1.05);
-                    background: var(--btn-gradient-flip);
-                    transition: transform 0.2s;
-                }
+            //     button:hover {
+            //         box-shadow: 5px 5px 10px 0 var(--input-shdw-b);
+            //         transform: scale(1.05);
+            //         background: var(--btn-gradient-flip);
+            //         transition: transform 0.2s;
+            //     }
 
-            }
+            // }
         }     
     }
+}
+
+.form-btn-container {
+    flex-grow: 1;
+
+    button {
+        font-family: 'muli', sans-serif;
+        font-weight: 900;
+        padding: 1rem 2rem 1rem 2rem;
+        border: none;
+        border-radius: 10rem;
+        font-size: $font-m;
+        cursor: pointer;
+        transition: 0.5s;
+        background: var(--btn-gradient);
+        color: #fff;
+        transition: all 0.2s;
+    }
+
+    button:hover {
+        box-shadow: 5px 5px 10px 0 var(--input-shdw-b);
+        transform: scale(1.05);
+        background: var(--btn-gradient-flip);
+        transition: transform 0.2s;
+    }
+
 }
 
 
@@ -203,7 +237,7 @@ $input-shdw-b: rgba(2,32,71,0.1);
     label {
         font-family: 'muli', sans-serif;
         margin-bottom: 1rem;
-        font-size: 1.3rem;
+        font-size: $font-s;
         color: var(--txt-auth-sub);
         transition: color 0.2s;
     }
@@ -223,7 +257,7 @@ $input-shdw-b: rgba(2,32,71,0.1);
             // font-family: 'Lato', sans-serif;
             font-family: 'muli', sans-serif;
             width: 100%;
-            font-size: 1.8rem;
+            font-size: $font-m;
             color: var(--txt-auth-main);
             background-color: var(--bg-search);
 
@@ -261,7 +295,7 @@ $input-shdw-b: rgba(2,32,71,0.1);
 
     p {
         visibility: hidden;
-        font-size: 1.3rem;
+        font-size: $font-s;
         padding: 1rem 0rem 0rem 1rem;
     }
 }
@@ -328,7 +362,7 @@ $input-shdw-b: rgba(2,32,71,0.1);
         p {
             color: var(--txt-auth-sub);
             font-family: 'Lato', sans-serif;
-            font-size: 1.4rem;
+            font-size: $font-xs;
             padding: 0.5rem 1rem 0.5rem 1rem;
         }
     }
@@ -345,3 +379,113 @@ $input-shdw-b: rgba(2,32,71,0.1);
         }
     }
 }   
+
+.profile-image-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .image-display-container {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .account-img {
+            width: 10rem;
+            height: 10rem;
+            background-color: transparent;
+            border-radius: 100rem;
+        }
+
+    }
+
+    .image-upload-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 60%;
+
+        h2 {
+            margin-top: 2rem;
+            font-size: $font-l;
+            color: var(--txt-auth-main);
+        }
+
+        p {
+            font-size: $font-xs;
+            font-weight: 400;
+            color: #707B95;
+            padding: 0.5rem 0rem;
+        }
+
+        .upload-controls-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            gap: 2rem;
+            margin-top: 2rem;
+
+            .upload-status-display {
+                min-width: 10rem;
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+
+            .custom-file-upload {
+                // width: 50%;
+                background-color: transparent;
+                border: none;
+                font-size: $font-m;
+                font-weight: bold;
+                cursor: pointer;
+                color: #4c6ce2;
+                transition: 0.5s;
+                text-decoration: none;
+                // padding: 2rem 0rem;
+                text-align: start;
+            }
+
+            #img-preview {
+                font-size: $font-xs;
+                font-weight: 400;
+                color: #707B95;
+                padding: 0.5rem 0rem;
+            }
+
+            #img-preview.invalid {
+                color: var(--error-red);
+            }
+
+            button {
+                // width: 100%;
+                font-weight: 600;
+                padding: 1.25rem 3rem;
+                margin: 2rem 0rem;
+                border: none;
+                border-radius: 10rem;
+                font-size: $font-m;
+                cursor: pointer;
+                transition: 0.5s;
+                background: var(--btn-gradient);
+                color: #fff;
+                transition: all 0.2s;
+            }
+        
+            button:hover {
+                box-shadow: 5px 5px 10px 0 rgba(2,32,71,0.1) ;
+                transform: scale(1.05);
+                background: var(--btn-gradient-flip);
+                transition: transform 0.2s;
+            }
+
+
+
+        }
+    }
+}
