@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLeagueOne, resetSelected } from '../../../features/leagues/leagueSelectedSlice';
 import GolfHome from './tabs/GolfHome';
+import Stats from './tabs/Stats';
 //Icons
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice'; //League
 import GroupsIcon from '@mui/icons-material/Groups'; //Team
@@ -118,7 +119,7 @@ export default function HomePage({title}) {
                                 <Route exact path="/" element={<GolfHome/>}/>
                                 <Route exact path="/world-ranks" element={<GolfRanks />}/>
                                 <Route exact path="/fedex-ranks" element={<FedExRanks />}/>
-                                <Route exact path="/stats" element={<p>Some Other Tab</p>}/>
+                                <Route exact path="/stats" element={<Stats />}/>
                             </Routes>
                         </div>
 
@@ -128,7 +129,7 @@ export default function HomePage({title}) {
                         component="main" 
                         sx={{ 
                             flexGrow: 1, 
-                            p: 3, 
+                            p: 0, 
                             color: '#bbb',
                             backgroundColor: "rgba(58,70,91,0.5)",
                             border: "1px solid #3a465b",

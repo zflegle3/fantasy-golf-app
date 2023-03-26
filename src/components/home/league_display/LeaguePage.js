@@ -12,6 +12,7 @@ import { getLeagueOne, resetSelected } from '../../../features/leagues/leagueSel
 import LeagueHome from "./LeagueHome"
 import TeamHome from './TeamHome';
 import PlayersPage from './PlayersPage';
+import Chat from '../chat_display/Chat';
 //Icons
 import LocalPoliceTwoToneIcon from '@mui/icons-material/LocalPoliceTwoTone';
 import GroupsTwoToneIcon from '@mui/icons-material/GroupsTwoTone';
@@ -140,6 +141,7 @@ export default function LeaguePage({title}) {
                                 borderRadius: "16px",
                             }}
                         >
+                            <Chat />
                         </Box>
     
                 </div>
