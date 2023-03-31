@@ -138,13 +138,13 @@ export default function HomePage({title}) {
                             overflowY: "scroll",
                         }}
                     >
-                        <TwitterTimelineEmbed 
+                        {/* <TwitterTimelineEmbed 
                             sourceType="profile" 
                             screenName="TheMasters"
                             // options={} 
                             // backgroundColor="rgba(163,187,211,0.05)"
                             theme="dark"
-                        />
+                        /> */}
                     </Box>
 
             </div>

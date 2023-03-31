@@ -74,8 +74,6 @@ export default function InboxPage({title}) {
     }));
 
 
-
-
     const addToClose = () => {
         gsap.to(`#add-chat-icon`, {
             duration: 0.3,

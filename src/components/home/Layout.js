@@ -185,7 +185,6 @@ export default function Layout() {
     }
 
 
-    console.log(selectedTab);
     return (
         <Box id="layout" sx={{ display: 'flex' }}>
 

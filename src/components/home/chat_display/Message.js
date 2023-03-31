@@ -7,9 +7,6 @@ import { Typography } from '@mui/material';
 
 export default function Message({messageData}) {
 
-
-
-
     return (
         <Box id="chat-container" sx={{display: "flex", justifyContent: "flex-start", padding: "1rem"}}>
             <Avatar sx={{marginRight: "1rem"}}>{messageData.username.charAt(0)}</Avatar>

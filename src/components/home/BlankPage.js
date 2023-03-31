@@ -68,11 +68,11 @@ export default function BlankPage({title}) {
                             overflowY: "scroll",
                         }}
                     >
-                        <TwitterTimelineEmbed 
+                        {/* <TwitterTimelineEmbed 
                             sourceType="profile" 
                             screenName="TheMasters"
                             // options={} 
-                        />
+                        /> */}
                     </Box>
 
             </Box>
