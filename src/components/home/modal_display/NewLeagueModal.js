@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createLeague } from "../../../features/leagues/leagueSlice";
+import { createLeague } from "../../../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 //SVGs & Images
 import { ReactComponent as PgaSvg } from '../../../images/icons/golf-pga.svg';
@@ -26,6 +27,7 @@ function NewLeagueModal(props) {
     //0 index is snake, 1 index is linear
     const [draftBtnSelect, setDraftBtnSelect] = useState(["",""]) 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const backStep = () => {
         //decrements step to conditionally render input form 
@@ -184,6 +186,7 @@ function NewLeagueModal(props) {
         }]
         //Create payload to submit to backend
         let payload = {
+            adminId: user._id,
             name: name,
             settings: settings,
             activity: leagueActivityNew,
@@ -191,7 +194,9 @@ function NewLeagueModal(props) {
             draft: draft,
         }
         dispatch(createLeague(payload));
-        props.setNewLeagueOpen(false);
+        navigate("/home");
+        // props.setNewLeagueOpen(false);
+
     }
 
     if (step === 1) {

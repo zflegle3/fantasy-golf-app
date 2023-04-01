@@ -37,6 +37,18 @@ export const logout = createAsyncThunk("auth/logout", async () => {
     await authService.logout();
 })
 
+//Create a new League
+export const createLeague = createAsyncThunk("league/create", async (leagueData, thunkAPI)=> {
+    try {
+        const token = thunkAPI.getState().auth.user.token; //token required b/c protected route
+        return await authService.createLeague(leagueData,token);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+
+})
+
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -84,6 +96,21 @@ export const authSlice = createSlice({
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
+            })
+            .addCase(createLeague.pending, (state) => {
+                state.isLoading = true; 
+            })
+            .addCase(createLeague.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                //returns an updated user with new league data
+                state.user = action.payload;
+            })
+            .addCase(createLeague.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = false;
+                state.isError = true;
+                state.message = "We were unable to create a new league";  
             })
 
             
