@@ -67,7 +67,7 @@ export default function SettingsPage({title}) {
 
     useEffect(() => {
         //get league info on id change
-        dispatch(getLeagueOne(id));
+        // dispatch(getLeagueOne(id));
         setSelectedTab('details');
     }, [id]);
 
@@ -81,7 +81,7 @@ export default function SettingsPage({title}) {
       }
 
 
-    if (league) {
+    if (user) {
         return (
 
             <div id="page-all">
@@ -161,9 +161,6 @@ export default function SettingsPage({title}) {
                 </div>
 
             </div>
-
-           
-            // </Box>
         
         );
     } else {

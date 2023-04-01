@@ -16,6 +16,7 @@ import { io } from 'socket.io-client';
 import { socket } from '../../../features/socket';
 import ChatInput from './ChatInput';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 // import socketIO from 'socket.io-client';
 // import { socket } from './socket';
@@ -59,21 +60,22 @@ export default function Chat() {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected);
     const {user} = useSelector((state) => state.auth);
     const [msgInput, setMsgInput] = useState("");
-    const [chatId, setchatId] = useState(1);
+    // const [chatId, setchatId] = useState("642658d7e34f23d7f548252a");
+    let { chatId } = useParams();
     const [chatName, setChatName] = useState("Test Chat 69")
     const [chatUsers, setChatUsers] = useState([{name: "Zach Flegle", _id:"63cc338333a02d1e66d95569", username: "zflegs"}, {name: "Other User", _id:"u2", username: "user2"}, {name: "Some Guy", _id:"u3", username: "user3"}])
-    const [msgOutput, setMsgOutput] = useState([{id: 1, username: "zflegs", time: "0", msg: "Howdy!"}, {id: 2, username: "user2", time: "1", msg: "Suh Dude!"}, {id: 3, username: "user3", time: "2", msg: "I'm here"}]);
+    const [msgOutput, setMsgOutput] = useState(null);
+    const [chatData, setChatData] = useState(null);
 
     // const [isConnected, setIsConnected] = useState(socket.connected);
     // const [fooEvents, setFooEvents] = useState([]);
 
     //Temp ID, will get chat id from league data
-    const chatOthers = chatUsers.filter((member) => member._id !== user._id )
-    let chatMembers = ""
-    chatOthers.map((member) => {
-        chatMembers += `, ${member.username}`
-    })
-
+    // const chatOthers = chatUsers.filter((member) => member._id !== user._id )
+    // let chatMembers = ""
+    // chatOthers.map((member) => {
+    //     chatMembers += `, ${member.username}`
+    // })
 
     const handleSend = (e) => {
         e.preventDefault();
@@ -82,6 +84,7 @@ export default function Chat() {
           console.log("Send message");
           const messageOut = {
               id: uuidv4(),
+              chatId: chatId,
               username: user.username,
               time: new Date(),
               msg: msgInput,
@@ -96,51 +99,65 @@ export default function Chat() {
     useEffect(() => {
       //on mount and unmount connections
       socket.connect();
+      socket.emit("join_room", user.username, chatId);
+ 
       return () => {
         console.log("cleanup");
         socket.disconnect();
+        //Leave room
+        // socket.emit("join_room", user.username, chatId);
       };
-    },[]);
-
-    const renderMessage = (data) => {
-        setMsgOutput([...msgOutput, data]);
-    }
+    },[chatId]);
 
 
     useEffect(() => {
       //listens to socket events
       socket.on("receive_message", (data) => {
-        // alert(data.message);
-        // console.log(msgOutput);
-        // let newMessages = [...msgOutput]
-        // console.log(newMessages);
-        // newMessages.push(data);
-        // setMsgOutput([...msgOutput, data]);
-        // console.log(data);
+        console.log("message In:", data)
         setMsgOutput((msgOutput) => ([...msgOutput, data]));
-        // renderMessage(data);
       })
     },[socket]);
 
 
-    return (
+    const getChatData = async (chatIdIn) => {
+      console.log(chatId);
+      await axios.post("http://localhost:8080/chat/get/id", {chatId: chatIdIn})
+      .then(function (response) {
+          //set chat data for reference
+          setChatData(response.data);
+          //set message data for ui output
+          setMsgOutput(response.data.messages)
+      })
+    }
+
+    useEffect(() => {
+      console.log("new chat", chatId);
+      getChatData(chatId)
+    },[chatId]);
+
+
+    if (chatData) {
+      return (
         <Box id="chat-container" sx={{display: "flex", flexDirection: "column", justifyContent: "flex-start", height: "100%"}}>
 
             <Box id="chat-header" sx={{backgroundColor: "#1d2230", padding: "1rem 1.5rem", borderRadius: "1.5rem"}}>
                 <Box id="chat-title" sx={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
-                    <Typography variant='h5' sx={{color: "#ffffff", fontWeight: "600"}}>{chatName}</Typography>
+                    <Typography variant='h5' sx={{color: "#ffffff", fontWeight: "600"}}>{chatData.name}</Typography>
                     <Box sx={{display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
-                        <Typography variant='body1' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", marginRight: "0.5rem"}}>{99}</Typography>
+                        <Typography variant='body1' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", marginRight: "0.5rem"}}>{chatData.members.length}</Typography>
                         <PeopleAltTwoToneIcon sx={{color: "#7888a4", marginRight: "0.5rem"}}/>
                         <Divider orientation="vertical" sx={{ bgcolor:"#677897"}}/>
-                        <Typography variant='body2' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", overflow: "hidden", maxWidth: "15rem", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{chatMembers.slice(2)}</Typography>
+                        <Typography variant='body2' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", overflow: "hidden", maxWidth: "15rem", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{chatData.members}</Typography>
                     </Box>
                 </Box>
             </Box>
 
-            <Box id="message-container" sx={{display: "flex", flexDirection: "column", flexGrow: 1, justifyContent: "flex-end"}}>
-                {msgOutput.map((message) => <Message key={message.id} messageData={message} />)}
+            <Box id="message-scroll-window" sx={{height: "100%",overflowY: "scroll"}}>
+              <Box id="message-container" sx={{display: "flex", flexDirection: "column-reverse", justifyContent: "flex-end"}}>
+                  {msgOutput.map((message) => <Message key={message.id} messageData={message} />)}
+              </Box>
             </Box>
+
 
             <Box id="chat-header" sx={{backgroundColor: "#1d2230", padding: "1rem 1.5rem", borderRadius: "1.5rem"}}>
                     <Box sx={{display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
@@ -163,7 +180,10 @@ export default function Chat() {
             </Box>
 
         </Box>
-    
-    );
+      );
+    } else {
+      return <div>Loading Chat</div>
+    }
+
 
 }

@@ -13,6 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import MapsUgcTwoToneIcon from '@mui/icons-material/MapsUgcTwoTone';
 import NewChat from './NewChat';
 import { Avatar } from '@mui/material';
+import axios from 'axios';
+
 
 //Icons
 import LocalPoliceTwoToneIcon from '@mui/icons-material/LocalPoliceTwoTone';
@@ -42,6 +44,7 @@ export default function InboxPage({title}) {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
     const [newChat, setNewChat] = useState(false);
+    const [userChats, setUserChats] = useState([]);
 
     const handleSelect = (e, newSelection) => {
         setSelectedChat(newSelection);
@@ -106,22 +109,22 @@ export default function InboxPage({title}) {
 
     };
 
-
-    const tempChatData = [
-        {
-            _id: "0",
-            chatName: "Test Chat 1",
-            users: [{name: "Zach Flegle", _id:"63cc338333a02d1e66d95569", username: "zflegs"}, {name: "Other User", _id:"u2", username: "user2"}],
-            messages: [{username: "zflegs", time: "0", msg: "Howdy!"}, {username: "user2", time: "1", msg: "Suh Dude!"}],
-        },
-        {
-            _id: "1",
-            chatName: "Test Chat 2",
-            users: [{name: "Zach Flegle", _id:"63cc338333a02d1e66d95569", username: "zflegs"}, {name: "Other User", _id:"u2", username: "user2"}, {name: "Some Guy", _id:"u3", username: "user3"}],
-            messages: [{username: "zflegs", time: "0", msg: "Howdy!"}, {username: "user2", time: "1", msg: "Suh Dude!"}, {username: "user3", time: "2", msg: "I'm here"}],
+    const getChatData = async () => {
+        let userChatsTemp = []
+        for (const chatId of user.chats) {
+            console.log(chatId);
+            await axios.post("http://localhost:8080/chat/get/id", {chatId: chatId})
+            .then(function (response) {
+                console.log(response.data);
+                userChatsTemp.push(response.data)
+            })
         }
-    ]
+        setUserChats(userChatsTemp);
+    }
 
+    useEffect(() => {
+        getChatData()
+    },[]);
 
     return (
 
@@ -158,11 +161,11 @@ export default function InboxPage({title}) {
                                     p: 3,
                                 }}
                                 >
-                                {tempChatData.map((chat, index) => (
+                                {userChats.map((chat, index) => (
                                     <Box sx={{display: "flex", width: "100%"}}>
                                         <ToggleButton component={Link} to={`/inbox/chat/${chat._id}`} value={chat._id} sx={{width: "80%", display: "flex", justifyContent: "flex-start", color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)", borderRadius: "1rem"}}>
-                                            <Avatar sx={{marginRight: "0.5rem"}}>{chat.chatName.charAt(0).toUpperCase()}</Avatar>
-                                            {chat.chatName}
+                                            <Avatar sx={{marginRight: "0.5rem"}}>{chat.name.charAt(0).toUpperCase()}</Avatar>
+                                            {chat.name}
                                         </ToggleButton>
 
                                         {/* <Box sx={{display: "flex", justifyContent: "flex-end", width: "20%"}}>
@@ -198,7 +201,7 @@ export default function InboxPage({title}) {
                         {/* {newChat ?  : <p>Current Selected Chat</p>} */}
                         <Routes>
                                 <Route exact path="/" element={<p>No Selection</p>}/>
-                                <Route exact path="/chat/:id" element={<Chat chatDataAll={tempChatData}/>}/>
+                                <Route exact path="/chat/:chatId" element={<Chat />}/>
                                 <Route exact path="/new-chat" element={<NewChat/>}/>
                         </Routes>
                     </Box>
