@@ -27,7 +27,8 @@ export default function TeamHome({managerId}) {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
  
-
+    console.log(managerId)
+    console.log(league);
     let team = league.teams.filter((team) => team.manager === managerId)[0];
 
     console.log(team);
