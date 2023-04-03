@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     BrowserRouter as Router,
     Routes,
@@ -7,6 +7,7 @@ import {
     Link
   } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
+import { resetUser } from '../../features/auth/authSlice';
 
 //Components
 import ModalContainer from "./modal_display/ModalContainer";
@@ -32,12 +33,9 @@ function PageRouter(props) {
     //props.newLeagueOpen
     //props.refreshUserData
     const {user} = useSelector((state) => state.auth);
-    const {leaguesAll, isLoading, isError, message} = useSelector((state) => state.leagues)
+    const {leaguesAll, isLoading, isSuccess, isError, message} = useSelector((state) => state.leagues)
+    const dispatch = useDispatch();
 
-    if (isLoading) { //Loading Rendering
-        //renders loading screen while loading array of user leagues
-        return <LoadingSpinner/>
-    }
 
     console.log(user.leagues)
     if (user.leagues.length < 1) { //User doesn't have any leagues created User has leagues

@@ -58,7 +58,7 @@ export const authSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = false;
             state.message = "";
-        }
+        },
     },
     extraReducers: (builder) => {
         builder

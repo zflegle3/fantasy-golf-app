@@ -17,6 +17,7 @@ import { socket } from '../../../features/socket';
 import ChatInput from './ChatInput';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { resetUser } from '../../../features/auth/authSlice';
 
 // import socketIO from 'socket.io-client';
 // import { socket } from './socket';
@@ -55,7 +56,7 @@ const StyledTextField = styled(TextField)({
 
 export default function Chat() {
     const theme = useTheme();
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     // const navigate = useNavigate();
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected);
     const {user} = useSelector((state) => state.auth);
@@ -66,6 +67,8 @@ export default function Chat() {
     const [chatUsers, setChatUsers] = useState([{name: "Zach Flegle", _id:"63cc338333a02d1e66d95569", username: "zflegs"}, {name: "Other User", _id:"u2", username: "user2"}, {name: "Some Guy", _id:"u3", username: "user3"}])
     const [msgOutput, setMsgOutput] = useState(null);
     const [chatData, setChatData] = useState(null);
+
+    // dispatch(resetUser);
 
     // const [isConnected, setIsConnected] = useState(socket.connected);
     // const [fooEvents, setFooEvents] = useState([]);

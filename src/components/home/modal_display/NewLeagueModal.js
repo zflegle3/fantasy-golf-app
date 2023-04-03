@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createLeague } from "../../../features/auth/authSlice";
+import { createLeague, resetUser } from "../../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 //SVGs & Images
@@ -10,7 +10,7 @@ import { ReactComponent as BackArrSvg} from "../../../images/icons/arrow-left.sv
 
 function NewLeagueModal(props) {
     //props.setNewLeagueOpen()
-    const {user} = useSelector((state) => state.auth);
+    const {user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
     const [step, setStep] = useState(1)
     const [name, setName] = useState("League Name");
     const [settings, setSettings] = useState({
@@ -194,9 +194,31 @@ function NewLeagueModal(props) {
             draft: draft,
         }
         dispatch(createLeague(payload));
-        navigate("/home");
+        // navigate("/home");
         // props.setNewLeagueOpen(false);
 
+    }
+
+    useEffect(() => {
+        // console.log("load");
+        // dispatch(resetUser);
+        return function cleanup() {
+            dispatch(resetUser());
+        };
+    },[]);
+
+
+
+    if (isLoading) {
+        return <div className="new-league-modal">One moment... we are creating your league</div>
+    }
+
+    if (isSuccess) {
+        return <div className="new-league-modal">Congrats! Your new legaue was created!</div>
+    }
+
+    if (isError) {
+        return <div className="new-league-modal">Whoops! We're were unable to create league. Please try again.</div>
     }
 
     if (step === 1) {

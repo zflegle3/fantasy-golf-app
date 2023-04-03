@@ -36,6 +36,9 @@ const createLeague = async (leagueData, token) => {
         }
     }//required for protected routes
     const response = await axios.post(process.env.REACT_APP_API_URL+"/league/create", leagueData, config);
+    if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+    }
     return response.data;
 }
 

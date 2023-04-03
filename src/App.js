@@ -14,6 +14,7 @@ import {
 import { getLeaguesAll, resetLeagues } from './features/leagues/leagueSlice';
 import { resetSelected } from './features/leagues/leagueSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { resetUser } from "./features/auth/authSlice"
 
 //Styles
 import './styles/Reset.css';
@@ -61,11 +62,25 @@ function App() {
   // const [fedexRanksData, setFedexRanksData] = useState();
   const dispatch = useDispatch();
   const [newLeagueOpen, setNewLeagueOpen] = useState(false);
-  const {user} = useSelector((state) => state.auth);
+  const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth);
 
   console.log(process.env);
 
+  useEffect(() => {
+    console.log("update user here");
+  });
+
+  // useEffect(() => {
+  //   //alerts message on update success or error
+  //   console.log("reset user")
+  //   if(isError || isSuccess) {
+  //       dispatch(resetUser())
+  //   };
+  // }, [user, isError, isSuccess, message])
+
+
   if (user) {
+    console.log(user);
     return (
       <div className="app-layout">
         <div className="app-container">
