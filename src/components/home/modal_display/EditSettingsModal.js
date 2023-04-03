@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import {closeModal} from "../../../features/modals/modalSlice"
 import LeagueEditForm from './LeagueEditForm';
+import { Box } from '@mui/material';
 
 
 
@@ -135,46 +136,50 @@ function EditSettingsModal(props) {
     }
 
 
-    if (formDisplay ==="draft") {
-        return (
-            <div className="edit-settings-modal-form" id="edit-settings-modal-form">
-                <div className="edit-settings-modal-tabs">
-                    <p id="league" onClick={navigateSettings}>League Settings</p>
-                    <p id="draft" onClick={navigateSettings}>Draft Settings</p>
-                    <p id="team" onClick={navigateSettings}>Team Settings</p>
-                    <p id="delete-league" onClick={deleteLeague}>Delete League</p>
-                </div>
+    return (
+        <Box>Settings Modal</Box>
+    )
+
+    // if (formDisplay ==="draft") {
+    //     return (
+    //         <div className="edit-settings-modal-form" id="edit-settings-modal-form">
+    //             <div className="edit-settings-modal-tabs">
+    //                 <p id="league" onClick={navigateSettings}>League Settings</p>
+    //                 <p id="draft" onClick={navigateSettings}>Draft Settings</p>
+    //                 <p id="team" onClick={navigateSettings}>Team Settings</p>
+    //                 <p id="delete-league" onClick={deleteLeague}>Delete League</p>
+    //             </div>
     
-                <LeagueEditForm />
-            </div>
-        );
-    } else if (formDisplay === "team") {
-        return (
-            <div className="edit-settings-modal-form" id="edit-settings-modal-form">
-                <div className="edit-settings-modal-tabs">
-                    <p id="league" onClick={navigateSettings}>League Settings</p>
-                    <p id="draft" onClick={navigateSettings}>Draft Settings</p>
-                    <p id="team" onClick={navigateSettings}>Team Settings</p>
-                    <p id="delete-league" onClick={deleteLeague}>Delete League</p>
-                </div>
+    //             <LeagueEditForm />
+    //         </div>
+    //     );
+    // } else if (formDisplay === "team") {
+    //     return (
+    //         <div className="edit-settings-modal-form" id="edit-settings-modal-form">
+    //             <div className="edit-settings-modal-tabs">
+    //                 <p id="league" onClick={navigateSettings}>League Settings</p>
+    //                 <p id="draft" onClick={navigateSettings}>Draft Settings</p>
+    //                 <p id="team" onClick={navigateSettings}>Team Settings</p>
+    //                 <p id="delete-league" onClick={deleteLeague}>Delete League</p>
+    //             </div>
     
-                <LeagueEditForm />
-            </div>
-        );
-    } else { //default is team settings
-        return (
-            <div className="edit-settings-modal-form" id="edit-settings-modal-form">
-                <div className="edit-settings-modal-tabs">
-                    <p id="league" onClick={navigateSettings}>League Settings</p>
-                    <p id="draft" onClick={navigateSettings}>Draft Settings</p>
-                    <p id="team" onClick={navigateSettings}>Team Settings</p>
-                    <p id="delete-league" onClick={deleteLeague}>Delete League</p>
-                </div>
+    //             <LeagueEditForm />
+    //         </div>
+    //     );
+    // } else { //default is team settings
+    //     return (
+    //         <div className="edit-settings-modal-form" id="edit-settings-modal-form">
+    //             <div className="edit-settings-modal-tabs">
+    //                 <p id="league" onClick={navigateSettings}>League Settings</p>
+    //                 <p id="draft" onClick={navigateSettings}>Draft Settings</p>
+    //                 <p id="team" onClick={navigateSettings}>Team Settings</p>
+    //                 <p id="delete-league" onClick={deleteLeague}>Delete League</p>
+    //             </div>
     
-                <LeagueEditForm />
-            </div>
-        );
-    }
+    //             <LeagueEditForm />
+    //         </div>
+    //     );
+    // }
     
 }
 

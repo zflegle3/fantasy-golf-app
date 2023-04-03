@@ -43,6 +43,7 @@ const createLeague = async (leagueData, token) => {
 }
 
 
+
 const authService = { register, login, logout, createLeague }
 
 export default authService;

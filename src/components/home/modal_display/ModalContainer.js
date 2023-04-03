@@ -19,6 +19,7 @@ function ModalContainer() {
         return ReactDom.createPortal(
             <>  
                 <div className="modal-overlay" onClick={close}></div>
+                <box></box>
                 <NewLeagueModal/>
             </>,
             document.getElementById("modal-portal")
@@ -29,6 +30,7 @@ function ModalContainer() {
             <>  
                 <div className="modal-overlay" onClick={close}></div>
                 <EditSettingsModal />
+                {/* <p>Settings</p> */}
             </>,
             document.getElementById("modal-portal")
         );

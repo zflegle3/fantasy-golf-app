@@ -60,8 +60,8 @@ function App() {
   // const [eventInfo, setLeaderboardInfo] = useState();
   // const [worldRanksData, setWorldRanksData] = useState();
   // const [fedexRanksData, setFedexRanksData] = useState();
-  const dispatch = useDispatch();
-  const [newLeagueOpen, setNewLeagueOpen] = useState(false);
+  // const dispatch = useDispatch();
+  // const [newLeagueOpen, setNewLeagueOpen] = useState(false);
   const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth);
 
   console.log(process.env);

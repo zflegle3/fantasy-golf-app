@@ -11,7 +11,7 @@ import LeagueSettings from './sections/LeagueSettings';
 
 export default function LeagueHome() {
     // const dispatch = useDispatch();
-    const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
+    const {league} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
  
 

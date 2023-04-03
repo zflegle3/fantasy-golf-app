@@ -69,6 +69,9 @@ Main Document Styles
   /* Fonts */
   font-family: 'Mukta', sans-serif;
   box-sizing: border-box;
+
+  --btn-gradient: linear-gradient(315deg,#00b7b3,#4ce2a7);
+  --btn-gradient-flip: linear-gradient(100deg,#00b7b3,#4ce2a7);
 }
 
 /* App Container Styles
