@@ -221,10 +221,15 @@ function NewLeagueModal(props) {
         return <div className="new-league-modal">Whoops! We're were unable to create league. Please try again.</div>
     }
 
+    const handleBack = (e) => {
+        e.preventDefault();
+        props.setLeagueType(null);
+    }
+
     if (step === 1) {
         return(
             <div className="new-league-modal">
-                <div className="step-back disable"> 
+                <div className="step-back" onClick={handleBack}> 
                     <BackArrSvg />
                 </div>
                 <div className="new-league-header">

@@ -32,6 +32,30 @@ export const updateLeagueSettings = createAsyncThunk("/league/update/settings", 
 
 })
 
+//Update an existing league's settings
+export const updateLeaguePasscodeInput = createAsyncThunk("/league/update/passcode-in", async (leagueData, thunkAPI)=> {
+    try {
+        const token = thunkAPI.getState().auth.user.token; //token required b/c protected route
+        return await leagueSelectedService.updateLeaguePasscodeInput(leagueData,token);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+
+})
+
+//Update an existing league's settings
+export const updateLeaguePasscodeAuto = createAsyncThunk("/league/update/passcode-auto", async (leagueData, thunkAPI)=> {
+    try {
+        const token = thunkAPI.getState().auth.user.token; //token required b/c protected route
+        return await leagueSelectedService.updateLeaguePasscodeAuto(leagueData,token);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+
+})
+
 export const leagueSelectedSlice = createSlice({
     name: "leagueData",
     initialState,
@@ -64,6 +88,34 @@ export const leagueSelectedSlice = createSlice({
                 state.league = action.payload;
             })
             .addCase(updateLeagueSettings.rejected, (state, action) => {
+                state.leagueLoading = false;
+                state.leagueError = true;
+                state.leagueMessage = action.payload;
+            })
+            //Update League Passcode with Admin Input
+            .addCase(updateLeaguePasscodeInput.pending, (state) => {
+                state.leagueLoading = true;
+            })
+            .addCase(updateLeaguePasscodeInput.fulfilled, (state, action) => {
+                state.leagueLoading = false;
+                state.leagueSuccess = true; 
+                state.league = action.payload;
+            })
+            .addCase(updateLeaguePasscodeInput.rejected, (state, action) => {
+                state.leagueLoading = false;
+                state.leagueError = true;
+                state.leagueMessage = action.payload;
+            })
+            //Update League Passcode, autogenerate
+            .addCase(updateLeaguePasscodeAuto.pending, (state) => {
+                state.leagueLoading = true;
+            })
+            .addCase(updateLeaguePasscodeAuto.fulfilled, (state, action) => {
+                state.leagueLoading = false;
+                state.leagueSuccess = true; 
+                state.league = action.payload;
+            })
+            .addCase(updateLeaguePasscodeAuto.rejected, (state, action) => {
                 state.leagueLoading = false;
                 state.leagueError = true;
                 state.leagueMessage = action.payload;

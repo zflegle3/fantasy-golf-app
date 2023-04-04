@@ -13,7 +13,7 @@ import { resetUser } from '../../features/auth/authSlice';
 import ModalContainer from "./modal_display/ModalContainer";
 // import League from "./league_display/League";
 // import userEvent from '@testing-library/user-event';
-import CreateLeague from "./league_display/sections/CreateLeague";
+import CreateLeague from "./new_league_display/CreateLeague";
 // import AccountSettings from "../AccountSettings";
 // import MockDraft from "../MockDraft";
 // import Inbox from "../Inbox";
@@ -24,6 +24,7 @@ import LeaguePage from './league_display/LeaguePage';
 import SettingsPage from './settings_display/SettingsPage';
 import HomePage from './home_display/HomePage';
 import InboxPage from './chat_display/InboxPage';
+import NewLeagueRouter from "./new_league_display/NewLeagueRouter";
 
 function PageRouter(props) {
     //props.db
@@ -44,13 +45,13 @@ function PageRouter(props) {
             <div className="center-panel-container">
                 <Routes>
                     <Route exact path="/home/*" element={<HomePage title="Golf Home Dashboard"/>}/>
-                    <Route exact path="/create-league" element={<CreateLeague/>}/>
+                    <Route exact path="/new-league/*" element={<NewLeagueRouter/>}/>
                     <Route exact path="/mock-draft" element={<BlankPage title="Mock Draft"/>}/>
                     <Route exact path="/inbox/*" element={<InboxPage title="Inbox"/>}/>
                     <Route exact path="/account-settings/*" element={<SettingsPage title="Account Settings"/>}/>
                     <Route path="*" element={<Navigate to="/create-league" replace />}/>
                 </Routes>
-                <ModalContainer userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/>
+                {/* <ModalContainer userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/> */}
             </div>
         )
     } else {  //User has leagues
@@ -60,13 +61,13 @@ function PageRouter(props) {
                     <Routes>
                         <Route exact path="/home/*" element={<HomePage title="Golf Home Dashboard"/>}/>
                         <Route exact path="/league/:id/*" element={<LeaguePage title="League Name"/>}/>
-                        <Route exact path="/create-league" element={<CreateLeague/>}/>
+                        <Route exact path="/new-league/*" element={<NewLeagueRouter/>}/>
                         <Route exact path="/mock-draft" element={<BlankPage title="Mock Draft"/>}/>
                         <Route exact path="/inbox/*" element={<InboxPage title="Inbox"/>}/>
                         <Route exact path="/account-settings/*" element={<SettingsPage title="Account Settings"/>}/>
                         <Route path="*" element={<Navigate to={`/league/${user.leagues[0].id}`} replace />}/>
                     </Routes>
-                <ModalContainer userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/>
+                {/* <ModalContainer userData={props.userData} userId={props.userId} db={props.db} refreshUserData={props.refreshUserData} setNewLeagueOpen={props.setNewLeagueOpen} newLeagueOpen={props.newLeagueOpen}/> */}
             </div>
         )
     }

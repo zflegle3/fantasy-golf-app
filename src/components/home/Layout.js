@@ -145,7 +145,7 @@ export default function Layout() {
         {
             id: 4, 
             title: "New League",
-            href: "/create-league",
+            href: "/new-league",
             icon: AddBoxIcon,
         },
     ]

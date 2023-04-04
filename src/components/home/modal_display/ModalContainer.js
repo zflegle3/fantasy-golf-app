@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../../../features/modals/modalSlice';
 import ReactDom from "react-dom";
 //Components
-import NewLeagueModal from "./NewLeagueModal";
+import NewLeagueModal from "../new_league_display/NewLeagueModal";
 import EditSettingsModal from './EditSettingsModal';
 
 

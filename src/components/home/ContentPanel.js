@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ModalContainer from "./modal_display/ModalContainer";
 import League from "./league_display/League";
 import userEvent from '@testing-library/user-event';
-import CreateLeague from "./league_display/sections/CreateLeague";
+import CreateLeague from "./new_league_display/CreateLeague";
 import AccountSettings from "../AccountSettings";
 import MockDraft from "../MockDraft";
 import Inbox from "../Inbox";
