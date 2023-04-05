@@ -1,6 +1,10 @@
 {
   "name": "fantasy-golf-app",
   "version": "0.1.0",
+  "engines": {
+    "node": "18.15.0",
+    "npm": "9.5.0"
+  },
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -24,7 +28,6 @@
     "react-twitter-embed": "^4.0.4",
     "sass": "^1.55.0",
     "socket.io": "^4.6.1",
-    "socket.io-client": "^4.6.1",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
