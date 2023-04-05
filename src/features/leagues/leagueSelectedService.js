@@ -55,8 +55,23 @@ const updateLeaguePasscodeAuto = async (leagueData, token) => {
     return response.data;
 }
 
+//Update League Settings
+const updateLeagueTeamSettings = async (leagueData, token) => {
+    console.log(leagueData);
+    let config = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }//required for protected routes
+    const response = await axios.put(process.env.REACT_APP_API_URL+"/league/update/team", leagueData, config);
+    if (response.data) {
+        localStorage.setItem("leagueSelected", JSON.stringify(response.data));
+    }
+    return response.data;
+}
+
 const leagueSelectedService = {
-    getLeagueOne, updateLeagueSettings, updateLeaguePasscodeInput, updateLeaguePasscodeAuto
+    getLeagueOne, updateLeagueSettings, updateLeaguePasscodeInput, updateLeaguePasscodeAuto, updateLeagueTeamSettings
 }
 
 export default leagueSelectedService

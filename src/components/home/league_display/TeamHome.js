@@ -19,6 +19,10 @@ import LongMenu from './LongMenu';
 import TeamRoster from "./TeamRoster"
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+import { Button } from '@mui/material';
+import { updateLeagueTeamSettings } from "../../../features/leagues/leagueSelectedSlice";
 
 
 
@@ -26,16 +30,38 @@ import EditIcon from '@mui/icons-material/Edit';
 export default function TeamHome({managerId}) {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
- 
-    console.log(managerId)
-    console.log(league.teams);
-    let team = league.teams.filter((team) => team.manager.id == managerId)[0];
-
-    console.log(team);
-
+    const [open, setOpen] = useState(false);
+    const [teamNameIn, setTeamNameIn] = useState("");
+    const dispatch = useDispatch();
+    let team = league.teams.filter((team) => team.manager.id === managerId)[0];
     const options = [
         'The Masters, Augusta National',
     ];
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(teamNameIn);
+        dispatch(updateLeagueTeamSettings({
+            managerId: user._id,
+            leagueId: league._id,
+            nameIn: teamNameIn,
+        }));
+    }
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: '#2d3649',
+        // bgcolor: "#ffffff",
+        boxShadow: "1px 1px 15px #18202f",
+        borderRadius: "2rem",
+        p: 4,
+    };
 
     return (
         <div id="league-home-container">
@@ -46,7 +72,7 @@ export default function TeamHome({managerId}) {
                     <Typography variant="body1" sx={{ color: "#fff"}}>{team.manager.username}</Typography>
                 </Box>
                 {managerId === user._id ?  
-                    <Fab variant="extended" size="small" aria-label="settings">
+                    <Fab variant="extended" size="small" aria-label="settings" onClick={handleOpen}>
                         <SettingsIcon />
                     </Fab> 
                     : null
@@ -64,6 +90,30 @@ export default function TeamHome({managerId}) {
 
                 <TeamRoster team={team} />
             </Box>
+
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography variant="h5" sx={{ color: "#ffffff", fontWeight: "600"}}>Team Settings</Typography>
+                    <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Update your team name</Typography>
+                    <Box sx={{display: "flex", flexDirection: "column", gap:"1rem"}}>
+
+                        <TextField id="team-name-edit" label="Team Name" variant="filled" placeholder={team.name} onChange={e => setTeamNameIn(e.target.value)}/>
+
+
+
+                        <Box className="form-btn-container" sx={{width: "100%"}}>
+                            <Button sx={{width: "100%"}} onClick={handleSubmit}>Submit</Button>
+                        </Box>
+
+                    </Box>
+
+                </Box>
+            </Modal>
 
         </div>
     

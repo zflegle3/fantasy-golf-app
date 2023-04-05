@@ -56,6 +56,18 @@ export const updateLeaguePasscodeAuto = createAsyncThunk("/league/update/passcod
 
 })
 
+//Update an existing league's settings
+export const updateLeagueTeamSettings = createAsyncThunk("/league/update/team", async (leagueData, thunkAPI)=> {
+    try {
+        const token = thunkAPI.getState().auth.user.token; //token required b/c protected route
+        return await leagueSelectedService.updateLeagueTeamSettings(leagueData,token);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+
+})
+
 export const leagueSelectedSlice = createSlice({
     name: "leagueData",
     initialState,
@@ -116,6 +128,20 @@ export const leagueSelectedSlice = createSlice({
                 state.league = action.payload;
             })
             .addCase(updateLeaguePasscodeAuto.rejected, (state, action) => {
+                state.leagueLoading = false;
+                state.leagueError = true;
+                state.leagueMessage = action.payload;
+            })
+            //Update Team settings within a league
+            .addCase(updateLeagueTeamSettings.pending, (state) => {
+                state.leagueLoading = true;
+            })
+            .addCase(updateLeagueTeamSettings.fulfilled, (state, action) => {
+                state.leagueLoading = false;
+                state.leagueSuccess = true; 
+                state.league = action.payload;
+            })
+            .addCase(updateLeagueTeamSettings.rejected, (state, action) => {
                 state.leagueLoading = false;
                 state.leagueError = true;
                 state.leagueMessage = action.payload;
