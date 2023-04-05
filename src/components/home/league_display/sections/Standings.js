@@ -37,7 +37,7 @@ export default function Standings() {
                         <Avatar >{item.name.charAt(0).toUpperCase()}</Avatar>
                         <Box sx={{display:"flex", flexDirection: "column", alignItems: "flex-start"}}>
                             <Typography variant="body1" sx={{margin: "0 0.5rem", color: "#fff", fontWeight: "600"}}>{item.name}</Typography>
-                            {item.manager ? <Typography variant="overline" sx={{margin: "0 0.5rem"}}>{item.manager}</Typography> : <Typography variant="overline" sx={{margin: "0 0.5rem"}}>Manager {index}</Typography>}
+                            {item.manager ? <Typography variant="overline" sx={{margin: "0 0.5rem"}}>{item.manager.username}</Typography> : <Typography variant="overline" sx={{margin: "0 0.5rem"}}>Manager {index}</Typography>}
                         </Box>
                         <Box sx={{display:"flex", flexGrow: 1, flexDirection: "row", justifyContent: "flex-end"}}>
                             <Typography variant="h5" sx={{margin: "0 1rem 0 0", color: "#fff"}}>0</Typography>

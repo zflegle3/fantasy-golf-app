@@ -43,7 +43,22 @@ const createLeague = async (leagueData, token) => {
 }
 
 
+//Create new League
+const joinLeague = async (leagueData, token) => {
+    let config = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }//required for protected routes
+    const response = await axios.put(process.env.REACT_APP_API_URL+"/league/join", leagueData, config);
+    if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    return response.data;
+}
 
-const authService = { register, login, logout, createLeague }
+
+
+const authService = { register, login, logout, createLeague, joinLeague }
 
 export default authService;

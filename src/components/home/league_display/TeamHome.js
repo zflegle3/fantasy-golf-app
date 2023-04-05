@@ -28,8 +28,8 @@ export default function TeamHome({managerId}) {
     const {user} = useSelector((state) => state.auth)
  
     console.log(managerId)
-    console.log(league);
-    let team = league.teams.filter((team) => team.manager === managerId)[0];
+    console.log(league.teams);
+    let team = league.teams.filter((team) => team.manager.id == managerId)[0];
 
     console.log(team);
 
@@ -43,7 +43,7 @@ export default function TeamHome({managerId}) {
                 <Avatar sx={{marginRight: "1rem"}}>{team.name.charAt(0).toUpperCase()}</Avatar>
                 <Box sx={{ display: "flex", flexDirection: "column", marginRight: "1rem"}}>
                     <Typography variant="h4" sx={{ color: "#fff", fontWeight: "600", marginRight: "0.5rem"}}>{team.name}</Typography>
-                    <Typography variant="body1" sx={{ color: "#fff"}}>{team.manager}</Typography>
+                    <Typography variant="body1" sx={{ color: "#fff"}}>{team.manager.username}</Typography>
                 </Box>
                 {managerId === user._id ?  
                     <Fab variant="extended" size="small" aria-label="settings">

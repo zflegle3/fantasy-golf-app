@@ -46,7 +46,17 @@ export const createLeague = createAsyncThunk("league/create", async (leagueData,
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         return thunkAPI.rejectWithValue(message);
     }
+})
 
+//Create a new League
+export const joinLeague = createAsyncThunk("league/join", async (leagueData, thunkAPI)=> {
+    try {
+        const token = thunkAPI.getState().auth.user.token; //token required b/c protected route
+        return await authService.joinLeague(leagueData,token);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
 })
 
 export const authSlice = createSlice({
@@ -97,6 +107,7 @@ export const authSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
             })
+            //Create a new league
             .addCase(createLeague.pending, (state) => {
                 state.isLoading = true; 
             })
@@ -111,6 +122,24 @@ export const authSlice = createSlice({
                 state.isSuccess = false;
                 state.isError = true;
                 state.message = "We were unable to create a new league";  
+            })
+            //Join an existing league
+            .addCase(joinLeague.pending, (state) => {
+                state.isLoading = true; 
+            })
+            .addCase(joinLeague.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                //returns an updated user with new league data
+                state.user = action.payload;
+                window.alert("Neato! League joined successfully!")
+            })
+            .addCase(joinLeague.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = false;
+                state.isError = true;
+                state.message = "We were unable to join the league";  
+                window.alert("We were unable to join the league, please confirm your league credentials and that you have not already joined the league")
             })
 
             
