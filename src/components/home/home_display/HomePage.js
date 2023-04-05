@@ -124,7 +124,7 @@ export default function HomePage({title}) {
                         </div>
 
                     </div>
-
+{/* 
                     <Box 
                         component="main" 
                         sx={{ 
@@ -138,14 +138,14 @@ export default function HomePage({title}) {
                             overflowY: "scroll",
                         }}
                     >
-                        {/* <TwitterTimelineEmbed 
+                        <TwitterTimelineEmbed 
                             sourceType="profile" 
                             screenName="TheMasters"
                             // options={} 
                             // backgroundColor="rgba(163,187,211,0.05)"
                             theme="dark"
-                        /> */}
-                    </Box>
+                        />
+                    </Box> */}
 
             </div>
 

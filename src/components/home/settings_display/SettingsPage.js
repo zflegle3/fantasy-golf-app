@@ -93,7 +93,7 @@ export default function SettingsPage({title}) {
                                     <Route exact path="/details" element={<AccountDetails />}/>
                                     <Route exact path="/password" element={<AccountPassword />}/>
                                     <Route exact path="profile" element={<AccountProfile />}/>
-                                    <Route exact path="preferences" element={<AccountPreferences/>}/>
+                                    {/* <Route exact path="preferences" element={<AccountPreferences/>}/> */}
                                     <Route path="*" element={<Navigate to={`/account-settings/details`} replace />}/>
                                 </Routes>
                             </div>
@@ -137,9 +137,9 @@ export default function SettingsPage({title}) {
                                     <ToggleButton component={Link} to={`/account-settings/profile`} value="profile" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
                                         PROFILE
                                     </ToggleButton>
-                                    <ToggleButton component={Link} to={`/account-settings/preferences`} value="preferences" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
+                                    {/* <ToggleButton component={Link} to={`/account-settings/preferences`} value="preferences" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
                                         PREFERENCES
-                                    </ToggleButton>
+                                    </ToggleButton> */}
                                 </StyledToggleButtonGroup>
                             </div>
 

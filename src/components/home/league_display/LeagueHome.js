@@ -20,7 +20,7 @@ export default function LeagueHome() {
     return (
         <div id="league-home-container">
 
-            {league.managers.length < league.teams.length ? <LeagueInvites /> : null}
+            {league.managers.length < league.teams.length && user._id === league.admin ? <LeagueInvites /> : null}
             <Leaderboard />
             <Standings />
             <LeagueActivity/>

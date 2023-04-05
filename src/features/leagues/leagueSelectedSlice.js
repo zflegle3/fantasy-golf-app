@@ -60,7 +60,7 @@ export const updateLeaguePasscodeAuto = createAsyncThunk("/league/update/passcod
 export const updateLeagueTeamSettings = createAsyncThunk("/league/update/team", async (leagueData, thunkAPI)=> {
     try {
         const token = thunkAPI.getState().auth.user.token; //token required b/c protected route
-        return await leagueSelectedService.updateLeagueTeamSettings(leagueData,token);
+        return await leagueSelectedService.updateLeagueTeamSettings(leagueData, token);
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         return thunkAPI.rejectWithValue(message);

@@ -44,12 +44,13 @@ function NewLeagueRouter(props) {
         return (
             <Box sx={{display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", backgroundColor: "#181c28"}}>
                 <div className="new-league-modal">
-                    <Typography variant="h6">Create a new or join an existing Legaue?</Typography>
-                    <Box sx={{display: "flex", flexDirection: "column"}}>
+                    <Typography variant="h5" sx={{marginBottom: "2rem", color: "#ffffff", fontWeight: "600"}}>Choose How To Start Your League</Typography>
+                    <Box sx={{display: "flex", flexDirection: "column", width: "100%", gap: "1rem"}}>
                         <Button
                             id="create"
                             variant= "outlined"
                             onClick={handleLeagueTypeSelect}
+                            sx={{padding: "1rem", fontWeight: 600}}
                         >
                         Create a League
                         </Button>
@@ -58,6 +59,7 @@ function NewLeagueRouter(props) {
                             id="join"
                             variant= "outlined"
                             onClick={handleLeagueTypeSelect}
+                            sx={{padding: "1rem", fontWeight: 600}}
                         >
                         Join an Existing League
                         </Button>

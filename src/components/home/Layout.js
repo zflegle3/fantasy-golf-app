@@ -130,18 +130,18 @@ export default function Layout() {
             href: "/home",
             icon: HomeIcon,
         },
-        {
-            id: 2, 
-            title: "Inbox",
-            href: "/inbox",
-            icon: MailIcon,
-        },
-        {
-            id: 3, 
-            title: "Mock Draft",
-            href: "/mock-draft",
-            icon: DvrIcon,
-        },
+        // {
+        //     id: 2, 
+        //     title: "Inbox",
+        //     href: "/inbox",
+        //     icon: MailIcon,
+        // },
+        // {
+        //     id: 3, 
+        //     title: "Mock Draft",
+        //     href: "/mock-draft",
+        //     icon: DvrIcon,
+        // },
         {
             id: 4, 
             title: "New League",
@@ -150,23 +150,6 @@ export default function Layout() {
         },
     ]
 
-    const leaguesTest = [
-        {
-            id: 1, 
-            title: "Fantasy Lizard Creatures",
-            icon: "F",
-        },
-        {
-            id: 2, 
-            title: "Test League Too",
-            icon: "T",
-        },
-        {
-            id: 3, 
-            title: "Deez League",
-            icon: "D",
-        },
-    ]
 
     const handleEnter = (e) => {
         setOpen(true);
@@ -211,12 +194,13 @@ export default function Layout() {
                             minWidth: 0,
                             mr: open ? 3 : 'auto',
                             justifyContent: 'center',
+                            color: "primary"
                             }}
                         >
-                            <GolfCourseIcon sx={{ fill:"#ffffff" }}/>
+                            <GolfCourseIcon sx={{ fill:"#1976d2" }}/>
                         </ListItemIcon>
                         
-                        <Typography sx={{ opacity: open ? 1 : 0, color:"#ffffff" }} variant="h6" noWrap component="div">Masters Golf App</Typography>
+                        <Typography sx={{ opacity: open ? 1 : 0, color:"#1976d2", fontWeight: "600" }} variant="h5" noWrap component="div">Masters Fantasy</Typography>
                         {/* <ListItemText primary="Masters Golf App" sx={{ opacity: open ? 1 : 0, color:"#ffffff", variant:"h3" }} /> */}
 
                     </ListItem>

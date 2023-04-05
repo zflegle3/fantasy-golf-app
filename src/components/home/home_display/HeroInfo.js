@@ -13,7 +13,9 @@ export default function HeroInfo() {
                 <Typography variant='h6' sx={{color: "#000000"}}>Augusta National Golf Club</Typography>
                 <Typography variant='h6' sx={{color: "#000000", marginBottom: "1rem"}}>Thu, Apr 6, 2023 – Sun, Apr 9, 2023</Typography>
                 <div className="form-btn-container">
-                        <button onClick={console.log("submit")}>WATCH LIVE NOW</button>
+                        <a href="https://www.masters.com/en_US/live/index.html">
+                            <button>WATCH LIVE NOW</button>
+                        </a>
                 </div>
             </Box>
 
