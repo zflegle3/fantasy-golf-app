@@ -31,7 +31,7 @@ export default function GolfRanks({managerId}) {
     const options = ["All","Available","Rostered"]
 
     const getRanks = async () => {
-        await axios.get("http://localhost:8080/player/all")
+        await axios.get("https://fantasy-golf-41.herokuapp.com/player/all")
         .then(function (response) {
             console.log(response.data);
             let filteredRanks = response.data.filter((element, index) => 

@@ -78,6 +78,11 @@ function App() {
   //   };
   // }, [user, isError, isSuccess, message])
 
+  useEffect(() => {
+    
+  }, [])
+
+
 
   if (user) {
     console.log(user);

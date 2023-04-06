@@ -28,7 +28,7 @@ export default function FedExRanks({managerId}) {
     const [standings, setStandings] = useState(null);
 
     const getStandings = async () => {
-        await axios.get("http://localhost:8080/player/all")
+        await axios.get("https://fantasy-golf-41.herokuapp.com/player/all")
         .then(function (response) {
             let filteredStandings = response.data.filter((element, index) => 
                 element.fedex.standing != null

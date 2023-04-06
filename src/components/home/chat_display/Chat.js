@@ -124,7 +124,8 @@ export default function Chat() {
 
     const getChatData = async (chatIdIn) => {
       console.log(chatId);
-      await axios.post("http://localhost:8080/chat/get/id", {chatId: chatIdIn})
+      // await axios.post("http://localhost:8080/chat/get/id", {chatId: chatIdIn})
+      await axios.post("https://fantasy-golf-41.herokuapp.com/chat/get/id", {chatId: chatIdIn})
       .then(function (response) {
           //set chat data for reference
           setChatData(response.data);

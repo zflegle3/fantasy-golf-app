@@ -120,8 +120,9 @@ export default function LeagueChat({chatId}) {
 
 
     const getChatData = async (chatIdIn) => {
-      console.log(chatId);
-      await axios.post("http://localhost:8080/chat/get/id", {chatId: chatIdIn})
+      console.log(chatIdIn);
+      // await axios.post("http://localhost:8080/chat/get/id", {chatId: chatIdIn})
+      await axios.post("https://fantasy-golf-41.herokuapp.com/chat/get/id", {chatId: chatIdIn})
       .then(function (response) {
           //set chat data for reference
           setChatData(response.data);
@@ -132,7 +133,7 @@ export default function LeagueChat({chatId}) {
 
     useEffect(() => {
       console.log("new chat", chatId);
-      getChatData(chatId)
+      getChatData(chatId);
     },[chatId]);
 
 

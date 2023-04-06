@@ -9,7 +9,7 @@ const getLeagueOne = async (leagueId, token) => {
     let payload = {
         _id: leagueId,
     }
-    const response = await axios.post("http://localhost:8080/league/getOne", payload, config,);
+    const response = await axios.post("https://fantasy-golf-41.herokuapp.com/league/getOne", payload, config,);
     return response.data;
 }
 
