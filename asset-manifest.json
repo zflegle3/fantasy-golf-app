@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/masters-fantasy/static/css/main.8fa32301.css",
+    "main.js": "/masters-fantasy/static/js/main.a2a1476b.js",
+    "static/media/practice-green-1.JPG": "/masters-fantasy/static/media/practice-green-1.89fe8db730e2f40b5e5b.JPG",
+    "static/media/9-hole-1.JPG": "/masters-fantasy/static/media/9-hole-1.def14d623da8562c0f34.JPG",
+    "static/media/greaser_dj.JPG": "/masters-fantasy/static/media/greaser_dj.737e6e7003ae7773fff6.JPG",
+    "static/media/3-fairway-2-test.JPG": "/masters-fantasy/static/media/3-fairway-2-test.f68bc4e7184a1f44793a.JPG",
+    "static/media/masters-hero-2.png": "/masters-fantasy/static/media/masters-hero-2.eeaca1782a3b15bbcf5e.png",
+    "static/media/golf-pga.svg": "/masters-fantasy/static/media/golf-pga.4c91c4ffa495a7609a061bd36aaea1e4.svg",
+    "static/media/snake.png": "/masters-fantasy/static/media/snake.ff1d0c76eaaf0166d1ae.png",
+    "index.html": "/masters-fantasy/index.html",
+    "static/media/arrow-left.svg": "/masters-fantasy/static/media/arrow-left.36bec1667db89cdb26a7186d0b9ab783.svg",
+    "main.8fa32301.css.map": "/masters-fantasy/static/css/main.8fa32301.css.map",
+    "main.a2a1476b.js.map": "/masters-fantasy/static/js/main.a2a1476b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8fa32301.css",
+    "static/js/main.a2a1476b.js"
+  ]
+}
