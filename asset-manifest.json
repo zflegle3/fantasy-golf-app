@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/fantasy-golf-app/static/css/main.57b48c04.css",
-    "main.js": "/fantasy-golf-app/static/js/main.91080465.js",
+    "main.js": "/fantasy-golf-app/static/js/main.d7923c8c.js",
     "static/media/practice-green-1.JPG": "/fantasy-golf-app/static/media/practice-green-1.89fe8db730e2f40b5e5b.JPG",
     "static/media/9-hole-1.JPG": "/fantasy-golf-app/static/media/9-hole-1.def14d623da8562c0f34.JPG",
     "static/media/greaser_dj.JPG": "/fantasy-golf-app/static/media/greaser_dj.737e6e7003ae7773fff6.JPG",
@@ -12,10 +12,10 @@
     "index.html": "/fantasy-golf-app/index.html",
     "static/media/arrow-left.svg": "/fantasy-golf-app/static/media/arrow-left.36bec1667db89cdb26a7186d0b9ab783.svg",
     "main.57b48c04.css.map": "/fantasy-golf-app/static/css/main.57b48c04.css.map",
-    "main.91080465.js.map": "/fantasy-golf-app/static/js/main.91080465.js.map"
+    "main.d7923c8c.js.map": "/fantasy-golf-app/static/js/main.d7923c8c.js.map"
   },
   "entrypoints": [
     "static/css/main.57b48c04.css",
-    "static/js/main.91080465.js"
+    "static/js/main.d7923c8c.js"
   ]
 }
