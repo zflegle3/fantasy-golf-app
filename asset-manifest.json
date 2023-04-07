@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/fantasy-golf-app/static/css/main.57b48c04.css",
-    "main.js": "/fantasy-golf-app/static/js/main.adc9df63.js",
+    "main.js": "/fantasy-golf-app/static/js/main.6916b782.js",
     "static/media/practice-green-1.JPG": "/fantasy-golf-app/static/media/practice-green-1.89fe8db730e2f40b5e5b.JPG",
     "static/media/9-hole-1.JPG": "/fantasy-golf-app/static/media/9-hole-1.def14d623da8562c0f34.JPG",
     "static/media/greaser_dj.JPG": "/fantasy-golf-app/static/media/greaser_dj.737e6e7003ae7773fff6.JPG",
     "static/media/3-fairway-2-test.JPG": "/fantasy-golf-app/static/media/3-fairway-2-test.f68bc4e7184a1f44793a.JPG",
-    "static/media/masters-hero-2.png": "/fantasy-golf-app/static/media/masters-hero-2.eeaca1782a3b15bbcf5e.png",
+    "static/media/3-fairway-1.JPG": "/fantasy-golf-app/static/media/3-fairway-1.432ba3805d995c290f08.JPG",
     "static/media/golf-pga.svg": "/fantasy-golf-app/static/media/golf-pga.4c91c4ffa495a7609a061bd36aaea1e4.svg",
     "static/media/snake.png": "/fantasy-golf-app/static/media/snake.ff1d0c76eaaf0166d1ae.png",
     "index.html": "/fantasy-golf-app/index.html",
     "static/media/arrow-left.svg": "/fantasy-golf-app/static/media/arrow-left.36bec1667db89cdb26a7186d0b9ab783.svg",
     "main.57b48c04.css.map": "/fantasy-golf-app/static/css/main.57b48c04.css.map",
-    "main.adc9df63.js.map": "/fantasy-golf-app/static/js/main.adc9df63.js.map"
+    "main.6916b782.js.map": "/fantasy-golf-app/static/js/main.6916b782.js.map"
   },
   "entrypoints": [
     "static/css/main.57b48c04.css",
-    "static/js/main.adc9df63.js"
+    "static/js/main.6916b782.js"
   ]
 }
