@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Leaderboard from './sections/Leaderboard';
+import MiniLeaderboard from './sections/MiniLeaderboard';
 import Standings from './sections/Standings';
 import LeagueActivity from './sections/LeagueActivity';
 import LeagueSettings from './sections/LeagueSettings';
@@ -15,23 +14,14 @@ export default function LeagueHome() {
     const {league} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
  
-
-    console.log(league);
     return (
-        <div id="league-home-container">
-
-            {league.managers.length < league.teams.length && user._id === league.admin ? <LeagueInvites /> : null}
-            <Leaderboard />
+        <Box id="league-home-container">
             <Standings />
+            <MiniLeaderboard />
+            {league.managers.length < league.teams.length && user._id === league.admin ? <LeagueInvites /> : null}
             <LeagueActivity/>
             <LeagueSettings/>
-
-            {/* <div className='test-div'></div>
-            <div className='test-div'></div>
-            <div className='test-div'></div>
-            <div className='test-div'></div> */}
-
-        </div>
+        </Box>
     
     );
 

@@ -107,10 +107,10 @@ export default function HomePage({title}) {
                                     <EmojiEventsTwoToneIcon sx={{ marginRight:"0.5rem"}}/>
                                     FEDEX CUP STANDINGS
                                 </ToggleButton>
-                                <ToggleButton component={Link} to={`/home/stats`}  value="stats" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
+                                {/* <ToggleButton component={Link} to={`/home/stats`}  value="stats" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
                                     <QueryStatsTwoToneIcon sx={{ marginRight:"0.5rem"}}/>
                                     RESEARCH
-                                </ToggleButton>
+                                </ToggleButton> */}
                             </StyledToggleButtonGroup>
                         </div>
 
@@ -119,7 +119,7 @@ export default function HomePage({title}) {
                                 <Route exact path="/" element={<GolfHome/>}/>
                                 <Route exact path="/world-ranks" element={<GolfRanks />}/>
                                 <Route exact path="/fedex-ranks" element={<FedExRanks />}/>
-                                <Route exact path="/stats" element={<Stats />}/>
+                                {/* <Route exact path="/stats" element={<Stats />}/> */}
                             </Routes>
                         </div>
 

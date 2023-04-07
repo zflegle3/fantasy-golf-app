@@ -23,7 +23,6 @@ function NewLeagueRouter(props) {
 
     const handleLeagueTypeSelect = (e) => {
         e.preventDefault();
-        console.log(e.target.id);
         setLeagueType(e.target.id);
     };
 

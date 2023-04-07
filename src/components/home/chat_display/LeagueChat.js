@@ -79,9 +79,7 @@ export default function LeagueChat({chatId}) {
 
     const handleSend = (e) => {
         e.preventDefault();
-        console.log(msgInput);
         if (msgInput.length > 0){
-          console.log("Send message");
           const messageOut = {
               id: uuidv4(),
               chatId: chatId,
@@ -102,7 +100,6 @@ export default function LeagueChat({chatId}) {
       socket.emit("join_room", user.username, chatId);
  
       return () => {
-        console.log("cleanup");
         socket.disconnect();
         //Leave room
         // socket.emit("join_room", user.username, chatId);
@@ -113,14 +110,12 @@ export default function LeagueChat({chatId}) {
     useEffect(() => {
       //listens to socket events
       socket.on("receive_message", (data) => {
-        console.log("message In:", data)
         setMsgOutput((msgOutput) => ([...msgOutput, data]));
       })
     },[socket]);
 
 
     const getChatData = async (chatIdIn) => {
-      console.log(chatIdIn);
       // await axios.post("http://localhost:8080/chat/get/id", {chatId: chatIdIn})
       await axios.post("https://fantasy-golf-41.herokuapp.com/chat/get/id", {chatId: chatIdIn})
       .then(function (response) {

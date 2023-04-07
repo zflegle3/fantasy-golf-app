@@ -11,10 +11,7 @@ import {
 } from "react-router-dom";
 
 //functions
-import { getLeaguesAll, resetLeagues } from './features/leagues/leagueSlice';
-import { resetSelected } from './features/leagues/leagueSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetUser } from "./features/auth/authSlice"
 
 //Styles
 import './styles/Reset.css';
@@ -38,62 +35,34 @@ import settingsIcon from "./images/icons/cog-outline-wh.png";
 import SignUp from "./components/auth/SignUp";
 import Login from "./components/auth/Login";
 import PasswordReset from "./components/auth/PasswordReset";
-import ControlPanel from "./components/home/ControlPanel";
-import ContentPanel from "./components/home/ContentPanel";
-import Home from "./components/Home";
-import League from "./components/home/league_display/League";
 import Reset from "./components/auth/Reset";
-import LoadingSpinner from "./components/LoadingSpinner"
 import Layout from "./components/home/Layout"
 import PageRouter from './components/home/PageRouter';
+import { Box, Typography} from '@mui/material';
 
 function App() {
-  // const [pageSelect, setPageSelect] = useState("login");
-  // const [userAuth, setUserAuth] = useState(false);
-  // const [userActive, setUserActive] = useState();
-  //Data passed to components 
-  // const [userData, setUserData] = useState("");
-  // const [userId, setUserId] = useState("");
-  // const [leagues, setLeagues] = useState([]); 
-  // const [scheduleDataAll, setScheduleDataAll] = useState();
-  // const [leaderboardData, setLeaderboardData] = useState();
-  // const [eventInfo, setLeaderboardInfo] = useState();
-  // const [worldRanksData, setWorldRanksData] = useState();
-  // const [fedexRanksData, setFedexRanksData] = useState();
-  // const dispatch = useDispatch();
-  // const [newLeagueOpen, setNewLeagueOpen] = useState(false);
   const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth);
 
-  console.log(process.env);
 
-  useEffect(() => {
-    console.log("update user here");
-  });
+  if (window.innerWidth < 800){ 
+    return (
+      <div className="app-layout">
+        <div className="app-container">
+          <Box sx={{width: "100%", height: "100%", backgroundColor: "#181c28", display: "flex", justifyContent: "center", alignItems: "center", padding: "3rem"}}>
+            <Typography variant='body1' sx={{color: "#ffffff"}}>Whoops! We don't work for mobile devices yet! Please switch to a laptop or computer.</Typography>
 
-  // useEffect(() => {
-  //   //alerts message on update success or error
-  //   console.log("reset user")
-  //   if(isError || isSuccess) {
-  //       dispatch(resetUser())
-  //   };
-  // }, [user, isError, isSuccess, message])
-
-  useEffect(() => {
-    
-  }, [])
-
-
+          </Box>
+        </div>
+        <div id="modal-portal"></div>
+      </div>
+    );
+  }
 
   if (user) {
-    console.log(user);
     return (
       <div className="app-layout">
         <div className="app-container">
           <HashRouter>
-            {/* <ControlPanel userData={userData} userId={userId} userLogOut={userLogOut} setNewLeagueOpen={setNewLeagueOpen}/>
-            <ContentPanel userData={userData} userId={userId} db={db} refreshUserData={refreshUserData} setNewLeagueOpen={setNewLeagueOpen} newLeagueOpen={newLeagueOpen}/> */}
-            {/* <ControlPanel userData={user} setNewLeagueOpen={setNewLeagueOpen}/>
-            <ContentPanel userData={user} newLeagueOpen={newLeagueOpen} setNewLeagueOpen={setNewLeagueOpen}/> */}
             <Layout />
             <PageRouter />
           </HashRouter>

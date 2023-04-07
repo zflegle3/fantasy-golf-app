@@ -26,6 +26,7 @@ import {
     Navigate,
     Link
 } from "react-router-dom";
+import LoadingSpinner from "../../LoadingSpinner"
 
 
 export default function LeaguePage({title}) {
@@ -114,10 +115,10 @@ export default function LeaguePage({title}) {
                                         <GroupAddTwoToneIcon sx={{ marginRight:"0.5rem"}}/>
                                         PLAYERS
                                     </ToggleButton>
-                                    <ToggleButton component={Link} to={`/league/${id}/draft`} value="draft" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
+                                    {/* <ToggleButton component={Link} to={`/league/${id}/draft`} value="draft" sx={{color:"#00ceb8", backgroundColor:"rgba(0,206,184,0.1)"}}>
                                         <DvrTwoToneIcon sx={{ marginRight:"0.5rem"}}/>
                                         DRAFT
-                                    </ToggleButton>
+                                    </ToggleButton> */}
                                 </StyledToggleButtonGroup>
                             </div>
 
@@ -126,7 +127,7 @@ export default function LeaguePage({title}) {
                                     <Route exact path="" element={<LeagueHome />}/>
                                     <Route exact path="team" element={<TeamHome managerId={user._id}/>}/>
                                     <Route exact path="players" element={<PlayersPage />}/>
-                                    <Route exact path="draft" element={<Box>draft</Box>}/>
+                                    {/* <Route exact path="draft" element={<Box>draft</Box>}/> */}
                                 </Routes>
                             </div>
 
@@ -155,7 +156,7 @@ export default function LeaguePage({title}) {
         );
     } else {
         return(
-            <div>Loading</div>
+            <LoadingSpinner/>
         )
     }
 

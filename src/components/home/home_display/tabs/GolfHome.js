@@ -8,9 +8,6 @@ import HeroInfo from '../HeroInfo';
 
 
 export default function GolfHome() {
-    // const dispatch = useDispatch();
-    // const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
-    // const {user} = useSelector((state) => state.auth)
  
 
     return (

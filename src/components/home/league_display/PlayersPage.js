@@ -28,13 +28,13 @@ import TableRow from '@mui/material/TableRow';
 import AddAction from './AddAction';
 import DropAction from './DropAction';
 import TradeAction from "./TradeAction"
+import axios from 'axios';
 
 
 export default function PlayersPage({managerId}) {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
- 
-    console.log(league);
+    const [players, setPlayers] = useState([])
 
     const options = ["All","Available","Rostered"]
 
@@ -51,6 +51,24 @@ export default function PlayersPage({managerId}) {
     }
 
 
+    const getPlayerScores = async () => {
+        await axios.get("https://fantasy-golf-41.herokuapp.com/player/all")
+        .then(function (response) {
+            let filteredRanks = response.data.filter((element, index) => 
+                element.leaderboard.pos != null
+            );
+            filteredRanks.sort((a,b) => {
+                return Number(a.world.average) -  Number(b.world.average)
+            } )
+            setPlayers(filteredRanks)
+        })
+    }
+
+    useEffect(() => {
+        getPlayerScores();
+    },[]);
+
+
     return (
         <div id="league-home-container">
             <Box id="players-container" sx={{ display:"flex", flexDirection: "column", padding: "1.5rem", flexGrow: 1, borderRadius: "1.6rem", backgroundColor: "rgba(163,187,211,0.05)", border: '1px solid rgba(58,70,91)'}}>
@@ -65,7 +83,7 @@ export default function PlayersPage({managerId}) {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="left">
-                                    <Typography variant="h6" sx={{ color: "#fff", fontWeight: "600"}}>GOLFER</Typography>
+                                    <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>GOLFER</Typography>
                                 </TableCell>
                                 <TableCell align="center">
                                     <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>STATUS</Typography>
@@ -74,10 +92,7 @@ export default function PlayersPage({managerId}) {
                                     <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>WORLD RANK</Typography>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>STAT A</Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                    <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>STAT B</Typography>
+                                    <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>Fedex </Typography>
                                 </TableCell>
                                 <TableCell align="center">
                                     <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>ACTION</Typography>
@@ -87,29 +102,26 @@ export default function PlayersPage({managerId}) {
 
 
                         <TableBody>
-                        {league.freeAgents.map((row, index) => (
+                        {players.map((row, index) => (
                             <TableRow
-                            key={row.name}
+                            key={row._id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="left" component="th" scope="row" sx={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                    <Avatar sx={{marginRight: "0.5rem"}} >{row.player.charAt(0).toUpperCase()}</Avatar>
-                                    <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{row.player}</Typography>
+                                    <Avatar sx={{marginRight: "0.5rem"}} >{row.first_name.charAt(0).toUpperCase()}</Avatar>
+                                    <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{row.first_name} {row.family_name}</Typography>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.status}</Typography>
+                                    <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{"Free agent"}</Typography>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{index}</Typography>
+                                    {row.world.rank ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.world.rank}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>-</Typography>}
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                    <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography>
+                                    {row.fedex.standing ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.fedex.standing}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>-</Typography>}
                                 </TableCell>
                                 <TableCell align="center" component="th" scope="row">
-                                    {getActionBtn(row.status)}
+                                    {getActionBtn('available')}
                                 </TableCell>
                             </TableRow>
                         ))}

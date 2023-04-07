@@ -33,22 +33,17 @@ export default function GolfRanks({managerId}) {
     const getRanks = async () => {
         await axios.get("https://fantasy-golf-41.herokuapp.com/player/all")
         .then(function (response) {
-            console.log(response.data);
             let filteredRanks = response.data.filter((element, index) => 
                 element.world.rank != null
             );
             filteredRanks.sort((a,b) => {
                 return Number(a.world.rank) -  Number(b.world.rank)
             } )
-            console.log(filteredRanks)
             setRanks(filteredRanks)
         })
     }
 
     useEffect(() => {
-        //send request for ranks data
-        //filter and sort by docs with rank values
-        //set state
         getRanks();
     },[]);
 

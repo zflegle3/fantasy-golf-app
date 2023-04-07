@@ -7,13 +7,13 @@ import {
     Link
   } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { resetUser } from '../../features/auth/authSlice';
+// import { resetUser } from '../../features/auth/authSlice';
 
 //Components
-import ModalContainer from "./modal_display/ModalContainer";
+// import ModalContainer from "./modal_display/ModalContainer";
 // import League from "./league_display/League";
 // import userEvent from '@testing-library/user-event';
-import CreateLeague from "./new_league_display/CreateLeague";
+// import CreateLeague from "./new_league_display/CreateLeague";
 // import AccountSettings from "../AccountSettings";
 // import MockDraft from "../MockDraft";
 // import Inbox from "../Inbox";
@@ -38,7 +38,6 @@ function PageRouter(props) {
     const dispatch = useDispatch();
 
 
-    console.log(user.leagues)
     if (user.leagues.length < 1) { //User doesn't have any leagues created User has leagues
         //return routes w/ default redirecting to new league component
         return(

@@ -46,8 +46,6 @@ export default function LeagueInvites() {
  
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("invite");
-        console.log(passcode);
         const payload = {
             id: league._id,
             adminId: user._id,
@@ -56,17 +54,8 @@ export default function LeagueInvites() {
         dispatch(updateLeaguePasscodeInput(payload))
     }
 
-    // const getUsers = async () => {
-    //     await axios.get("http://localhost:8080/user/read/all")
-    //     .then(function (response) {
-    //         console.log(response.data);
-    //         setUsersAutocomplete(response.data)
-    //     });
-    // };
-
     const handleAutoGenerate = (e) => {
         e.preventDefault();
-        console.log("auto update")
         const payload = {
             id: league._id,
             adminId: user._id,
@@ -74,12 +63,6 @@ export default function LeagueInvites() {
         dispatch(updateLeaguePasscodeAuto(payload))
     };
 
-    // useEffect(() => {
-    //     getUsers();
-
-    // }, []);
-
-    console.log(league);
     return (
         <Box id="invites-container" sx={{  minHeight: "300px", display:"flex", flexDirection: "column", gap: "0.5rem", padding: "1.5rem", flexGrow: 1, borderRadius: "1.6rem", backgroundColor: "rgba(163,187,211,0.05)", border: '1px solid rgba(58,70,91)'}}>
             <Typography variant='h6'>Invite freiends to play</Typography>

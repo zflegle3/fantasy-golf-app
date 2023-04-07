@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as PgaSvg } from '../../../images/icons/golf-pga.svg';
 // import { ReactComponent as LivSvg } from '../images/icons/golf-liv.svg';
 import { ReactComponent as BackArrSvg} from "../../../images/icons/arrow-left.svg";
+import LoadingSpinner from "../../LoadingSpinner";
 
 function NewLeagueModal(props) {
     //props.setNewLeagueOpen()
@@ -210,7 +211,8 @@ function NewLeagueModal(props) {
 
 
     if (isLoading) {
-        return <div className="new-league-modal">One moment... we are creating your league</div>
+        // return <div className="new-league-modal">One moment... we are creating your league</div>
+        <LoadingSpinner />
     }
 
     if (isSuccess) {

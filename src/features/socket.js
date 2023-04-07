@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 // const URL = 'http://localhost:8000';
-const URL = 'ws://fantasy-golf-41.herokuapp.com/';
+const URL = 'wss://fantasy-golf-41.herokuapp.com/';
 
 // export const socket = io.connect(URL);
 

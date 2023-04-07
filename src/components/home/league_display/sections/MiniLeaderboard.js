@@ -1,14 +1,7 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
-import { Avatar } from '@mui/material';
-import { padding } from '@mui/system';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -18,10 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 
-export default function Leaderboard() {
-    // const dispatch = useDispatch();
-    const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
-    const {user} = useSelector((state) => state.auth)
+export default function MiniLeaderboard() {
     const [players, setPlayers] = useState([])
 
 
@@ -34,11 +24,15 @@ export default function Leaderboard() {
             filteredRanks.sort((a,b) => {
                 return Number(a.leaderboard.sortTotal) -  Number(b.leaderboard.sortTotal)
             } )
-            setPlayers(filteredRanks)
+            let sortedTop = filteredRanks.slice(0,10)
+            setPlayers(sortedTop);
         })
     }
 
     useEffect(() => {
+        //send request for ranks data
+        //filter and sort by docs with rank values
+        //set state
         getPlayerScores();
     },[]);
 
@@ -52,16 +46,13 @@ export default function Leaderboard() {
                     <TableHead>
                         <TableRow>
                             <TableCell align="left">
-                                <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>Pos</Typography>
+                                <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>Pos.</Typography>
                             </TableCell>
                             <TableCell align="left">
                                 <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>Golfer</Typography>
                             </TableCell>
                             <TableCell align="center">
                                 <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>To Par</Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                                <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>Today</Typography>
                             </TableCell>
                             <TableCell align="center">
                                 <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>Rd. 1</Typography>
@@ -74,9 +65,6 @@ export default function Leaderboard() {
                             </TableCell>
                             <TableCell align="center">
                                 <Typography variant="body1" sx={{ color: "#d8e2ed", fontWeight: "600"}}>Rd. 4</Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                                <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>Total</Typography>
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -98,9 +86,6 @@ export default function Leaderboard() {
                                 {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.toPar}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.today} thru {row.leaderboard.thru}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>-</Typography> }
-                            </TableCell>
-                            <TableCell align="center">
                                 {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.rOne}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
@@ -111,9 +96,6 @@ export default function Leaderboard() {
                             </TableCell>
                             <TableCell align="center">
                                 {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.rFour}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
-                            </TableCell>
-                            <TableCell align="center" component="th" scope="row">
-                                {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.total}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                         </TableRow>
                     ))}
