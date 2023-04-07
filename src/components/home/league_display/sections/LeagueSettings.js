@@ -54,6 +54,7 @@ export default function LeagueSettings() {
             let settingsPayload = {
                 id: league._id,
                 adminId: user._id,
+                adminUsername: user.username,
                 name: leagueName,
                 teamCount: teamCount,
                 rosterSize: rosterSize,
