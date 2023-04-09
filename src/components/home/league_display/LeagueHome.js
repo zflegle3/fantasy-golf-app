@@ -14,6 +14,7 @@ export default function LeagueHome() {
     const {league} = useSelector((state) => state.leagueSelected)
     const {user} = useSelector((state) => state.auth)
  
+
     return (
         <Box id="league-home-container">
             <Standings />

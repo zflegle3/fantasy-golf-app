@@ -112,7 +112,7 @@ export default function PlayersPage({managerId}) {
                                     <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{row.first_name} {row.family_name}</Typography>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{"Free agent"}</Typography>
+                                    <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{"FA"}</Typography>
                                 </TableCell>
                                 <TableCell align="center">
                                     {row.world.rank ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.world.rank}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>-</Typography>}
