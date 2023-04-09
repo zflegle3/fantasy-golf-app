@@ -25,16 +25,16 @@ export default function Standings() {
 
             <ButtonGroup variant="text" aria-label="outlined button group" sx={{display: "flex", alignItems: "flex-start", flexDirection: "column", justifyContext: "flex-start", padding: "1rem 0rem"}}>
                 {teamsAll.map((item, index) => (
-                    <Button key={uuidv4()} id="text-pair" sx={{display: "flex", width: "100%", alignItems: "flex-start", flexDirection: "row", justifyContext: "flex-start", padding: "1rem 0rem", border: "none"}}>
+                    <Button key={uuidv4()} id="text-pair" sx={{display: "flex", width: "100%", alignItems: "flex-start", flexDirection: "row", justifyContext: "flex-start", padding: "1rem 0rem 1rem 1rem"}}>
                         <Typography variant="h5" sx={{margin: "0 1rem 0 0", color: "#fff"}}>{index+1}</Typography>
                         {/* <Avatar >{item.name.charAt(0).toUpperCase()}</Avatar> */}
-                        <Box sx={{display:"flex", flexDirection: "column", alignItems: "flex-start"}}>
+                        <Box sx={{display:"flex", flexDirection: "column", alignItems: "flex-start", paddingRight: "0.5rem"}}>
                             <Typography variant="body1" sx={{margin: "0 0.5rem", color: "#fff", fontWeight: "600", whiteSpace: "nowrap"}}>{item.name}</Typography>
                             {item.manager ? <Typography variant="overline" sx={{margin: "0 0.5rem", whiteSpace: "nowrap"}}>{item.manager.username}</Typography> : <Typography variant="overline" sx={{margin: "0 0.5rem"}}>Manager {index}</Typography>}
                         </Box>
                         <TeamChips roster={item.roster}/>
                         <Box sx={{display:"flex", flexGrow: 1, flexDirection: "row", justifyContent: "flex-end"}}>
-                            <Typography variant="h5" sx={{margin: "0 1rem 0 0", color: "#fff"}}>{item.total}</Typography>
+                            <Typography variant="h5" sx={{margin: "0 1rem 0 0.5rem", color: "#fff"}}>{item.total}</Typography>
                         </Box>
                     </Button>
                 ))}

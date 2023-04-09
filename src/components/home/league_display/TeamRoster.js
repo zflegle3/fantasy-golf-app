@@ -78,7 +78,7 @@ export default function BasicTable({team}) {
                                 {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.rThree}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography>
+                            {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.rFour}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center" component="th" scope="row">
                                 {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.total}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
