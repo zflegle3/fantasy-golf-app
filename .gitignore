@@ -24,6 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 
 #dev misc
-/components/unused
+/src/components/unused
 
 
