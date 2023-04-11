@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { resetUser } from '../../features/auth/authSlice';
 
 //Components
-import BlankPage from "./BlankPage";
+import BlankPage from "./misc/BlankPage";
 import LeaguePage from './league_display/LeaguePage';
 import SettingsPage from './settings_display/SettingsPage';
 import HomePage from './home_display/HomePage';

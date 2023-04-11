@@ -26,7 +26,7 @@ import {
     Navigate,
     Link
 } from "react-router-dom";
-import LoadingSpinner from "../LoadingSpinner"
+import LoadingSpinner from "../misc/LoadingSpinner"
 
 
 export default function LeaguePage({title}) {
