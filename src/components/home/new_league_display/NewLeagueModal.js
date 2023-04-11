@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as PgaSvg } from '../../../images/icons/golf-pga.svg';
 // import { ReactComponent as LivSvg } from '../images/icons/golf-liv.svg';
 import { ReactComponent as BackArrSvg} from "../../../images/icons/arrow-left.svg";
-import LoadingSpinner from "../../LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 
 function NewLeagueModal(props) {
     //props.setNewLeagueOpen()

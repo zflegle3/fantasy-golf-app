@@ -4,11 +4,11 @@ import {
     Route,
     Link,
 } from "react-router-dom";
-import Test from "./Test";
-import WorldRanks from "./WorldRanks";
+import Test from "../Test";
+import WorldRanks from "../WorldRanks";
 import FedexRanks from "./FedexRanks";
-import ScheduleTab from "./ScheduleTab";
-import LeaderboardTab from "./LeaderboardTab";
+import ScheduleTab from "../ScheduleTab";
+import LeaderboardTab from "../LeaderboardTab";
 
 
 function Home(props) {

@@ -7,7 +7,7 @@ import {checkNewUserName, checkNewEmail, checkNewPass } from "../../features/aut
 import { addFocus, removeFocus} from '../../features/style';
 
 //Components
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "../home/LoadingSpinner";
 import PasswordInput from "./PasswordInput"
 // import Logo from '../Logo';
 

@@ -10,15 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { resetUser } from '../../features/auth/authSlice';
 
 //Components
-// import ModalContainer from "./modal_display/ModalContainer";
-// import League from "./league_display/League";
-// import userEvent from '@testing-library/user-event';
-// import CreateLeague from "./new_league_display/CreateLeague";
-// import AccountSettings from "../AccountSettings";
-// import MockDraft from "../MockDraft";
-// import Inbox from "../Inbox";
-// import DirectMessages from "../DirectMessages";
-import LoadingSpinner from '../LoadingSpinner';
 import BlankPage from "./BlankPage";
 import LeaguePage from './league_display/LeaguePage';
 import SettingsPage from './settings_display/SettingsPage';

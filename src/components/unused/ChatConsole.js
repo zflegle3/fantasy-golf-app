@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { useHistory, useParams } from 'react-router-dom'
 //Components
-import MessageList from "./MessageList";
+import MessageList from "../MessageList";
 //img
 import sendIcon from "../images/icons/send-wh.png";
 
