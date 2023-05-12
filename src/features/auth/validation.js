@@ -9,9 +9,9 @@ const validateUserNameFormat = (userName) => {
 export const checkUserDb = async (userIn) => {
     console.log(userIn);
     //checks for user in db and returns true if found, false if not found
-    const responseEmail = await axios.post(process.env.REACT_APP_API_URL+"/user/read/username", {username: userIn});
-    console.log(responseEmail.data);
-    if (responseEmail.data.username === userIn) {
+    const responseUsername = await axios.post(process.env.REACT_APP_API_URL+"/users/read/username", {username: userIn});
+    console.log(responseUsername);
+    if (responseUsername) {
         return true;
     } else {
         return false;
@@ -20,8 +20,8 @@ export const checkUserDb = async (userIn) => {
 
 //ACTIVE USER DB VALIDATION BY EMAIL
 export const checkEmailDb = async (userEmail) => {
-    const response = await axios.post(process.env.REACT_APP_API_URL+"/user/read/email", {email: userEmail});
-    if (response.data.email === userEmail) {
+    const responseEmail = await axios.post(process.env.REACT_APP_API_URL+"/users/read/email", {email: userEmail});
+    if (responseEmail) {
         return true;
     } else {
         return false;

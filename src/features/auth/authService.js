@@ -14,10 +14,11 @@ const register = async(userData) => {
 
 //Login existing user
 const login = async(userData) => {
-    const response = await axios.post(process.env.REACT_APP_API_URL+"/user/login", userData);
+    const response = await axios.post(process.env.REACT_APP_API_URL+"/users/login", userData);
 
     if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        console.log(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
     }
 
     return response.data;

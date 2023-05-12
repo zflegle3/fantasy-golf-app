@@ -28,13 +28,14 @@ export default function FedExRanks({managerId}) {
     const [standings, setStandings] = useState(null);
 
     const getStandings = async () => {
-        await axios.get("https://fantasy-golf-41.herokuapp.com/player/all")
+        // await axios.get("https://fantasy-golf-41.herokuapp.com/player/all")
+        await axios.get(process.env.REACT_APP_API_URL+"/players/fedex/all")
         .then(function (response) {
-            let filteredStandings = response.data.filter((element, index) => 
-                element.fedex.standing != null
+            let filteredStandings = response.data.players.filter((element, index) => 
+                element.fedex_rank != null
             );
             filteredStandings.sort((a,b) => {
-                return Number(a.fedex.standing) -  Number(b.fedex.standing)
+                return Number(a.fedex_rank ) -  Number(b.fedex_rank )
             } )
             setStandings(filteredStandings)
         })
@@ -100,31 +101,31 @@ export default function FedExRanks({managerId}) {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell align="left" >
-                                        <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{player.fedex.standing}</Typography>
+                                        <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{player.fedex_rank }</Typography>
                                     </TableCell>
                                     <TableCell align="left" >
-                                        <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{player.first_name} {player.family_name}</Typography>
+                                        <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{player.first_name} {player.last_name}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex.points}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex_total}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex.wins}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex_wins}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex.top10}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex_top_10}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex.top25}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex_top_25}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex.scoreAvg}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex_avg}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex.strokes}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex_strokes}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex.rounds}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.fedex_rounds}</Typography>
                                     </TableCell>
 
                                 </TableRow>

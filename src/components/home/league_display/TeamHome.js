@@ -127,7 +127,7 @@ export default function TeamHome({managerId}) {
                     <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Update your team name</Typography>
                     <Box sx={{display: "flex", flexDirection: "column", gap:"1rem"}}>
 
-                        <StyledTextField id="team-name-edit" label="Team Name" inputProps={{ style: { color: "#ffffff" } }} placeholder={team.name} variant="outlined" onChange={e => setTeamNameIn(e.target.value)} sx={{width: "100%"}}/>
+                        <StyledTextField id="team-name-edit" label="Team Name" inputProps={{ style: { color: "#ffffff"}}} placeholder={team.name} variant="outlined" onChange={e => setTeamNameIn(e.target.value)} sx={{width: "100%"}}/>
 
                         <Box className="form-btn-container" sx={{width: "100%"}}>
                             <Button sx={{width: "100%"}} onClick={handleSubmit}>Submit</Button>

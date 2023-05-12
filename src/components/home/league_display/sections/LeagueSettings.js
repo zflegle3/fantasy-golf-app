@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
@@ -14,10 +15,64 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { updateLeagueSettings } from '../../../../features/leagues/leagueSelectedSlice';
 
+const StyledTextField = styled(TextField)({
+    "& label": {
+      color: "white"
+    },
+    "&:hover label": {
+    //   fontWeight: 700
+    },
+    "& label.Mui-focused": {
+      color: "white"
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "white"
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white"
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+  
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white"
+      }
+    }
+});
+
+const StyledFormControl = styled(FormControl)({
+    "& label": {
+      color: "white"
+    },
+    "&:hover label": {
+    //   fontWeight: 700
+    },
+    "& label.Mui-focused": {
+      color: "white"
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "white"
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white"
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+  
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white"
+      }
+    }
+});
+
 
 export default function LeagueSettings() {
     const dispatch = useDispatch();
-    const {league} = useSelector((state) => state.leagueSelected)
+    const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected);
     const {user} = useSelector((state) => state.auth)
     const [open, setOpen] = useState(false);
     const [teamCount, setTeamCount] = useState(league.settings.teamCount);
@@ -75,6 +130,8 @@ export default function LeagueSettings() {
         }
     };
  
+
+    console.log(leagueName);
     return (
         <Box id="leaderboard-container" sx={{  minHeight: "300px", display:"flex", flexDirection: "column", padding: "1.5rem", flexGrow: 1, borderRadius: "1.6rem", backgroundColor: "rgba(163,187,211,0.05)", border: '1px solid rgba(58,70,91)'}}>
 
@@ -126,35 +183,39 @@ export default function LeagueSettings() {
                     <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Edit number of teams, scoring, etc.</Typography>
                     <Box sx={{display: "flex", flexDirection: "column", gap:"1rem"}}>
 
-                        <TextField id="team-name-edit" label="Team Name" variant="filled" placeholder={leagueName} onChange={e => setLeagueName(e.target.value)}/>
+                        <StyledTextField id="league-name-edit" label="League Name" variant="filled" inputProps={{ style: { color: "#ffffff"}}} placeholder={leagueName} onChange={e => setLeagueName(e.target.value)}/>
 
-                        <FormControl variant="filled" sx={{minWidth: 120 }}>
+                        <StyledFormControl variant="filled"  sx={{minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-filled-label">Number of Teams</InputLabel>
                             <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
                             value={teamCount}
                             onChange={e => setTeamCount(e.target.value)}
+                            sx={{ color: "#ffffff"}}
+                            defaultValue={Number(league.settings.teamCount)}
                             >
-                            <MenuItem value={4}>4</MenuItem>
-                            <MenuItem value={5}>5</MenuItem>
-                            <MenuItem value={6}>6</MenuItem>
-                            <MenuItem value={7}>7</MenuItem>
-                            <MenuItem value={8}>8</MenuItem>
-                            <MenuItem value={9}>9</MenuItem>
-                            <MenuItem value={10}>10</MenuItem>
-                            <MenuItem value={11}>11</MenuItem>
-                            <MenuItem value={12}>12</MenuItem>
+                                <MenuItem value={4}>4</MenuItem>
+                                <MenuItem value={5}>5</MenuItem>
+                                <MenuItem value={6}>6</MenuItem>
+                                <MenuItem value={7}>7</MenuItem>
+                                <MenuItem value={8}>8</MenuItem>
+                                <MenuItem value={9}>9</MenuItem>
+                                <MenuItem value={10}>10</MenuItem>
+                                <MenuItem value={11}>11</MenuItem>
+                                <MenuItem value={12}>12</MenuItem>
                             </Select>
-                        </FormControl>
+                        </StyledFormControl>
 
-                        <FormControl variant="filled" sx={{ minWidth: 120 }}>
+                        <StyledFormControl variant="filled" sx={{ minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-filled-label">Roster Size</InputLabel>
                             <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
                             value={rosterSize}
                             onChange={e => setRosterSize(e.target.value)}
+                            sx={{ color: "#ffffff"}}
+                            defaultValue={Number(league.settings.rosterSize)}
                             >
                             <MenuItem value={4}>4</MenuItem>
                             <MenuItem value={5}>5</MenuItem>
@@ -164,15 +225,17 @@ export default function LeagueSettings() {
                             <MenuItem value={9}>9</MenuItem>
                             <MenuItem value={10}>10</MenuItem>
                             </Select>
-                        </FormControl>
+                        </StyledFormControl>
 
-                        <FormControl variant="filled" sx={{ minWidth: 120 }}>
+                        <StyledFormControl variant="filled" sx={{ minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-filled-label">Roster Cut</InputLabel>
                             <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
                             value={rosterCut}
                             onChange={e => setRosterCut(e.target.value)}
+                            sx={{ color: "#ffffff"}}
+                            defaultValue={Number(league.settings.rosterCut)}
                             >
                             <MenuItem value={0}>0</MenuItem>
                             <MenuItem value={1}>1</MenuItem>
@@ -184,15 +247,17 @@ export default function LeagueSettings() {
                             <MenuItem value={7}>7</MenuItem>
                             <MenuItem value={8}>8</MenuItem>
                             </Select>
-                        </FormControl>
+                        </StyledFormControl>
 
-                        <FormControl variant="filled" sx={{ minWidth: 120 }}>
+                        <StyledFormControl variant="filled" sx={{ minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-filled-label">Miss Cut Score</InputLabel>
                             <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
                             value={missCutScore}
                             onChange={e => setMissCutScore(e.target.value)}
+                            sx={{ color: "#ffffff"}}
+                            defaultValue={league.settings.missCutScore}
                             >
                             <MenuItem value={"avg"}>Average Round Score (active players)</MenuItem>
                             <MenuItem value={-3}>-3</MenuItem>
@@ -210,7 +275,7 @@ export default function LeagueSettings() {
                             <MenuItem value={9}>9</MenuItem>
                             <MenuItem value={10}>10</MenuItem>
                             </Select>
-                        </FormControl>
+                        </StyledFormControl>
 
                         <Box className="form-btn-container" sx={{width: "100%"}}>
                             <Button sx={{width: "100%"}} onClick={handleSubmit}>Submit</Button>

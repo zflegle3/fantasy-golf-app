@@ -1,9 +1,8 @@
-import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-// Added
-import { useHistory, useNavigate, useParams } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import Divider from '@mui/material/Divider';
@@ -12,18 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
 import Message from './Message';
 import { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
+//socket connection 
 import { socket } from '../../../features/socket';
-import ChatInput from './ChatInput';
-import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
-
-// import socketIO from 'socket.io-client';
-// import { socket } from './socket';
-// import { io } from 'socket.io-client';
-// import { ConnectionState } from './components/ConnectionState';
-// import { ConnectionManager } from './components/ConnectionManager';
-// const socket = io('http://localhost:8080');
 
 const StyledTextField = styled(TextField)({
   "& label": {
@@ -54,28 +43,14 @@ const StyledTextField = styled(TextField)({
 
 
 export default function LeagueChat({chatId}) {
-    const theme = useTheme();
     // const dispatch = useDispatch();
     // const navigate = useNavigate();
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected);
     const {user} = useSelector((state) => state.auth);
     const [msgInput, setMsgInput] = useState("");
-    // const [chatId, setchatId] = useState("642658d7e34f23d7f548252a");
-    // let { chatId } = useParams();
-    const [chatName, setChatName] = useState("Test Chat 69")
-    const [chatUsers, setChatUsers] = useState([{name: "Zach Flegle", _id:"63cc338333a02d1e66d95569", username: "zflegs"}, {name: "Other User", _id:"u2", username: "user2"}, {name: "Some Guy", _id:"u3", username: "user3"}])
     const [msgOutput, setMsgOutput] = useState(null);
     const [chatData, setChatData] = useState(null);
 
-    // const [isConnected, setIsConnected] = useState(socket.connected);
-    // const [fooEvents, setFooEvents] = useState([]);
-
-    //Temp ID, will get chat id from league data
-    // const chatOthers = chatUsers.filter((member) => member._id !== user._id )
-    // let chatMembers = ""
-    // chatOthers.map((member) => {
-    //     chatMembers += `, ${member.username}`
-    // })
 
     const handleSend = (e) => {
         e.preventDefault();
@@ -92,8 +67,6 @@ export default function LeagueChat({chatId}) {
       }     
     }
 
-
-
     useEffect(() => {
       //on mount and unmount connections
       socket.connect();
@@ -101,8 +74,7 @@ export default function LeagueChat({chatId}) {
  
       return () => {
         socket.disconnect();
-        //Leave room
-        // socket.emit("join_room", user.username, chatId);
+        //Leave room on dismount
       };
     },[chatId]);
 
@@ -116,8 +88,7 @@ export default function LeagueChat({chatId}) {
 
 
     const getChatData = async (chatIdIn) => {
-      // await axios.post("http://localhost:8080/chat/get/id", {chatId: chatIdIn})
-      await axios.post("https://fantasy-golf-41.herokuapp.com/chat/get/id", {chatId: chatIdIn})
+      await axios.post(process.env.REACT_APP_API_URL+"/chat/get/id", {chatId: chatIdIn})
       .then(function (response) {
           //set chat data for reference
           setChatData(response.data);
@@ -127,10 +98,19 @@ export default function LeagueChat({chatId}) {
     }
 
     useEffect(() => {
-      console.log("new chat", chatId);
       getChatData(chatId);
     },[chatId]);
 
+
+    let managersOut = "";
+    let managedTeams = league.teams.filter(team => team.manager.id != null);
+    for (let i=0; i < managedTeams.length; i++) {
+      if (i === managedTeams.length-1) {
+        managersOut += `${managedTeams[i].manager.username}`;
+      } else {
+        managersOut += `${managedTeams[i].manager.username}, `;
+      }
+    }
 
     if (chatData) {
       return (
@@ -140,10 +120,10 @@ export default function LeagueChat({chatId}) {
                 <Box id="chat-title" sx={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
                     <Typography variant='h5' sx={{color: "#ffffff", fontWeight: "600"}}>{chatData.name}</Typography>
                     <Box sx={{display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
-                        <Typography variant='body1' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", marginRight: "0.5rem"}}>{chatData.members.length}</Typography>
+                        <Typography variant='body1' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", marginRight: "0.5rem"}}>{league.managers.length}</Typography>
                         <PeopleAltTwoToneIcon sx={{color: "#7888a4", marginRight: "0.5rem"}}/>
                         <Divider orientation="vertical" sx={{ bgcolor:"#677897"}}/>
-                        <Typography variant='body2' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", overflow: "hidden", maxWidth: "15rem", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{chatData.members}</Typography>
+                        <Typography variant='body2' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", overflow: "hidden", maxWidth: "15rem", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{managersOut}</Typography>
                     </Box>
                 </Box>
             </Box>

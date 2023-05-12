@@ -16,6 +16,7 @@ function LeagueSettingsList(props) {
     } 
 
 
+
     return (
         <div className="league-settings-list">
             <div className="league-settings-item">

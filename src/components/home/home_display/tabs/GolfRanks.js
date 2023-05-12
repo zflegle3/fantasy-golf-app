@@ -31,13 +31,13 @@ export default function GolfRanks({managerId}) {
     const options = ["All","Available","Rostered"]
 
     const getRanks = async () => {
-        await axios.get("https://fantasy-golf-41.herokuapp.com/player/all")
+        await axios.get(process.env.REACT_APP_API_URL+"/players/world/all")
         .then(function (response) {
-            let filteredRanks = response.data.filter((element, index) => 
-                element.world.rank != null
+            let filteredRanks = response.data.players.filter((element, index) => 
+                element.world_rank != null
             );
             filteredRanks.sort((a,b) => {
-                return Number(a.world.rank) -  Number(b.world.rank)
+                return Number(a.world_rank) -  Number(b.world_rank)
             } )
             setRanks(filteredRanks)
         })
@@ -84,6 +84,9 @@ export default function GolfRanks({managerId}) {
                                         <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>Points Lost</Typography>
                                     </TableCell>
                                     <TableCell align="center">
+                                        <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>Earnings</Typography>
+                                    </TableCell>
+                                    <TableCell align="center">
                                         <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>Events</Typography>
                                     </TableCell>
                                 </TableRow>
@@ -97,28 +100,31 @@ export default function GolfRanks({managerId}) {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell align="left" >
-                                        <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{player.world.rank}</Typography>
+                                        <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{player.world_rank}</Typography>
                                     </TableCell>
                                     {/* <TableCell align="center">
                                         <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography>
                                     </TableCell> */}
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.first_name} {player.family_name}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.first_name} {player.last_name}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world.total}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world_total}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world.average}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world_avg}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world.gained}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world_gain}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world.lost}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world_lost}</Typography>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world.events}</Typography>
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world_earn}</Typography>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{player.world_events}</Typography>
                                     </TableCell>
                                 </TableRow>
                             ))}
