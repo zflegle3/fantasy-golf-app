@@ -33,8 +33,31 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
     }
 })
 
+
 export const logout = createAsyncThunk("auth/logout", async () => {
     await authService.logout();
+})
+
+//Update existing user details
+export const updateDetails = createAsyncThunk("auth/update", async (user, thunkAPI) => {
+    try{
+        return await authService.updateDetails(user);
+    } catch (error) {
+        console.log(error);
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+})
+
+//Update existing user password
+export const updatePassword = createAsyncThunk("auth/update", async (payload, thunkAPI) => {
+    try{
+        return await authService.updatePassword(payload);
+    } catch (error) {
+        console.log(error);
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
 })
 
 //Create a new League
@@ -48,7 +71,7 @@ export const createLeague = createAsyncThunk("league/create", async (leagueData,
     }
 })
 
-//Create a new League
+//Join a new League
 export const joinLeague = createAsyncThunk("league/join", async (leagueData, thunkAPI)=> {
     try {
         const token = thunkAPI.getState().auth.user.token; //token required b/c protected route
@@ -72,6 +95,7 @@ export const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            //Register
             .addCase(register.pending, (state) => {
                 state.isLoading = true;
             })
@@ -89,6 +113,7 @@ export const authSlice = createSlice({
                 //rejectwithvalue returns message as payload in catch above
                 state.user = null;
             })
+            //Login
             .addCase(login.pending, (state) => {
                 state.isLoading = true; 
             })
@@ -140,6 +165,24 @@ export const authSlice = createSlice({
                 state.isError = true;
                 state.message = "We were unable to join the league";  
                 window.alert("We were unable to join the league, please confirm your league credentials and that you have not already joined the league")
+            })
+            //Update
+            .addCase(updateDetails.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateDetails.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.user = action.payload; 
+                //returned user data as payload from register function
+            })
+            .addCase(updateDetails.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = false;
+                state.isError = true;
+                state.message = action.payload;
+                //rejectwithvalue returns message as payload in catch above
+                state.user = null;
             })
 
             

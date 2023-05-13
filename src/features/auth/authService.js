@@ -3,13 +3,13 @@ import axios from "axios";
 
 //Register new user
 const register = async(userData) => {
-    const response = await axios.post(process.env.REACT_APP_API_URL+"/user/create", userData);
+    const response = await axios.post(process.env.REACT_APP_API_URL+"/users/create", userData);
 
     if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        console.log(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
     }
-
-    return response.data;
+    return response.data.user;
 };
 
 //Login existing user
@@ -20,8 +20,7 @@ const login = async(userData) => {
         console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data.user));
     }
-
-    return response.data;
+    return response.data.user;
 };
 
 //Logout user
@@ -59,7 +58,26 @@ const joinLeague = async (leagueData, token) => {
 }
 
 
+const updateDetails = async(userData) => {
+    const response = await axios.put(process.env.REACT_APP_API_URL+"/users/update/details", userData);
+    if (response.data) {
+        console.log(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+    }
+    return response.data.user;
+};
 
-const authService = { register, login, logout, createLeague, joinLeague }
+const updatePassword = async(userData) => {
+    const response = await axios.put(process.env.REACT_APP_API_URL+"/users/update/password", userData);
+    if (response.data) {
+        console.log(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+    }
+    return response.data.user;
+};
+
+
+
+const authService = { register, login, logout, createLeague, joinLeague, updateDetails, updatePassword }
 
 export default authService;

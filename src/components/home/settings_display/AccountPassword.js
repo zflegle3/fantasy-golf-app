@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLeagueOne, resetSelected } from '../../../features/leagues/leagueSelectedSlice';
-import { logout, resetUser } from "../../../features/auth/authSlice"
+import { logout, resetUser, updatePassword } from "../../../features/auth/authSlice"
 //Icons
 import { FaRegCheckCircle, FaCheck, FaRegTimesCircle } from 'react-icons/fa';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice'; //League
@@ -21,6 +21,7 @@ import {
     useNavigate
 } from "react-router-dom";
 import {addFocus, removeFocus} from "../../../features/style"
+import {checkPassDb, checkNewPass} from "../../../features/auth/validation"
 
 
 export default function AccountPassword({title}) {
@@ -30,6 +31,46 @@ export default function AccountPassword({title}) {
     const [newPassword, setNewPassword] = useState("");
 
 
+    const submitPassword = async (e) => {
+        e.preventDefault();
+        resetErrors();
+        //validate current password
+        //if valid dispatch update for new password
+        if (currentPassword.length > 0) {
+            if (await checkPassDb(user.id, currentPassword)) {
+                document.querySelector(".form-item-container.pass-current").classList.add("invalid");
+                document.getElementById("pass-error-current").textContent = "Whoops? You sure thats your password?";
+            } else {
+                if (checkNewPass(newPassword)) {
+                    let payload = {
+                        id: user.id,
+                        password: currentPassword,
+                        password_new: newPassword,
+                    }
+                    dispatch(updatePassword(payload));
+
+                } 
+            }
+        } else {
+            document.querySelector(".form-item-container.pass-current").classList.add("invalid");
+            document.getElementById("pass-error-current").textContent = "cannot be empty";
+        }
+
+
+    }
+
+    const resetErrors = () => {
+        let currentPass = document.querySelector(".form-item-container.pass-current");
+        if (currentPass.classList.contains("invalid")) {
+            currentPass.classList.remove("invalid");
+            document.getElementById("pass-error-current").textContent = "Current Error";
+        }
+        let passItem = document.querySelector(".form-item-container.pass-in");
+        if (passItem.classList.contains("invalid")) {
+            passItem.classList.remove("invalid");
+            document.getElementById("pass-error").textContent = "Password Error";
+        }
+    }
 
     return (
         <Box sx={{width: "100%", height: "100%", padding: "3rem"}}>
@@ -89,7 +130,7 @@ export default function AccountPassword({title}) {
 
 
                     <div className="form-btn-container">
-                        <button onClick={console.log("submit")}>SUBMIT</button>
+                        <button onClick={submitPassword}>SUBMIT</button>
                     </div>
 
                 </form>

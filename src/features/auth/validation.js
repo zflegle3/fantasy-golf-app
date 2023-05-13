@@ -11,7 +11,7 @@ export const checkUserDb = async (userIn) => {
     //checks for user in db and returns true if found, false if not found
     const responseUsername = await axios.post(process.env.REACT_APP_API_URL+"/users/read/username", {username: userIn});
     console.log(responseUsername);
-    if (responseUsername) {
+    if (responseUsername.data.id) {
         return true;
     } else {
         return false;
@@ -21,7 +21,7 @@ export const checkUserDb = async (userIn) => {
 //ACTIVE USER DB VALIDATION BY EMAIL
 export const checkEmailDb = async (userEmail) => {
     const responseEmail = await axios.post(process.env.REACT_APP_API_URL+"/users/read/email", {email: userEmail});
-    if (responseEmail) {
+    if (responseEmail.data.id) {
         return true;
     } else {
         return false;
@@ -33,7 +33,7 @@ export const validateUsernameEmail = async (userEmailOrNameIn) => {
     //Validates username/email is populated
     //only handles emails currently
     if (userEmailOrNameIn.length > 0) {
-        if (await checkUserDb(userEmailOrNameIn)) {
+        if ( await checkUserDb(userEmailOrNameIn)) {
             //username is valid
             return(true);
         } else if (await checkEmailDb(userEmailOrNameIn)) {
@@ -58,8 +58,9 @@ export const checkNewUserName = async (userNameIn) => {
         //FORMAT (Numbers and letters only 0-XX characters)
         if (validateUserNameFormat(userNameIn)) { 
             // AVAILABILITY IN DATABASE
+            console.log(await checkUserDb(userNameIn));
             if ( await checkUserDb(userNameIn)) {
-            //returns true if username already exists
+                //returns true if username already exists
                 document.querySelector(".form-item-container.user-name-in").classList.add("invalid");
                 document.getElementById("user-name-error").textContent = `Whoops! ${userNameIn} is already taken`;
                 return false;
@@ -128,7 +129,7 @@ export const checkPassDb = async (idIn, passIn, tokenIn) => {
             authorization: `Bearer ${tokenIn}`
         }
     };//required for protected routes
-    const responsePass = await axios.post(process.env.REACT_APP_API_URL+"/user/read/password", {id: idIn, password: passIn}, config);
+    const responsePass = await axios.post(process.env.REACT_APP_API_URL+"/users/read/password", {id: idIn, password: passIn}, config);
     //returns false if passwords match, true if not matching 
     return responsePass.data.passMatch;
 };

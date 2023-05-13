@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLeagueOne, resetSelected } from '../../../features/leagues/leagueSelectedSlice';
-import { logout, resetUser } from "../../../features/auth/authSlice"
+import { logout, resetUser, updateDetails } from "../../../features/auth/authSlice"
 //Icons
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice'; //League
 import GroupsIcon from '@mui/icons-material/Groups'; //Team
@@ -26,9 +26,26 @@ export default function AccountDetails({title}) {
     const dispatch = useDispatch();
     const {user} = useSelector((state) => state.auth);
     const [firstIn, setFirstIn] = useState(user.first_name);
-    const [lastIn, setLastIn] = useState(user.family_name);
+    const [lastIn, setLastIn] = useState(user.last_name);
     const [usernameIn, setUsernameIn] = useState(user.username);
     const [emailIn, setEmailIn] = useState(user.email);
+
+
+
+    const submitSettings = (e) => {
+        e.preventDefault();
+        //takes and validates user inputs and dispatches and an update user function to submit the values
+        //id, first_name, last_name, username, email
+        console.log(firstIn === user.first_name );
+        let payload = {
+            id: user.id,
+            first_name: (firstIn.length < 1 || firstIn === user.first_name ? null : firstIn),
+            last_name: (lastIn.length < 1 || lastIn === user.last_name ? null : lastIn),
+            username: (usernameIn.length < 1 || usernameIn === user.username ? null : usernameIn),
+            email: (emailIn.length < 1 || emailIn === user.email ? null : emailIn),
+        }
+        dispatch(updateDetails(payload));
+    }
 
 
 
@@ -69,7 +86,7 @@ export default function AccountDetails({title}) {
 
                         <div className="form-item-container email-in">
                             <label htmlFor="email-in">email</label>
-                            <div className="input-container">
+                            <div className="input-container" >
                                 <input type="email-in" id="email" name="email-in" value={emailIn} onFocus={addFocus} onBlur={removeFocus} onChange={e => setEmailIn(e.target.value)} ></input>
                             </div>
                             <p id="email-error">email error</p>
@@ -84,7 +101,7 @@ export default function AccountDetails({title}) {
 
 
                     <div className="form-btn-container">
-                        <button onClick={console.log("submit")}>SUBMIT</button>
+                        <button onClick={submitSettings}>SUBMIT</button>
                     </div>
 
                 </form>
