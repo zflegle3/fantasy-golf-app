@@ -68,8 +68,9 @@ export default function LeaguePage({title}) {
     }));
 
     useEffect(() => {
+        console.log(id);
         //get league info on id change
-        dispatch(getLeagueOne(id));
+        dispatch(getLeagueOne({id:id}));
         setSelectedTab('league');
     }, [id]);
 

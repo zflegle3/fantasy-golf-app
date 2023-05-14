@@ -187,17 +187,16 @@ function NewLeagueModal(props) {
         }]
         //Create payload to submit to backend
         let payload = {
-            adminId: user._id,
             name: name,
-            settings: settings,
-            activity: leagueActivityNew,
-            year: 2023,
-            draft: draft,
+            admin: user.id,
+            team_qty: settings.teamCount, 
+            roster_qty: settings.rosterSize, 
+            roster_cut: settings.rosterCut, 
+            cut_score: settings.missCutScore
         }
         dispatch(createLeague(payload));
         // navigate("/home");
         // props.setNewLeagueOpen(false);
-
     }
 
     useEffect(() => {

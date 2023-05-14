@@ -248,11 +248,11 @@ export default function Layout() {
                     {/* <div id="league-btns"> */}
                         {user.leagues.map((league) => (
                             <ToggleButton
-                                id={league.id} 
-                                key={league.id}
-                                value={league.id}
+                                id={league.league_id} 
+                                key={league.league_id}
+                                value={league.league_id}
                                 component={Link}
-                                to={`/league/${league.id}`}
+                                to={`/league/${league.league_id}`}
                                 sx={{
                                 minHeight: 48,
                                 justifyContent: open ? 'initial' : 'center',

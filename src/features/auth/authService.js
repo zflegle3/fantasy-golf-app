@@ -15,7 +15,7 @@ const register = async(userData) => {
 //Login existing user
 const login = async(userData) => {
     const response = await axios.post(process.env.REACT_APP_API_URL+"/users/login", userData);
-
+    console.log(userData);
     if (response.data) {
         console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data.user));
@@ -35,11 +35,11 @@ const createLeague = async (leagueData, token) => {
             authorization: `Bearer ${token}`
         }
     }//required for protected routes
-    const response = await axios.post(process.env.REACT_APP_API_URL+"/league/create", leagueData, config);
+    const response = await axios.post(process.env.REACT_APP_API_URL+"/leagues/create", leagueData, config);
     if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("user", JSON.stringify(response.data.user));
     }
-    return response.data;
+    return response.data.user;
 }
 
 

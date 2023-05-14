@@ -36,6 +36,8 @@ function League(props) {
     // console.log(props.worldRanksData);
     // console.log(props.fedexRanksData);
 
+    console.log(id);
+
 
     useEffect(() => {
         //get league info on id change
