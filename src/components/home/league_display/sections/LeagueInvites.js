@@ -47,9 +47,9 @@ export default function LeagueInvites() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const payload = {
-            id: league._id,
-            adminId: user._id,
-            passcodeIn: passcode,
+            id: league.id,
+            admin: user.id,
+            passcode: passcode,
         }
         dispatch(updateLeaguePasscodeInput(payload))
     }
@@ -57,8 +57,8 @@ export default function LeagueInvites() {
     const handleAutoGenerate = (e) => {
         e.preventDefault();
         const payload = {
-            id: league._id,
-            adminId: user._id,
+            id: league.id,
+            admin: user.id,
         }
         dispatch(updateLeaguePasscodeAuto(payload))
     };

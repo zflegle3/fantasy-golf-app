@@ -16,8 +16,9 @@ export default function Standings() {
 
     let teamsAll = [...league.teams];
     teamsAll.sort((a,b) => {
-        return Number(a.total) -  Number(b.total)
+        return Number(a.event_wins) -  Number(b.event_wins)
     });
+
 
     return (
         <Box id="leaderboard-container" sx={{  minHeight: "300px", display:"flex", flexDirection: "column", padding: "1.5rem", flexGrow: 1, borderRadius: "1.6rem", backgroundColor: "rgba(163,187,211,0.05)", border: '1px solid rgba(58,70,91)'}}>
@@ -30,9 +31,9 @@ export default function Standings() {
                         {/* <Avatar >{item.name.charAt(0).toUpperCase()}</Avatar> */}
                         <Box sx={{display:"flex", flexDirection: "column", alignItems: "flex-start", paddingRight: "0.5rem"}}>
                             <Typography variant="body1" sx={{margin: "0 0.5rem", color: "#fff", fontWeight: "600", whiteSpace: "nowrap"}}>{item.name}</Typography>
-                            {item.manager ? <Typography variant="overline" sx={{margin: "0 0.5rem", whiteSpace: "nowrap"}}>{item.manager.username}</Typography> : <Typography variant="overline" sx={{margin: "0 0.5rem"}}>Manager {index}</Typography>}
+                            {item.manager ? <Typography variant="overline" sx={{margin: "0 0.5rem", whiteSpace: "nowrap"}}>{item.username}</Typography> : <Typography variant="overline" sx={{margin: "0 0.5rem"}}>Manager {index+1}</Typography>}
                         </Box>
-                        <TeamChips roster={item.roster}/>
+                        <TeamChips roster={item.players}/>
                         <Box sx={{display:"flex", flexGrow: 1, flexDirection: "row", justifyContent: "flex-end"}}>
                             <Typography variant="h5" sx={{margin: "0 1rem 0 0.5rem", color: "#fff"}}>{item.total}</Typography>
                         </Box>

@@ -50,11 +50,11 @@ const joinLeague = async (leagueData, token) => {
             authorization: `Bearer ${token}`
         }
     }//required for protected routes
-    const response = await axios.put(process.env.REACT_APP_API_URL+"/league/join", leagueData, config);
+    const response = await axios.put(process.env.REACT_APP_API_URL+"/leagues/join", leagueData, config);
     if (response.data) {
         localStorage.setItem("user", JSON.stringify(response.data));
     }
-    return response.data;
+    return response.data.user;
 }
 
 

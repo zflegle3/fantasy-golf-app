@@ -75,11 +75,11 @@ export default function LeagueSettings() {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected);
     const {user} = useSelector((state) => state.auth)
     const [open, setOpen] = useState(false);
-    const [teamCount, setTeamCount] = useState(league.settings.teamCount);
+    const [teamCount, setTeamCount] = useState(league.team_qty);
     const [leagueName, setLeagueName] = useState(league.name);
-    const [rosterSize, setRosterSize] = useState(league.settings.rosterSize);
-    const [rosterCut, setRosterCut] = useState(league.settings.rosterCut);
-    const [missCutScore, setMissCutScore] = useState(league.settings.missCutScore);
+    const [rosterSize, setRosterSize] = useState(league.roster_qty);
+    const [rosterCut, setRosterCut] = useState(league.roster_cut);
+    const [missCutScore, setMissCutScore] = useState(league.cut_score);
 
 
     const handleOpen = () => setOpen(true);
@@ -105,18 +105,18 @@ export default function LeagueSettings() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (league._id, user._id, leagueName, teamCount, rosterSize, rosterCut, missCutScore) {
+        if (league.id, user.id, leagueName, teamCount, rosterSize, rosterCut, missCutScore) {
             let settingsPayload = {
-                id: league._id,
-                adminId: user._id,
-                adminUsername: user.username,
+                id: league.id,
+                admin: user.id,
                 name: leagueName,
-                teamCount: teamCount,
-                rosterSize: rosterSize,
-                rosterCut: rosterCut,
-                missCutScore: missCutScore
-            }
-            if (teamCount != league.settings.teamCount || rosterSize != league.settings.rosterSize) {
+                team_qty: teamCount,
+                roster_qty: rosterSize,
+                roster_cut: rosterCut,
+                misscut_scoreCutScore: missCutScore
+            };
+            console.log(settingsPayload);
+            if (teamCount != league.team_qty || rosterSize != league.roster_qty) {
                 //alert team settings reset
                 const text = "Are you sure you want to proceed? Changing the number of teams or players on each team now will erase any existing teams, managers, and players."
                 if (window.confirm(text)) {
@@ -137,7 +137,7 @@ export default function LeagueSettings() {
 
             <Box sx={{paddingBottom: "1rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                 <Typography variant='h6'>League Settings</Typography>
-                {league.admin === user._id ? 
+                {league.admin === user.id ? 
                       <IconButton aria-label="delete" size="medium" onClick={handleOpen}>
                         <SettingsIcon sx={{color: "#fff"}}/>
                     </IconButton>
@@ -145,32 +145,32 @@ export default function LeagueSettings() {
             </Box>
             <Box sx={{paddingTop: "0.5rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                 <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Number of Teams</Typography>
-                <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{league.settings.teamCount}</Typography>
+                <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{league.team_qty}</Typography>
             </Box>
             <Box sx={{ paddingTop: "0.5rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                 <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Roster Size</Typography>
-                <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{league.settings.rosterSize}</Typography>
+                <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{league.roster_qty}</Typography>
             </Box>
             <Box sx={{ paddingTop: "0.5rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                 <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Roster Spots Cut</Typography>
-                <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{league.settings.rosterCut}</Typography>
+                <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{league.roster_cut}</Typography>
             </Box>
             <Box sx={{ paddingTop: "0.5rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                 <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Missed Cut Score</Typography>
-                <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{league.settings.missCutScore}</Typography>
+                <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{league.cut_score}</Typography>
             </Box>
             <Box sx={{ paddingTop: "0.5rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                 <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Tournament</Typography>
                 <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>The Masters, Augusta National</Typography>
             </Box>
-            <Box sx={{ paddingTop: "0.5rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+            {/* <Box sx={{ paddingTop: "0.5rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                 <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Draft Type</Typography>
                 <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{league.draft.type}</Typography>
-            </Box>
-            <Box sx={{ paddingTop: "0.5rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+            </Box> */}
+            {/* <Box sx={{ paddingTop: "0.5rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                 <Typography variant="overline" sx={{ color: "#7988a1", fontWeight: "600"}}>Draft Date</Typography>
                 <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{new Date(league.draft.date).toLocaleDateString()} {new Date(league.draft.date).toLocaleTimeString()}</Typography>
-            </Box>
+            </Box> */}
             
             <Modal
                 open={open}
@@ -193,7 +193,7 @@ export default function LeagueSettings() {
                             value={teamCount}
                             onChange={e => setTeamCount(e.target.value)}
                             sx={{ color: "#ffffff"}}
-                            defaultValue={Number(league.settings.teamCount)}
+                            defaultValue={Number(league.team_qty)}
                             >
                                 <MenuItem value={4}>4</MenuItem>
                                 <MenuItem value={5}>5</MenuItem>
@@ -215,7 +215,7 @@ export default function LeagueSettings() {
                             value={rosterSize}
                             onChange={e => setRosterSize(e.target.value)}
                             sx={{ color: "#ffffff"}}
-                            defaultValue={Number(league.settings.rosterSize)}
+                            defaultValue={Number(league.roster_qty)}
                             >
                             <MenuItem value={4}>4</MenuItem>
                             <MenuItem value={5}>5</MenuItem>
@@ -235,7 +235,7 @@ export default function LeagueSettings() {
                             value={rosterCut}
                             onChange={e => setRosterCut(e.target.value)}
                             sx={{ color: "#ffffff"}}
-                            defaultValue={Number(league.settings.rosterCut)}
+                            defaultValue={Number(league.roster_cut)}
                             >
                             <MenuItem value={0}>0</MenuItem>
                             <MenuItem value={1}>1</MenuItem>
@@ -257,7 +257,7 @@ export default function LeagueSettings() {
                             value={missCutScore}
                             onChange={e => setMissCutScore(e.target.value)}
                             sx={{ color: "#ffffff"}}
-                            defaultValue={league.settings.missCutScore}
+                            defaultValue={league.cut_score}
                             >
                             <MenuItem value={"avg"}>Average Round Score (active players)</MenuItem>
                             <MenuItem value={-3}>-3</MenuItem>

@@ -18,13 +18,13 @@ export default function PlayerChip({player}) {
         }
     }
 
-    const color = getStyle(player.score.sortTotal);
+    const color = getStyle(player.event_sort_total);
     console.log(color);
     return (
         <Stack key={uuidv4()} direction="row" spacing={1}>
             <Chip
-                avatar={player._id !== "none" ? <Avatar sx={{ bgcolor: "#ffffff"}}>{player.score.toPar}</Avatar> : <Avatar sx={{ bgcolor: "#ffffff" }}>0</Avatar>}
-                label={`${player.family_name}`}
+                avatar={player.id !== "none" ? <Avatar sx={{ bgcolor: "#ffffff"}}>{player.event_to_par}</Avatar> : <Avatar sx={{ bgcolor: "#ffffff" }}>0</Avatar>}
+                label={`${player.last_name}`}
                 variant="outlined"
                 sx ={{color: color}}
             />

@@ -20,7 +20,6 @@ export default function LeagueActivity() {
     const {user} = useSelector((state) => state.auth)
  
 
-
     return (
         <Box id="leaderboard-container" sx={{ display:"flex", flexDirection: "column", padding: "1.5rem", flexGrow: 1, borderRadius: "1.6rem", backgroundColor: "rgba(163,187,211,0.05)", border: '1px solid rgba(58,70,91)'}}>
             <Box sx={{paddingBottom: "1rem", display:"flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
@@ -34,11 +33,11 @@ export default function LeagueActivity() {
                             <LocalPoliceIcon />
                         </Avatar>
                         <Box sx={{display:"flex", flexDirection: "column", alignItems: "flex-start"}}>
-                            <Typography variant="body1" sx={{margin: "0 0.5rem", color: "#fff", fontWeight: "600"}}>{item.user}</Typography>
+                            <Typography variant="body1" sx={{margin: "0 0.5rem", color: "#fff", fontWeight: "600"}}>{item.username}</Typography>
                             <Typography variant="overline" sx={{margin: "0 0.5rem"}}>{item.time}</Typography> 
                         </Box>
                         <Box sx={{display:"flex", flexGrow: 1, flexDirection: "row", justifyContent: "flex-end"}}>
-                            <Typography variant="overline" sx={{margin: "0 0.5rem"}}>{item.item}</Typography>
+                            <Typography variant="overline" sx={{margin: "0 0.5rem"}}>{item.body}</Typography>
                         </Box>
                     </ListItem>
                 ))}

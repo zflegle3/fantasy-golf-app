@@ -14,13 +14,13 @@ export default function BasicTable({team}) {
     const {league, isLoading, isError, message} = useSelector((state) => state.leagueSelected)
 
     //Temporary data 
-    let playersAll = [...team.roster];
+    let playersAll = [...team.players];
     playersAll.sort((a,b) => {
-        return Number(a.score.sortTotal) -  Number(b.score.sortTotal)
+        return Number(a.event_sort_total) -  Number(b.event_sort_total)
     });
-    let starters = playersAll.slice(0,(league.settings.rosterSize - league.settings.rosterCut));
-    console.log(league.settings.rosterSize - league.settings.rosterCut);
-    let bench = playersAll.slice(league.settings.rosterSize - league.settings.rosterCut);
+    let starters = playersAll.slice(0,(league.roster_qty - league.roster_cut));
+    console.log(league.roster_qty - league.roster_cut);
+    let bench = playersAll.slice(league.roster_qty - league.roster_cut);
 
 
     return (
@@ -63,25 +63,25 @@ export default function BasicTable({team}) {
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell align="left" component="th" scope="row">
-                                <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{row.first_name} {row.family_name}</Typography>
+                                <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{row.first_name} {row.last_name}</Typography>
                             </TableCell>
                             <TableCell align="center">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.toPar}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_to_par ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_to_par}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.rOne}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_r_one ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_one}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.rTwo}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_r_two ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_two}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.rThree}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_r_three ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_three}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                            {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.rFour}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                            {row.event_r_four ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_four}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center" component="th" scope="row">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.total}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_total ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_total}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                         </TableRow>
                     ))}
@@ -133,25 +133,25 @@ export default function BasicTable({team}) {
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell align="left" component="th" scope="row">
-                                <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{row.first_name} {row.family_name}</Typography>
+                                <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{row.first_name} {row.last_name}</Typography>
                             </TableCell>
                             <TableCell align="center">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.toPar}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_to_par ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_to_par}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.rOne}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_r_one ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_one}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.rTwo}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_r_two ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_two}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.rThree}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_r_three ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_three}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography>
+                            {row.event_r_four ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_four}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center" component="th" scope="row">
-                                {row._id !== "none" ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.score.total}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row.event_total ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_total}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                         </TableRow>
                     ))}

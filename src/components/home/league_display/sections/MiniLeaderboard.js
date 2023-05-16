@@ -16,15 +16,9 @@ export default function MiniLeaderboard() {
 
 
     const getPlayerScores = async () => {
-        await axios.get("https://fantasy-golf-41.herokuapp.com/player/all")
+        await axios.get(process.env.REACT_APP_API_URL+"/players/leaderboard/all")
         .then(function (response) {
-            let filteredRanks = response.data.filter((element, index) => 
-                element.leaderboard.pos != null
-            );
-            filteredRanks.sort((a,b) => {
-                return Number(a.leaderboard.sortTotal) -  Number(b.leaderboard.sortTotal)
-            } )
-            let sortedTop = filteredRanks.slice(0,10)
+            let sortedTop = response.data.players.slice(0,10)
             setPlayers(sortedTop);
         })
     }
@@ -77,25 +71,25 @@ export default function MiniLeaderboard() {
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell align="left" component="th" scope="row">
-                                {row.leaderboard ? <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{row.leaderboard.pos}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row ? <Typography variant="overline" sx={{ color: "#fff", fontWeight: "600"}}>{row.event_pos}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="left" component="th" scope="row">
-                                <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{row.first_name} {row.family_name}</Typography>
+                                <Typography variant="body1" sx={{ color: "#fff", fontWeight: "600"}}>{row.first_name} {row.last_name}</Typography>
                             </TableCell>
                             <TableCell align="center">
-                                {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.toPar}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_to_par}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.rOne}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_one}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.rTwo}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_two}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.rThree}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_three}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                             <TableCell align="center">
-                                {row.leaderboard ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.leaderboard.rFour}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
+                                {row ? <Typography variant="overline" sx={{ color: "#d8e2ed"}}>{row.event_r_four}</Typography> : <Typography variant="overline" sx={{ color: "#d8e2ed"}}>0</Typography> }
                             </TableCell>
                         </TableRow>
                     ))}

@@ -7,7 +7,7 @@ const getLeagueOne = async (payload, token) => {
         }
     }//required for protected routes
     console.log(payload);
-    const response = await axios.get(process.env.REACT_APP_API_URL+"/leagues/read", payload, config,);
+    const response = await axios.post(process.env.REACT_APP_API_URL+"/leagues/read", payload, config);
     // const response = await axios.post("http://localhost:8000/league/getOne", payload, config);
     return response.data.league;
 }
@@ -19,11 +19,11 @@ const updateLeagueSettings = async (leagueData, token) => {
             authorization: `Bearer ${token}`
         }
     }//required for protected routes
-    const response = await axios.put(process.env.REACT_APP_API_URL+"/league/update/settings", leagueData, config);
+    const response = await axios.put(process.env.REACT_APP_API_URL+"/leagues/update/settings", leagueData, config);
     if (response.data) {
-        localStorage.setItem("leagueSelected", JSON.stringify(response.data));
+        localStorage.setItem("leagueSelected", JSON.stringify(response.data.league));
     }
-    return response.data;
+    return response.data.league;
 }
 
 //Update League Settings
@@ -33,11 +33,11 @@ const updateLeaguePasscodeInput = async (leagueData, token) => {
             authorization: `Bearer ${token}`
         }
     }//required for protected routes
-    const response = await axios.put(process.env.REACT_APP_API_URL+"/league/update/passcode-in", leagueData, config);
+    const response = await axios.put(process.env.REACT_APP_API_URL+"/leagues/update/passcode-in", leagueData, config);
     if (response.data) {
         localStorage.setItem("leagueSelected", JSON.stringify(response.data));
     }
-    return response.data;
+    return response.data.league;
 }
 
 //Update League Settings
@@ -47,11 +47,11 @@ const updateLeaguePasscodeAuto = async (leagueData, token) => {
             authorization: `Bearer ${token}`
         }
     }//required for protected routes
-    const response = await axios.put(process.env.REACT_APP_API_URL+"/league/update/passcode-auto", leagueData, config);
+    const response = await axios.put(process.env.REACT_APP_API_URL+"/leagues/update/passcode-auto", leagueData, config);
     if (response.data) {
         localStorage.setItem("leagueSelected", JSON.stringify(response.data));
     }
-    return response.data;
+    return response.data.league;
 }
 
 //Update League Settings

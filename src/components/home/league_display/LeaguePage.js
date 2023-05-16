@@ -126,7 +126,7 @@ export default function LeaguePage({title}) {
                             <div className='test-container'>
                                 <Routes>
                                     <Route exact path="" element={<LeagueHome />}/>
-                                    <Route exact path="team" element={<TeamHome managerId={user._id}/>}/>
+                                    <Route exact path="team" element={<TeamHome managerId={user.id}/>}/>
                                     <Route exact path="players" element={<PlayersPage />}/>
                                     {/* <Route exact path="draft" element={<Box>draft</Box>}/> */}
                                 </Routes>
@@ -144,7 +144,7 @@ export default function LeaguePage({title}) {
                                 borderRadius: "16px",
                             }}
                         >
-                            <LeagueChat chatId={league.chat} />
+                            {/* <LeagueChat chatId={league.chat_id} /> */}
                         </Box>
     
                 </div>

@@ -58,7 +58,7 @@ export default function TeamHome({managerId}) {
     const [open, setOpen] = useState(false);
     const [teamNameIn, setTeamNameIn] = useState("");
     const dispatch = useDispatch();
-    let team = league.teams.filter((team) => team.manager.id === managerId)[0];
+    let team = league.teams.filter((team) => team.manager === managerId)[0];
     const options = [
         'The Masters, Augusta National',
     ];
@@ -87,6 +87,9 @@ export default function TeamHome({managerId}) {
         borderRadius: "2rem",
         p: 4,
     };
+
+
+    console.log(managerId);
 
     return (
         <div id="league-home-container">

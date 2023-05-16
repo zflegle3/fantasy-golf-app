@@ -56,11 +56,10 @@ export default function LeagueChat({chatId}) {
         e.preventDefault();
         if (msgInput.length > 0){
           const messageOut = {
-              id: uuidv4(),
-              chatId: chatId,
-              username: user.username,
+              chat_id: chatId,
+              user_id: user.id,
               time: new Date(),
-              msg: msgInput,
+              body: msgInput,
           }
         setMsgInput("");
         socket.emit("send_message", messageOut)
@@ -88,12 +87,14 @@ export default function LeagueChat({chatId}) {
 
 
     const getChatData = async (chatIdIn) => {
-      await axios.post(process.env.REACT_APP_API_URL+"/chat/get/id", {chatId: chatIdIn})
+      console.log(chatIdIn);
+      await axios.post(process.env.REACT_APP_API_URL+"/chats/get/id", {id: chatIdIn})
       .then(function (response) {
           //set chat data for reference
-          setChatData(response.data);
+          console.log(response.data);
+          setChatData(response.data.chat);
           //set message data for ui output
-          setMsgOutput(response.data.messages)
+          // setMsgOutput(response.data.messages)
       })
     }
 
@@ -103,14 +104,14 @@ export default function LeagueChat({chatId}) {
 
 
     let managersOut = "";
-    let managedTeams = league.teams.filter(team => team.manager.id != null);
-    for (let i=0; i < managedTeams.length; i++) {
-      if (i === managedTeams.length-1) {
-        managersOut += `${managedTeams[i].manager.username}`;
-      } else {
-        managersOut += `${managedTeams[i].manager.username}, `;
-      }
-    }
+    // let managedTeams = league.teams.filter(team => team.id != null);
+    // for (let i=0; i < managedTeams.length; i++) {
+    //   if (i === managedTeams.length-1) {
+    //     managersOut += `${managedTeams[i].manager.username}`;
+    //   } else {
+    //     managersOut += `${managedTeams[i].manager.username}, `;
+    //   }
+    // }
 
     if (chatData) {
       return (
@@ -120,7 +121,7 @@ export default function LeagueChat({chatId}) {
                 <Box id="chat-title" sx={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
                     <Typography variant='h5' sx={{color: "#ffffff", fontWeight: "600"}}>{chatData.name}</Typography>
                     <Box sx={{display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
-                        <Typography variant='body1' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", marginRight: "0.5rem"}}>{league.managers.length}</Typography>
+                        <Typography variant='body1' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", marginRight: "0.5rem"}}>{league.teams.length}</Typography>
                         <PeopleAltTwoToneIcon sx={{color: "#7888a4", marginRight: "0.5rem"}}/>
                         <Divider orientation="vertical" sx={{ bgcolor:"#677897"}}/>
                         <Typography variant='body2' sx={{color: "#7888a4", fontWeight: "600", alignItems: "center", overflow: "hidden", maxWidth: "15rem", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{managersOut}</Typography>
@@ -130,7 +131,7 @@ export default function LeagueChat({chatId}) {
 
             <Box id="message-scroll-window" sx={{height: "100%",overflowY: "scroll"}}>
               <Box id="message-container" sx={{display: "flex", flexDirection: "column-reverse", justifyContent: "flex-end"}}>
-                  {msgOutput.map((message) => <Message key={message.id} messageData={message} />)}
+                  {chatData.messages.map((message) => <Message key={message.id} messageData={message} />)}
               </Box>
             </Box>
 

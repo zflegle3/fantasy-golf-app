@@ -15,11 +15,12 @@ export default function LeagueHome() {
     const {user} = useSelector((state) => state.auth)
  
 
+    // console.log(league.teams.filter(team => !team.manager).length);
     return (
         <Box id="league-home-container">
             <Standings />
             <MiniLeaderboard />
-            {league.managers.length < league.teams.length && user._id === league.admin ? <LeagueInvites /> : null}
+            {league.teams.filter(team => !team.manager).length < league.teams.length && user.id === league.admin ? <LeagueInvites /> : null}
             <LeagueActivity/>
             <LeagueSettings/>
         </Box>

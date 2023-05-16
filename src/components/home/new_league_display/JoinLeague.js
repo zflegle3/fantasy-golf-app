@@ -50,9 +50,9 @@ function JoinLeague({setLeagueType}) {
         //validate inputs**
 
         const payload = {
-            leagueName: leagueNameIn.trim(), 
+            league_name: leagueNameIn.trim(), 
             passcode: leaguePassIn.trim(),
-            managerId: user._id,
+            user_id: user.id,
         };
         //validate inputs and dispatch join league
         dispatch(joinLeague(payload))
