@@ -65,15 +65,27 @@ export default function TeamHome({managerId}) {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const toggleEdit  = (e) => {
+        if (open) {
+            setOpen(false);
+        } else {
+            setOpen(true);
+        };
+    };
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(teamNameIn);
-        dispatch(updateLeagueTeamSettings({
-            managerId: user._id,
-            leagueId: league._id,
-            nameIn: teamNameIn,
-        }));
-    }
+        let payload = {
+            user_id: user.id,
+            id: team.id,
+            name: teamNameIn,
+        }
+        // console.log(payload);
+        dispatch(updateLeagueTeamSettings(payload));
+    };
 
     const style = {
         position: 'absolute',
@@ -112,7 +124,7 @@ export default function TeamHome({managerId}) {
                 <Box sx={{ display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
                     <LongMenu options={options} title={"Wk. 1"}/>
                     <Fab variant="extended" size="small" aria-label="edit">
-                        <EditIcon />
+                        <EditIcon onClick={toggleEdit} />
                     </Fab>
                 </Box>
 

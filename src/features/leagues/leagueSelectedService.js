@@ -62,11 +62,11 @@ const updateLeagueTeamSettings = async (leagueData, token) => {
             authorization: `Bearer ${token}`
         }
     }//required for protected routes
-    const response = await axios.put(process.env.REACT_APP_API_URL+"/league/update/team", leagueData, config);
+    const response = await axios.put(process.env.REACT_APP_API_URL+"/teams/update", leagueData, config);
     if (response.data) {
-        localStorage.setItem("leagueSelected", JSON.stringify(response.data));
+        localStorage.setItem("leagueSelected", JSON.stringify(response.data.league));
     }
-    return response.data;
+    return response.data.league;
 }
 
 const leagueSelectedService = {
